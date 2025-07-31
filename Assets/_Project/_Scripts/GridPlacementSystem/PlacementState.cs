@@ -12,9 +12,9 @@ public class PlacementState : IBuildingState
     ObjectPlacer objectPlacer;
     SoundFeedback soundFeedback;
 
-    public PlacementState(int ID, Grid grid, PreviewSystem previewSystem, ObjectsDatabaseSO database, GridData floorData, GridData furnitureData, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
+    public PlacementState(int id, Grid grid, PreviewSystem previewSystem, ObjectsDatabaseSO database, GridData floorData, GridData furnitureData, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
     {
-        this.ID = ID;
+        ID = id;
         this.grid = grid;
         this.previewSystem = previewSystem;
         this.database = database;
@@ -23,13 +23,13 @@ public class PlacementState : IBuildingState
         this.objectPlacer = objectPlacer;
         this.soundFeedback = soundFeedback;
 
-        selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == ID);
+        selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == id);
         if (selectedObjectIndex > -1)
         {
             previewSystem.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab, database.objectsData[selectedObjectIndex].Size);
         }
         else
-            throw new System.Exception($"There is no object with ID: {ID}");
+            throw new System.Exception($"There is no object with ID: {id}");
 
     }
 
