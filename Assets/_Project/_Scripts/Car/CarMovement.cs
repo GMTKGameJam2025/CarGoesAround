@@ -2,7 +2,7 @@ using System;
 using UnityEngine;
 using UnityEngine.Serialization;
 
-public class Car : MonoBehaviour
+public class CarMovement : MonoBehaviour
 {
     public TrackNode currentNode;
     public float thresholdDistanceToGoal = 0.2f;
@@ -19,8 +19,7 @@ public class Car : MonoBehaviour
         _destNode = currentNode.nextNode;
     }
 
-    // Update is called once per frame
-    void Update()
+    public void MoveCar()
     {
         if (!currentNode) return;
         
@@ -34,7 +33,7 @@ public class Car : MonoBehaviour
         Transform destTransform = _destNode.transform;
         Vector3 carPosNoHeight = new Vector3(transform.position.x, 0, transform.position.z);
         Vector3 destPosNoHeight = new Vector3(destTransform.position.x, 0, destTransform.position.z);
-        if ((destPosNoHeight- carPosNoHeight).normalized != transform.forward)
+        if ((destPosNoHeight- carPosNoHeight).normalized != Vector3.zero)
         {
             Quaternion destRot = Quaternion.LookRotation(destPosNoHeight - carPosNoHeight, transform.up);
             transform.rotation = Quaternion.RotateTowards(transform.rotation, destRot, turnSpeed * Time.deltaTime);
