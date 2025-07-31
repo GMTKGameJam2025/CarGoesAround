@@ -10,13 +10,11 @@ public class PlacementSystem : MonoBehaviour
     private InputManager inputManager;
     [SerializeField]
     private Grid grid;
+
     [SerializeField]
     private ObjectsDatabaseSO database;
     [SerializeField]
     private GameObject gridVisualization;
-
-    // [SerializeField]
-    // private AudioSource placementSound;
 
     private GridData floorData, furnitureData;
 
@@ -31,6 +29,9 @@ public class PlacementSystem : MonoBehaviour
 
     IBuildingState buildingState;
 
+    [SerializeField]
+    private SoundFeedback soundFeedback;
+
     private void Start()
     {
         StopPlacement();
@@ -42,7 +43,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);
-        buildingState = new PlacementState(ID, grid, preview, database, floorData, furnitureData, objectPlacer);
+        buildingState = new PlacementState(ID, grid, preview, database, floorData, furnitureData, objectPlacer, soundFeedback);
         inputManager.OnClick += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
@@ -51,7 +52,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);
-        buildingState = new RemovingState(grid, preview, floorData, furnitureData, objectPlacer);
+        buildingState = new RemovingState(grid, preview, floorData, furnitureData, objectPlacer, soundFeedback);
         inputManager.OnClick += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
@@ -69,15 +70,9 @@ public class PlacementSystem : MonoBehaviour
         buildingState.OnAction(gridPosition);
     }
 
-    // private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
-    // {
-    //     GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-
-    //     return selectedData.CanPlaceOjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
-    // }
-
     private void StopPlacement()
     {
+        soundFeedback.PlaySound(SoundType.Click);
         if (buildingState == null)
             return;
 
