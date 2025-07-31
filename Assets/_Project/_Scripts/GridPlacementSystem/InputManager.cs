@@ -1,16 +1,28 @@
 using UnityEngine;
+using System.Collections;
+using System.Collections.Generic;
 
-public class NewMonoBehaviourScript : MonoBehaviour
+public class InputManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    [SerializeField]
+    private Camera sceneCamera;
+    private Vector3 lastPosition;
+
+    [SerializeField]
+    private LayerMask placementLayerMask;
+
+    public Vector3 GetSelectedMapPosition()
     {
-        
+        Vector3 mousePos = Input.mousePosition;
+        mousePos.z = sceneCamera.nearClipPlane;
+        Ray ray = sceneCamera.ScreenPointToRay(mousePos);
+        RaycastHit hit;
+        if (Physics.Raycast(ray, out hit, 100, placementLayerMask))
+        {
+            lastPosition = hit.point;
+
+        }
+        return lastPosition;
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
