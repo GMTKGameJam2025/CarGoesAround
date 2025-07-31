@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class FloatVariable : ScriptableObject
 {
     private float _value;
+    
     public event Action<float> OnValueChanged;
     
     public float Value
@@ -20,4 +21,5 @@ public class FloatVariable : ScriptableObject
             OnValueChanged?.Invoke(_value);
         }
     }
+
 }
