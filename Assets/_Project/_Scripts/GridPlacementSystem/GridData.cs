@@ -2,10 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class GridData : MonoBehaviourSingleton<GridData>
 {
-    [SerializeField] private Vector2Int gridRadius = new(5, 5);
+    [SerializeField] private Vector2Int gridSize = new(5, 5);
     [SerializeField] private int cellSize = 1;
     
     [SerializeField] private Grid grid;
@@ -28,7 +29,7 @@ public class GridData : MonoBehaviourSingleton<GridData>
 
         if (gridVisualization)
         {
-            gridVisualization.localScale = new Vector3(gridRadius.x * 2 / 10f, 1, gridRadius.y * 2 / 10f);
+            gridVisualization.localScale = new Vector3(gridSize.x / 10f, 1, gridSize.y/ 10f);
         }
     }
     
@@ -63,7 +64,7 @@ public class GridData : MonoBehaviourSingleton<GridData>
         List<Vector3Int> positionToOccupy = GetOccupiedPosition(gridPosition, objectSize);
         return positionToOccupy.All(pos =>
         {
-            bool inGrid = pos.x < gridRadius.x && pos.y < gridRadius.y  && pos.x >= -gridRadius.x && pos.y >= -gridRadius.y;
+            bool inGrid = pos.x < gridSize.x && pos.y < gridSize.y  && pos is { x: >= 0, y: >= 0 };
             bool occupied = _placedObjects.ContainsKey(pos);
 
             return inGrid && !occupied;
@@ -97,9 +98,9 @@ public class GridData : MonoBehaviourSingleton<GridData>
     {
         if (Application.isPlaying)
         {
-            for (int x = -gridRadius.x; x <= gridRadius.x - 1; x++)
+            for (int x = 0; x <= gridSize.x; x++)
             {
-                for (int y = -gridRadius.y; y <= gridRadius.y - 1; y++)
+                for (int y = 0; y <= gridSize.y; y++)
                 {
                     if (_placedObjects.ContainsKey(new Vector3Int(x, y, 0)))
                     {
