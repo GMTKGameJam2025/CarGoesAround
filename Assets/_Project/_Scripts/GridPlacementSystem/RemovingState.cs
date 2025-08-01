@@ -8,11 +8,11 @@ public class RemovingState : IBuildingState
     private ObjectPlacer _objectPlacer;
     private SoundFeedback _soundFeedback;
 
-    public RemovingState(Grid grid, PreviewSystem previewSystem, GridData gridData, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
+    public RemovingState(Grid grid, PreviewSystem previewSystem, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
     {
         _grid = grid;
         _previewSystem = previewSystem;
-        _gridData = gridData;
+        _gridData = GridData.Instance;
         _objectPlacer = objectPlacer;
         _soundFeedback = soundFeedback;
 

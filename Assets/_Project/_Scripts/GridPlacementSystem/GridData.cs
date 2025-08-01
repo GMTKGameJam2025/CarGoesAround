@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
-public class GridData : MonoBehaviour
+public class GridData : MonoBehaviourSingleton<GridData>
 {
     [SerializeField] private Vector2Int gridRadius = new(5, 5);
     [SerializeField] private int cellSize = 1;
@@ -85,6 +85,8 @@ public class GridData : MonoBehaviour
             _placedObjects.Remove(pos);
         }
     }
+    
+    
 #if UNITY_EDITOR
     private void OnValidate()
     {

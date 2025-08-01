@@ -11,13 +11,13 @@ public class PlacementState : IBuildingState
     private ObjectPlacer _objectPlacer;
     private SoundFeedback _soundFeedback;
 
-    public PlacementState(int id, Grid grid, PreviewSystem previewSystem, ObjectsDatabaseSO database, GridData gridData, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
+    public PlacementState(int id, Grid grid, PreviewSystem previewSystem, ObjectsDatabaseSO database, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
     {
         _id = id;
         _grid = grid;
         _previewSystem = previewSystem;
+        _gridData = GridData.Instance;
         _database = database;
-        _gridData = gridData;
         _objectPlacer = objectPlacer;
         _soundFeedback = soundFeedback;
 
