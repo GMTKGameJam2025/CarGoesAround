@@ -25,6 +25,10 @@ public class CarMovement : MonoBehaviour {
     private Vector3 _currentDirection;
     private float _currentSpeed;
 
+    private TrackNode _previousNode;
+    private bool _isGrounded;
+    private bool _wasGroundedThisFrame;
+
     void Start() {
         _rb = GetComponent<Rigidbody>();
         _currentDirection = transform.rotation * Vector3.forward; 
@@ -44,19 +48,27 @@ public class CarMovement : MonoBehaviour {
         }
 
         ApplyDiveIfFalling();
-        ResetTiltIfGrounded();
-        if (!IsGrounded()) return;
+        _isGrounded = IsGrounded(); 
+
+        if (!_wasGroundedThisFrame && _isGrounded) {
+            ResetTiltIfGrounded();
+        }
         
+        _wasGroundedThisFrame = _isGrounded;
+        
+        if (!_isGrounded) return;
+        
+        Vector3 flatDirection = new Vector3(_currentDirection.x, 0f, _currentDirection.z).normalized;
         // Compute turn angle
-        float turnAngle = Vector3.Angle(transform.forward, _currentDirection);
+        float turnAngle = Vector3.Angle(transform.forward, flatDirection);
         float speedMultiplier = Mathf.Lerp(1f, 0.3f, Mathf.InverseLerp(0f, 90f, turnAngle));
         float actualSpeed = moveSpeed * speedMultiplier;
 
         // Move the car
-        _rb.MovePosition(_rb.position + _currentDirection * (actualSpeed * Time.fixedDeltaTime));
+        _rb.MovePosition(_rb.position + flatDirection * (actualSpeed * Time.fixedDeltaTime));
 
         // Rotate the car
-        Quaternion targetRotation = Quaternion.LookRotation(_currentDirection, Vector3.up);
+        Quaternion targetRotation = Quaternion.LookRotation(flatDirection, Vector3.up);
         _rb.MoveRotation(Quaternion.RotateTowards(_rb.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime));
     }
     
@@ -68,9 +80,10 @@ public class CarMovement : MonoBehaviour {
     }
     
     private void ResetTiltIfGrounded() {
-        if (IsGrounded()) {
-            Quaternion uprightRotation = Quaternion.Euler(0, transform.eulerAngles.y, 0);
-            transform.rotation = Quaternion.RotateTowards(transform.rotation, uprightRotation, 100f * Time.deltaTime);
+        if (_isGrounded) {
+            Quaternion uprightRotation = Quaternion.Euler(0f, _rb.rotation.eulerAngles.y, 0f);
+            _rb.MoveRotation(Quaternion.RotateTowards(_rb.rotation, uprightRotation, 100f * Time.fixedDeltaTime));
+            _rb.angularVelocity = new Vector3(0f, _rb.angularVelocity.y, 0f); // Allow only yaw
         }
     }
 
@@ -105,10 +118,46 @@ public class CarMovement : MonoBehaviour {
             Vector3 destPos = _destNode.transform.position;
             float distance = Vector3.Distance(new Vector3(_rb.position.x, 0, _rb.position.z), new Vector3(destPos.x, 0, destPos.z));
             if (distance <= thresholdDistanceToGoal) {
+                _previousNode = currentNode;
                 currentNode = _destNode;
                 _destNode = GetNextNode();
+                
+                // Try to auto-detect curve exit
+                if (_previousNode && currentNode && _destNode) {
+                    Vector3 dir1 = (currentNode.Position - _previousNode.Position).normalized;
+                    Vector3 dir2 = (_destNode.Position - currentNode.Position).normalized;
+
+                    float angle = Vector3.Angle(dir1, dir2);
+
+                    // If we just transitioned from a curve (sharp angle), and now go straight-ish
+                    if (angle is > 30f and < 150f) {
+                        float curveSharpness = Vector3.Dot(dir1, dir2); // closer to 1 = straight
+                        if (curveSharpness < 0.95f) {
+                            SnapCarToGrid();
+                        }
+                    }
+                }
             }
         }
+    }
+    
+    private void SnapCarToGrid() {
+        // Snap Y rotation to nearest 90°
+        Vector3 euler = _rb.rotation.eulerAngles;
+        float snappedY = Mathf.Round(euler.y / 90f) * 90f;
+        Quaternion snappedRotation = Quaternion.Euler(0f, snappedY, 0f);
+
+        _rb.MoveRotation(snappedRotation);
+
+        // Position snap only horizontally, preserve Y
+        Vector3 pos = _rb.position;
+        pos.x = Mathf.Round(pos.x * 2f) / 2f; // Snap to 0.5 grid if needed
+        pos.z = Mathf.Round(pos.z * 2f) / 2f;
+        _rb.MovePosition(new Vector3(pos.x, pos.y, pos.z));
+
+        // Stop physics drift
+        _rb.linearVelocity = Vector3.zero;
+        _rb.angularVelocity = Vector3.zero;
     }
 
     private bool IsGrounded() 
