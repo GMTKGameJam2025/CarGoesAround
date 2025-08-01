@@ -91,24 +91,6 @@ public class GridData : MonoBehaviourSingleton<GridData>
     {
         ConstructGrid();
     }
-
-    private void OnDrawGizmos()
-    {
-        if (Application.isPlaying)
-        {
-            for (int x = 0; x <= gridSize.x; x++)
-            {
-                for (int y = 0; y <= gridSize.y; y++)
-                {
-                    if (_placedObjects.ContainsKey(new Vector3Int(x, y, 0)))
-                    {
-                        Vector3 center = new Vector3(x + 0.5f, 1, y + 0.5f);
-                        Gizmos.DrawSphere(center, 0.25f);
-                    }
-                }
-            }
-        }
-    }
 #endif
 }
 

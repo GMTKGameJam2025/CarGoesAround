@@ -1,7 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class TrackPiece : MonoBehaviour
+public class TrackPiece : MonoBehaviour, IBuildable
 {
     public Transform trackNodeParent;
 
@@ -17,10 +17,9 @@ public class TrackPiece : MonoBehaviour
                 trackNodes.Add(node);    
             }
         }
-        OnBuild();
     }
 
-    void OnBuild()
+    public void OnBuild()
     {
         foreach (TrackNode node in trackNodes)
         {

@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using System.Linq;
 
 public class ObjectPlacer : MonoBehaviour
 {
@@ -26,6 +27,13 @@ public class ObjectPlacer : MonoBehaviour
         }
 
         placedGameObjects.Add(newObject);
+
+        IBuildable[] buildables = newObject.GetComponents<IBuildable>();
+        foreach (IBuildable buildable in buildables)
+        {
+            buildable.OnBuild();
+        }
+        
         return placedGameObjects.Count - 1;
     }
 
