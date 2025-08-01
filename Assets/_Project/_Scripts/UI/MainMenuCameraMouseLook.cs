@@ -2,38 +2,31 @@ using UnityEngine;
 
 public class MainMenuCameraMouseLook : MonoBehaviour
 {
-    [Header("Mouse Follow Settings")]
-    public float sensitivity = 0.05f;     // How much the camera moves with the mouse
-    public float maxOffset = 0.5f;        // Maximum movement from the center
-    public float smoothSpeed = 5f;        // How smoothly it returns/stays
+    [Header("Rotation Settings")]
+    public float rotationAmount = 5f; // Max degrees the camera will rotate
+    public float smoothSpeed = 5f;
 
-    private Vector3 initialPosition;
+    private Quaternion initialRotation;
 
     void Start()
     {
-        initialPosition = transform.localPosition;
+        initialRotation = transform.localRotation;
     }
 
     void Update()
     {
-        // Get mouse position in viewport coordinates (0 to 1)
-        Vector2 mouseViewport = Camera.main.ScreenToViewportPoint(Input.mousePosition);
+        Vector2 mousePos = Input.mousePosition;
+        Vector2 screenCenter = new Vector2(Screen.width / 2f, Screen.height / 2f);
 
-        // Offset from center (0.5, 0.5), range -0.5 to +0.5
-        Vector2 offsetFromCenter = mouseViewport - new Vector2(0.5f, 0.5f);
+        // Normalize mouse position relative to screen center (-1 to 1)
+        Vector2 offset = (mousePos - screenCenter) / screenCenter;
+        offset = Vector2.ClampMagnitude(offset, 1f);
 
-        // Calculate desired offset
-        Vector3 desiredOffset = new Vector3(
-            offsetFromCenter.x * sensitivity,
-            offsetFromCenter.y * sensitivity,
-            0f
-        );
+        // Calculate target rotation angles
+        float rotX = -offset.y * rotationAmount; // invert Y so up is up
+        float rotY = offset.x * rotationAmount;
 
-        // Clamp movement to maxOffset
-        desiredOffset = Vector3.ClampMagnitude(desiredOffset, maxOffset);
-
-        // Smooth movement
-        Vector3 targetPosition = initialPosition + desiredOffset;
-        transform.localPosition = Vector3.Lerp(transform.localPosition, targetPosition, Time.deltaTime * smoothSpeed);
+        Quaternion targetRotation = Quaternion.Euler(rotX, rotY, 0f);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, initialRotation * targetRotation, Time.deltaTime * smoothSpeed);
     }
 }
