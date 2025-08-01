@@ -86,7 +86,7 @@ public class PreviewSystem : MonoBehaviour
         // Clear previous highlight
         ClearObjectHighlight();
 
-        if (targetObject)
+        if (!targetObject)
             return;
 
         _currentHighlightedObject = targetObject;
@@ -110,7 +110,7 @@ public class PreviewSystem : MonoBehaviour
 
     public void ClearObjectHighlight()
     {
-        if (_currentHighlightedObject&& _originalRenderers != null)
+        if (_currentHighlightedObject && _originalRenderers != null)
         {
             // Restore original materials
             for (int i = 0; i < _originalRenderers.Length; i++)
