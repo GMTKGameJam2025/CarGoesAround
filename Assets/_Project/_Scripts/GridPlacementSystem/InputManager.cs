@@ -13,7 +13,7 @@ public class InputManager : MonoBehaviour
     [SerializeField]
     private LayerMask placementLayerMask;
 
-    public event Action OnClick, OnExit;
+    public event Action OnClick, OnExit, OnRotate;
 
     private void Update()
     {
@@ -24,6 +24,10 @@ public class InputManager : MonoBehaviour
         else if (Input.GetKeyDown(KeyCode.Escape))
         {
             OnExit?.Invoke();
+        }
+        else if (Input.GetKeyDown(KeyCode.R))
+        {
+            OnRotate?.Invoke();
         }
     }
 

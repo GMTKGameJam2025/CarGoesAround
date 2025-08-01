@@ -8,10 +8,23 @@ public class ObjectPlacer : MonoBehaviour
     [SerializeField]
     private List<GameObject> placedGameObjects = new();
 
-    public int PlaceObject(GameObject prefab, Vector3 position)
+    public int PlaceObject(GameObject prefab, Vector3 position, float rotationAngle)
     {
         GameObject newObject = Instantiate(prefab);
         newObject.transform.position = position;
+
+        // Rotate the child object, not the parent
+        if (newObject.transform.childCount > 0)
+        {
+            Transform childTransform = newObject.transform.GetChild(0);
+            childTransform.rotation = Quaternion.Euler(0, rotationAngle, 0);
+        }
+        else
+        {
+            // If no children, rotate the object itself
+            newObject.transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
+        }
+
         placedGameObjects.Add(newObject);
         return placedGameObjects.Count - 1;
     }

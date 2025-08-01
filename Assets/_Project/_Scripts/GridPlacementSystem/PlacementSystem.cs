@@ -40,6 +40,7 @@ public class PlacementSystem : MonoBehaviour
         _buildingState = new PlacementState(id, grid, preview, database, objectPlacer, soundFeedback);
         inputManager.OnClick += PlaceStructure;
         inputManager.OnExit += StopPlacement;
+        inputManager.OnRotate += RotateObject;
     }
 
     public void StartRemoving()
@@ -64,6 +65,14 @@ public class PlacementSystem : MonoBehaviour
         _buildingState.OnAction(gridPosition);
     }
 
+    private void RotateObject()
+    {
+        if (_buildingState != null)
+        {
+            ((PlacementState)_buildingState).OnRotate();
+        }
+    }
+
     private void StopPlacement()
     {
         soundFeedback.PlaySound(SoundType.Click);
@@ -74,6 +83,7 @@ public class PlacementSystem : MonoBehaviour
         _buildingState.EndState();
         inputManager.OnClick -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
+        inputManager.OnRotate -= RotateObject;
         _lastDetectedPosition = Vector3Int.zero;
         _buildingState = null;
     }

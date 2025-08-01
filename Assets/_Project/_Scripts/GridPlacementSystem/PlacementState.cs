@@ -10,6 +10,7 @@ public class PlacementState : IBuildingState
     private GridData _gridData;
     private ObjectPlacer _objectPlacer;
     private SoundFeedback _soundFeedback;
+    private int _currentRotation = 0; // Track rotation in 90-degree increments (0, 1, 2, 3)
 
     public PlacementState(int id, Grid grid, PreviewSystem previewSystem, ObjectsDatabaseSO database, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
     {
@@ -45,8 +46,11 @@ public class PlacementState : IBuildingState
             return;
         }
         _soundFeedback.PlaySound(SoundType.Place);
-        int index = _objectPlacer.PlaceObject(_database.objectsData[_selectedObjectIndex].Prefab, _grid.CellToWorld(gridPosition));
-        
+
+        float rotationAngle = _currentRotation * 90f;
+
+        int index = _objectPlacer.PlaceObject(_database.objectsData[_selectedObjectIndex].Prefab, _grid.CellToWorld(gridPosition), rotationAngle);
+
         _gridData.AddObjectAt(gridPosition, _database.objectsData[_selectedObjectIndex].Size, _database.objectsData[_selectedObjectIndex].ID, index);
         _previewSystem.UpdatePosition(_grid.CellToWorld(gridPosition), false);
     }
@@ -61,5 +65,13 @@ public class PlacementState : IBuildingState
         bool placementValidity = CheckPlacementValidity(gridPosition, _selectedObjectIndex);
 
         _previewSystem.UpdatePosition(_grid.CellToWorld(gridPosition), placementValidity);
+    }
+
+    public void OnRotate()
+    {
+        _currentRotation = (_currentRotation + 1) % 4; // Cycle through 0, 1, 2, 3
+        float rotationAngle = _currentRotation * 90f;
+        _previewSystem.SetRotation(rotationAngle);
+        _soundFeedback.PlaySound(SoundType.Click); // Optional: play sound on rotation
     }
 }

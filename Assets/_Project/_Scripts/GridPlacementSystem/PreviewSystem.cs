@@ -8,6 +8,7 @@ public class PreviewSystem : MonoBehaviour
     [SerializeField] private Material highlightMaterial; // highlighting existing objects
 
     private GameObject _previewObject;
+    private GameObject _childObject;
     private Material _previewMaterialInstance;
     private Renderer _cellIndicatorRender;
 
@@ -40,6 +41,18 @@ public class PreviewSystem : MonoBehaviour
     public void StartShowingPlacementPreview(GameObject prefab, Vector2Int size)
     {
         _previewObject = Instantiate(prefab);
+
+        // Find the child object to rotate (assuming it's the first child)
+        if (_previewObject.transform.childCount > 0)
+        {
+            _childObject = _previewObject.transform.GetChild(0).gameObject;
+        }
+        else
+        {
+            // If no children, rotate the object itself
+            _childObject = _previewObject;
+        }
+
         PreparePreview(_previewObject);
         PrepareCursor(size);
         cellIndicator.SetActive(true);
@@ -74,7 +87,16 @@ public class PreviewSystem : MonoBehaviour
         if (_previewObject != null)
             Destroy(_previewObject);
 
+        _childObject = null;
         ClearObjectHighlight();
+    }
+
+    public void SetRotation(float rotationAngle)
+    {
+        if (_childObject != null)
+        {
+            _childObject.transform.rotation = Quaternion.Euler(0, rotationAngle, 0);
+        }
     }
 
     // Object highlighting during removal
