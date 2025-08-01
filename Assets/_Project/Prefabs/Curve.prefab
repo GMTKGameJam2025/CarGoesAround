@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 762440721610548386}
   - component: {fileID: 8128606131850794399}
   m_Layer: 7
-  m_Name: EdgeNode
+  m_Name: EnterNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -102,8 +102,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 3702506682909873935}
   - {fileID: 5483455964629579501}
+  - {fileID: 3702506682909873935}
   - {fileID: 8315789672651855611}
   m_Father: {fileID: 2815729470039248746}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -119,7 +119,7 @@ GameObject:
   - component: {fileID: 8212714376323143463}
   - component: {fileID: 3287979004239119738}
   m_Layer: 7
-  m_Name: EdgeNode
+  m_Name: ExitNode
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -192,7 +192,7 @@ GameObject:
   - component: {fileID: 8358988069866826709}
   - component: {fileID: 2805543442057433880}
   m_Layer: 7
-  m_Name: Node
+  m_Name: Node1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

@@ -305,7 +305,7 @@ MonoBehaviour:
   currentNode: {fileID: 0}
   thresholdDistanceToGoal: 0.05
   moveSpeed: 2
-  turnSpeed: 300
+  turnSpeed: 500
   probeRadius: 0.2
   probeDistance: 1
   trackNodeLayer:
