@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -16,7 +17,7 @@ public class CarMovement : MonoBehaviour
         if (!currentNode) return;
         
         transform.position = currentNode.transform.position;
-        _destNode = currentNode.nextNode;
+        _destNode = GetNextNode();
     }
 
     public void MoveCar()
@@ -26,7 +27,7 @@ public class CarMovement : MonoBehaviour
         if (!_destNode)
         {
             //Try get nextNode;
-            _destNode = currentNode.nextNode;
+            _destNode = GetNextNode();
             return;
         }
 
@@ -48,8 +49,17 @@ public class CarMovement : MonoBehaviour
         {
             currentNode = _destNode;
             transform.position = currentNode.transform.position;
-            _destNode = currentNode.nextNode;
+            _destNode = GetNextNode();
         }
+    }
+
+    private TrackNode GetNextNode()
+    {
+        return currentNode.connectedNodes
+            .OrderByDescending(n => Vector3.Dot(
+                (n.Position - currentNode.Position).normalized,
+                transform.forward.normalized))
+            .First();
     }
 
     private void OnDrawGizmos()

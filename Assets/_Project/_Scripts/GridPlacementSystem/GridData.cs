@@ -39,10 +39,8 @@ public class GridData : MonoBehaviourSingleton<GridData>
         PlacementData data = new PlacementData(positionToOccupy, id, placedObjectIndex);
         foreach (var pos in positionToOccupy)
         {
-            if (_placedObjects.ContainsKey(pos))
+            if (!_placedObjects.TryAdd(pos, data))
                 throw new Exception($"Position {pos} is already occupied");
-            
-            _placedObjects[pos] = data;
         }
     }
 
@@ -119,7 +117,7 @@ public class PlacementData
     public readonly List<Vector3Int> OccupiedPositions;
     public int ID { get; private set; }
     public int PlacedObjectIndex { get; private set; }
-
+    
     public PlacementData(List<Vector3Int> occupiedPositions, int id, int placedObjectIndex)
     {
         this.OccupiedPositions = occupiedPositions;
