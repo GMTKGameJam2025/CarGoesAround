@@ -43,8 +43,7 @@ MonoBehaviour:
     probeVolumeBlendStatesCS: {fileID: 7200000, guid: b9a23f869c4fd45f19c5ada54dd82176, type: 3}
   m_RendererFeatures:
   - {fileID: 7833122117494664109}
-  - {fileID: 1208437678651431352}
-  m_RendererFeatureMap: ad6b866f10d7b46cb8593789aa3bc510
+  m_RendererFeatureMap: ad6b866f10d7b46c
   m_UseNativeRenderPass: 1
   xrSystemData: {fileID: 0}
   postProcessData: {fileID: 11400000, guid: 41439944d30ece34e96484bdb6645b55, type: 2}
@@ -85,6 +84,8 @@ MonoBehaviour:
   m_Active: 1
   m_bloomShader: {fileID: 4800000, guid: 5f1864addb451f54bae8c86d230f736e, type: 3}
   m_compositeShader: {fileID: -6465566751694194690, guid: c953d0bfdc31c304db3ca27f681d919e, type: 3}
+  m_bloomMaterial: {fileID: 0}
+  m_compositeMaterial: {fileID: 0}
 --- !u!114 &7833122117494664109
 MonoBehaviour:
   m_ObjectHideFlags: 0
