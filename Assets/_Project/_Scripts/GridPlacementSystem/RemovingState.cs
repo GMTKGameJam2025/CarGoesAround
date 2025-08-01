@@ -68,5 +68,32 @@ public class RemovingState : IBuildingState
     {
         bool isValid = CheckIfSelectionIsValid(gridPosition);
         previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), isValid);
+
+        // Highlight the object at the current position if there is one
+        GameObject objectToHighlight = GetObjectAt(gridPosition);
+        previewSystem.HighlightObjectAt(objectToHighlight);
+    }
+
+    private GameObject GetObjectAt(Vector3Int gridPosition)
+    {
+        // Check furniture first, then floor
+        if (!furnitureData.CanPlaceOjectAt(gridPosition, Vector2Int.one))
+        {
+            int index = furnitureData.GetRepresentationIndex(gridPosition);
+            if (index > -1)
+            {
+                return objectPlacer.GetPlacedObjectAt(index);
+            }
+        }
+        else if (!floorData.CanPlaceOjectAt(gridPosition, Vector2Int.one))
+        {
+            int index = floorData.GetRepresentationIndex(gridPosition);
+            if (index > -1)
+            {
+                return objectPlacer.GetPlacedObjectAt(index);
+            }
+        }
+
+        return null;
     }
 }

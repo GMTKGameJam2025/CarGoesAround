@@ -16,7 +16,16 @@ public class ObjectPlacer : MonoBehaviour
         return placedGameObjects.Count - 1;
     }
 
-    internal void RemoveObjecAt(int gameObjectIndex)
+    public GameObject GetPlacedObjectAt(int index)
+    {
+        if (index >= 0 && index < placedGameObjects.Count)
+        {
+            return placedGameObjects[index];
+        }
+        return null;
+    }
+
+    public void RemoveObjecAt(int gameObjectIndex)
     {
         if (placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
             return;
