@@ -16,18 +16,18 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private GameObject gridVisualization;
 
-    private GridData floorData, furnitureData;
+    private GridData _gridData;
 
 
     [SerializeField]
     private PreviewSystem preview;
 
-    private Vector3Int lastDetectedPosition = Vector3Int.zero;
+    private Vector3Int _lastDetectedPosition = Vector3Int.zero;
 
     [SerializeField]
     private ObjectPlacer objectPlacer;
 
-    IBuildingState buildingState;
+    private IBuildingState _buildingState;
 
     [SerializeField]
     private SoundFeedback soundFeedback;
@@ -35,15 +35,14 @@ public class PlacementSystem : MonoBehaviour
     private void Start()
     {
         StopPlacement();
-        floorData = new();
-        furnitureData = new();
+        _gridData = new();
 
     }
-    public void StartPlacement(int ID)
+    public void StartPlacement(int id)
     {
         StopPlacement();
         gridVisualization.SetActive(true);
-        buildingState = new PlacementState(ID, grid, preview, database, floorData, furnitureData, objectPlacer, soundFeedback);
+        _buildingState = new PlacementState(id, grid, preview, database, _gridData, objectPlacer, soundFeedback);
         inputManager.OnClick += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
@@ -52,7 +51,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);
-        buildingState = new RemovingState(grid, preview, floorData, furnitureData, objectPlacer, soundFeedback);
+        _buildingState = new RemovingState(grid, preview, _gridData, objectPlacer, soundFeedback);
         inputManager.OnClick += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
@@ -67,34 +66,33 @@ public class PlacementSystem : MonoBehaviour
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
 
-        buildingState.OnAction(gridPosition);
+        _buildingState.OnAction(gridPosition);
     }
 
     private void StopPlacement()
     {
         soundFeedback.PlaySound(SoundType.Click);
-        if (buildingState == null)
+        if (_buildingState == null)
             return;
 
         gridVisualization.SetActive(false);
-        buildingState.EndState();
+        _buildingState.EndState();
         inputManager.OnClick -= PlaceStructure;
         inputManager.OnExit -= StopPlacement;
-        lastDetectedPosition = Vector3Int.zero;
-        buildingState = null;
+        _lastDetectedPosition = Vector3Int.zero;
+        _buildingState = null;
     }
 
     private void Update()
     {
-        if (buildingState == null)
+        if (_buildingState == null)
             return;
 
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
         Vector3Int gridPosition = grid.WorldToCell(mousePosition);
-        if (lastDetectedPosition != gridPosition)
-        {
-            buildingState.UpdateState(gridPosition);
-            lastDetectedPosition = gridPosition;
-        }
+        if (_lastDetectedPosition == gridPosition)
+            return;
+        _buildingState.UpdateState(gridPosition);
+        _lastDetectedPosition = gridPosition;
     }
 }

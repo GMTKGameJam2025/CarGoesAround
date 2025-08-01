@@ -25,7 +25,7 @@ public class ObjectPlacer : MonoBehaviour
         return null;
     }
 
-    public void RemoveObjecAt(int gameObjectIndex)
+    public void RemoveObjectAt(int gameObjectIndex)
     {
         if (placedGameObjects.Count <= gameObjectIndex || placedGameObjects[gameObjectIndex] == null)
             return;

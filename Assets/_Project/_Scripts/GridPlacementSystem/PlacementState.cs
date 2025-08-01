@@ -2,31 +2,29 @@ using UnityEngine;
 
 public class PlacementState : IBuildingState
 {
-    private int selectedObjectIndex = -1;
-    int ID;
-    Grid grid;
-    PreviewSystem previewSystem;
-    ObjectsDatabaseSO database;
-    GridData floorData;
-    GridData furnitureData;
-    ObjectPlacer objectPlacer;
-    SoundFeedback soundFeedback;
+    private int _selectedObjectIndex = -1;
+    private int _id;
+    private Grid _grid;
+    private PreviewSystem _previewSystem;
+    private ObjectsDatabaseSO _database;
+    private GridData _gridData;
+    private ObjectPlacer _objectPlacer;
+    private SoundFeedback _soundFeedback;
 
-    public PlacementState(int id, Grid grid, PreviewSystem previewSystem, ObjectsDatabaseSO database, GridData floorData, GridData furnitureData, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
+    public PlacementState(int id, Grid grid, PreviewSystem previewSystem, ObjectsDatabaseSO database, GridData gridData, ObjectPlacer objectPlacer, SoundFeedback soundFeedback)
     {
-        ID = id;
-        this.grid = grid;
-        this.previewSystem = previewSystem;
-        this.database = database;
-        this.floorData = floorData;
-        this.furnitureData = furnitureData;
-        this.objectPlacer = objectPlacer;
-        this.soundFeedback = soundFeedback;
+        _id = id;
+        _grid = grid;
+        _previewSystem = previewSystem;
+        _database = database;
+        _gridData = gridData;
+        _objectPlacer = objectPlacer;
+        _soundFeedback = soundFeedback;
 
-        selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == id);
-        if (selectedObjectIndex > -1)
+        _selectedObjectIndex = database.objectsData.FindIndex(data => data.ID == id);
+        if (_selectedObjectIndex > -1)
         {
-            previewSystem.StartShowingPlacementPreview(database.objectsData[selectedObjectIndex].Prefab, database.objectsData[selectedObjectIndex].Size);
+            previewSystem.StartShowingPlacementPreview(database.objectsData[_selectedObjectIndex].Prefab, database.objectsData[_selectedObjectIndex].Size);
         }
         else
             throw new System.Exception($"There is no object with ID: {id}");
@@ -35,36 +33,33 @@ public class PlacementState : IBuildingState
 
     public void EndState()
     {
-        previewSystem.StopShowingPreview();
+        _previewSystem.StopShowingPreview();
     }
 
     public void OnAction(Vector3Int gridPosition)
     {
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        bool placementValidity = CheckPlacementValidity(gridPosition, _selectedObjectIndex);
         if (!placementValidity)
         {
-            soundFeedback.PlaySound(SoundType.wrongPlacement);
+            _soundFeedback.PlaySound(SoundType.wrongPlacement);
             return;
         }
-        soundFeedback.PlaySound(SoundType.Place);
-        int index = objectPlacer.PlaceObject(database.objectsData[selectedObjectIndex].Prefab, grid.CellToWorld(gridPosition));
-
-        GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-        selectedData.AddOjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size, database.objectsData[selectedObjectIndex].ID, index);
-        previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), false);
+        _soundFeedback.PlaySound(SoundType.Place);
+        int index = _objectPlacer.PlaceObject(_database.objectsData[_selectedObjectIndex].Prefab, _grid.CellToWorld(gridPosition));
+        
+        _gridData.AddObjectAt(gridPosition, _database.objectsData[_selectedObjectIndex].Size, _database.objectsData[_selectedObjectIndex].ID, index);
+        _previewSystem.UpdatePosition(_grid.CellToWorld(gridPosition), false);
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, int selectedObjectIndex)
     {
-        GridData selectedData = database.objectsData[selectedObjectIndex].ID == 0 ? floorData : furnitureData;
-
-        return selectedData.CanPlaceOjectAt(gridPosition, database.objectsData[selectedObjectIndex].Size);
+        return _gridData.CanPlaceObjectAt(gridPosition, _database.objectsData[selectedObjectIndex].Size);
     }
 
     public void UpdateState(Vector3Int gridPosition)
     {
-        bool placementValidity = CheckPlacementValidity(gridPosition, selectedObjectIndex);
+        bool placementValidity = CheckPlacementValidity(gridPosition, _selectedObjectIndex);
 
-        previewSystem.UpdatePosition(grid.CellToWorld(gridPosition), placementValidity);
+        _previewSystem.UpdatePosition(_grid.CellToWorld(gridPosition), placementValidity);
     }
 }
