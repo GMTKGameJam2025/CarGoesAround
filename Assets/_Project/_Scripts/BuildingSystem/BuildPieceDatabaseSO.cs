@@ -20,7 +20,6 @@ public class BuildPieceData
     
     public bool canBuildOnTop = false;
     public bool storeThisToGrid = true;
-    public bool canBeRemovedFromGrid = true;
         
     public BuildLayer layer = BuildLayer.Ground;
     public BuildLayer canBeBuiltOnLayers = BuildLayer.Ground;

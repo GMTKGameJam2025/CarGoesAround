@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Serialization;
 
@@ -32,12 +33,23 @@ public class GridBuildPiece : MonoBehaviour
         sizeOnGrid = data.Size;
         canBuildOnTop = data.canBuildOnTop;
         storeThisToGrid = data.storeThisToGrid;
-        canBeRemovedFromGrid = data.canBeRemovedFromGrid;
         layer = data.layer;
         canBeBuiltOnLayers = data.canBeBuiltOnLayers;
 
         // Initialize empty lists just in case (defensive)
         gridObjectsOnTop = new List<GridBuildPiece>();
         occupiedPositions = new List<Vector2Int>();
+
+        OnBuild();
+    }
+
+    public void OnBuild()
+    {
+        List<IBuildable> allBuildable = GetComponents<IBuildable>().ToList();
+
+        foreach (IBuildable buildable in allBuildable)
+        {
+            buildable.OnBuild();
+        }
     }
 }
