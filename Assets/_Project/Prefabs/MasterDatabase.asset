@@ -173,11 +173,3 @@ MonoBehaviour:
     storeThisToGrid: 1
     layer: 0
     canBeBuiltOnLayers: 3
-  - <Name>k__BackingField: 
-    <ID>k__BackingField: 0
-    <Size>k__BackingField: {x: 0, y: 0}
-    <Prefab>k__BackingField: {fileID: 0}
-    canBuildOnTop: 0
-    storeThisToGrid: 0
-    layer: 0
-    canBeBuiltOnLayers: 0
