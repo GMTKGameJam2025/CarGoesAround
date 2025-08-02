@@ -34,9 +34,9 @@ public class InventoryManager : MonoBehaviour
 
         foreach (var item in inventoryPreset.Items)
         {
-            if (item.BuildPieceData != null)
+            if (item != null)
             {
-                currentQuantities[item.BuildPieceData.ID] = item.InitialQuantity;
+                currentQuantities[item.ID] = item.InitialQuantity;
             }
         }
 
@@ -44,14 +44,14 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"Inventory initialized with {currentQuantities.Count} items from preset: {inventoryPreset.PresetName}");
     }
 
-    
+
     // Check if there's enough quantity of an item
     public bool HasEnoughItems(int itemID, int requiredQuantity = 1)
     {
         return currentQuantities.TryGetValue(itemID, out int currentQty) && currentQty >= requiredQuantity;
     }
 
-    
+
     // Consume items (e.g., when placing a building)
     public bool ConsumeItems(int itemID, int quantity = 1)
     {
@@ -68,7 +68,7 @@ public class InventoryManager : MonoBehaviour
         return true;
     }
 
-    
+
     // Add items back to inventory (e.g., when removing a building)
     public void AddItems(int itemID, int quantity = 1)
     {
@@ -85,28 +85,28 @@ public class InventoryManager : MonoBehaviour
         Debug.Log($"Added {quantity} of item {itemID}. New total: {currentQuantities[itemID]}");
     }
 
-    
+
     // Get current quantity of an item
     public int GetCurrentQuantity(int itemID)
     {
         return currentQuantities.TryGetValue(itemID, out int quantity) ? quantity : 0;
     }
 
-    
+
     // Get all current quantities
     public Dictionary<int, int> GetAllQuantities()
     {
         return new Dictionary<int, int>(currentQuantities);
     }
 
-    
+
     // Reset inventory to initial state
     public void ResetInventory()
     {
         InitializeInventory();
     }
 
-    
+
     // Change the inventory preset useful for different levels)
     public void SetInventoryPreset(InventoryPreset newPreset)
     {

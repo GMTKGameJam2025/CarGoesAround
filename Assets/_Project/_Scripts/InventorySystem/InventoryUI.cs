@@ -58,7 +58,7 @@ public class InventoryUI : MonoBehaviour
         // Create UI elements for each item in the preset
         foreach (var item in inventoryManager.CurrentPreset.Items)
         {
-            if (item.BuildPieceData == null) continue;
+            if (item == null) continue;
 
             CreateItemUI(item);
         }
@@ -77,16 +77,16 @@ public class InventoryUI : MonoBehaviour
         }
 
         // Setup the UI element
-        itemUI.Setup(item, inventoryManager.GetCurrentQuantity(item.BuildPieceData.ID));
+        itemUI.Setup(item, inventoryManager.GetCurrentQuantity(item.ID));
 
         // Add click listener to start building
         itemUI.OnItemClicked += () => OnItemSelected(item);
 
         // Store reference for updates
-        itemUIElements[item.BuildPieceData.ID] = itemUI;
+        itemUIElements[item.ID] = itemUI;
 
         // Hide if quantity is zero and setting is enabled
-        if (hideItemsWithZeroQuantity && inventoryManager.GetCurrentQuantity(item.BuildPieceData.ID) <= 0)
+        if (hideItemsWithZeroQuantity && inventoryManager.GetCurrentQuantity(item.ID) <= 0)
         {
             itemUIObj.SetActive(false);
         }
@@ -96,7 +96,7 @@ public class InventoryUI : MonoBehaviour
     private void OnItemSelected(InventoryItem item)
     {
         // Check if we have enough items
-        if (!inventoryManager.HasEnoughItems(item.BuildPieceData.ID))
+        if (!inventoryManager.HasEnoughItems(item.ID))
         {
             Debug.Log($"Cannot build {item.ItemName} - not enough items in inventory");
             return;
@@ -105,7 +105,7 @@ public class InventoryUI : MonoBehaviour
         // Start placement in building system
         if (placementSystem != null)
         {
-            placementSystem.StartPlacement(item.BuildPieceData.ID);
+            placementSystem.StartPlacement(item.ID);
         }
 
         Debug.Log($"Selected item: {item.ItemName} for building");
