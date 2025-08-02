@@ -84,7 +84,7 @@ public class PreviewSystem : MonoBehaviour
     public void StopShowingPreview()
     {
         cellIndicator.SetActive(false);
-        if (_previewObject != null)
+        if (_previewObject)
             Destroy(_previewObject);
 
         _childObject = null;

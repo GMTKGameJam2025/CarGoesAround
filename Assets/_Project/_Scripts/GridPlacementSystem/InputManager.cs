@@ -8,7 +8,7 @@ public class InputManager : MonoBehaviour
 {
     [SerializeField]
     private Camera sceneCamera;
-    private Vector3 lastPosition;
+    private Vector3 _lastPosition;
 
     [SerializeField]
     private LayerMask placementLayerMask;
@@ -42,10 +42,9 @@ public class InputManager : MonoBehaviour
         RaycastHit hit;
         if (Physics.Raycast(ray, out hit, 100, placementLayerMask))
         {
-            lastPosition = hit.point;
+            _lastPosition = hit.point;
 
         }
-        return lastPosition;
+        return _lastPosition;
     }
-
 }

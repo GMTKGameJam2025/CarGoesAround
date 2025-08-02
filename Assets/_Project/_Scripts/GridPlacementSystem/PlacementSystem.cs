@@ -2,57 +2,48 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
+using UnityEngine.Serialization;
 
 
 public class PlacementSystem : MonoBehaviour
 {
-    [SerializeField]
-    private InputManager inputManager;
-    [SerializeField]
-    private Grid grid;
-
-    [SerializeField]
-    private ObjectsDatabaseSO database;
-    [SerializeField]
-    private GameObject gridVisualization;
+    [SerializeField] private InputManager inputManager;
+    [SerializeField] private GridManager gridManager;
     
-    [SerializeField]
-    private PreviewSystem preview;
+    public GridBuildPiece currentGridBuildPiece;
+    
+    [Header("Feedback")]
+    [SerializeField] private GameObject gridVisualization;
+    [SerializeField] private PreviewSystem preview;
+    [SerializeField] private SoundFeedback soundFeedback;
 
     private Vector3Int _lastDetectedPosition = Vector3Int.zero;
-
-    [SerializeField]
-    private ObjectPlacer objectPlacer;
-
     private IBuildingState _buildingState;
-
-    [SerializeField]
-    private SoundFeedback soundFeedback;
 
     private void Start()
     {
-        StopPlacement();
+        OnExit();
     }
-    public void StartPlacement(int id)
+    public void StartPlacement()
     {
-        StopPlacement();
+        OnExit();
         gridVisualization.SetActive(true);
-        _buildingState = new PlacementState(id, grid, preview, database, objectPlacer, soundFeedback);
-        inputManager.OnClick += PlaceStructure;
-        inputManager.OnExit += StopPlacement;
-        inputManager.OnRotate += RotateObject;
+        _buildingState = new BuildState(currentGridBuildPiece, this, gridManager, preview, soundFeedback);
+        inputManager.OnClick += OnClick;
+        inputManager.OnExit += OnExit;
+        inputManager.OnRotate += OnRotate;
     }
 
     public void StartRemoving()
     {
-        StopPlacement();
+        OnExit();
         gridVisualization.SetActive(true);
-        _buildingState = new RemovingState(grid, preview, objectPlacer, soundFeedback);
-        inputManager.OnClick += PlaceStructure;
-        inputManager.OnExit += StopPlacement;
+        //_buildingState = new RemovingState(grid, preview, soundFeedback);
+        inputManager.OnClick += OnClick;
+        inputManager.OnExit += OnExit;
     }
 
-    private void PlaceStructure()
+    private void OnClick()
     {
         if (inputManager.IsPointerOverUI())
         {
@@ -60,20 +51,21 @@ public class PlacementSystem : MonoBehaviour
         }
 
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
-        Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+        gridManager.grid.GetXZ(mousePosition, out int x, out int z);
+        Vector3Int gridPosition = new(x, z, 0);
 
         _buildingState.OnAction(gridPosition);
     }
 
-    private void RotateObject()
+    private void OnRotate()
     {
-        if (_buildingState != null)
+        if (_buildingState is BuildState state)
         {
-            ((PlacementState)_buildingState).OnRotate();
+            state.OnRotate();
         }
     }
 
-    private void StopPlacement()
+    private void OnExit()
     {
         soundFeedback.PlaySound(SoundType.Click);
         if (_buildingState == null)
@@ -81,9 +73,11 @@ public class PlacementSystem : MonoBehaviour
 
         gridVisualization.SetActive(false);
         _buildingState.EndState();
-        inputManager.OnClick -= PlaceStructure;
-        inputManager.OnExit -= StopPlacement;
-        inputManager.OnRotate -= RotateObject;
+        
+        inputManager.OnClick -= OnClick;
+        inputManager.OnExit -= OnExit;
+        inputManager.OnRotate -= OnRotate;
+        
         _lastDetectedPosition = Vector3Int.zero;
         _buildingState = null;
     }
@@ -94,10 +88,18 @@ public class PlacementSystem : MonoBehaviour
             return;
 
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
-        Vector3Int gridPosition = grid.WorldToCell(mousePosition);
+        gridManager.grid.GetXZ(mousePosition, out int x, out int z);
+        Vector3Int gridPosition = new(x, z, 0);
+        
         if (_lastDetectedPosition == gridPosition)
             return;
+        
         _buildingState.UpdateState(gridPosition);
         _lastDetectedPosition = gridPosition;
+    }
+
+    public GridBuildPiece CreateBuildPiece(GridBuildPiece piece, Vector3 position, Quaternion rotation)
+    {
+        return Instantiate(piece, position, rotation);
     }
 }
