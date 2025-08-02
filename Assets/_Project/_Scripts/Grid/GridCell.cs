@@ -56,7 +56,7 @@ public class GridCell
     {
         if (_buildPieces.TryPeek(out GridBuildPiece piece))
         {
-            return piece.gridObjectsOnTop.Count <= 0;
+            return piece.gridObjectsOnTop.Count <= 0 && piece.canBeRemovedFromGrid;
         }
 
         return false;
