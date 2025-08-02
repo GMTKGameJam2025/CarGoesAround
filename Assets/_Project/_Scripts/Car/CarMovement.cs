@@ -20,15 +20,20 @@ public class CarMovement : MonoBehaviour
     public float groundCheckDistance = 0.5f;
     public float groundCheckLength = 10f;
     public LayerMask groundCheckMask;
-
-    private TrackNode _destNode;
+    
     private Rigidbody _rb;
     private Vector3 _currentDirection;
     private float _currentSpeed;
+    
+    private TrackNode _destNode;
     private TrackNode _previousNode;
+    
     private bool _isGrounded;
     private bool _wasGroundedThisFrame;
     private bool _isDestroyed = false;
+
+    private TrackNode _startNode;
+    private bool _reachedStartNode;
 
     void Start()
     {
@@ -100,6 +105,11 @@ public class CarMovement : MonoBehaviour
 
     private void Update()
     {
+        if (currentNode && !_startNode)
+        {
+            _startNode = currentNode;
+        } 
+        
         if (!_destNode)
         {
             if (currentNode) _destNode = GetNextNode();
@@ -134,6 +144,12 @@ public class CarMovement : MonoBehaviour
                 _previousNode = currentNode;
                 currentNode = _destNode;
                 _destNode = GetNextNode();
+
+                if (currentNode == _startNode && !_reachedStartNode)
+                {
+                    _reachedStartNode = true;
+                    EventBus.Fire<WinEvent>(new());
+                }
 
                 // Try to auto-detect curve exit
                 if (_previousNode && currentNode && _destNode)

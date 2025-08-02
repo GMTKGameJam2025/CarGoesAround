@@ -3,10 +3,11 @@ using System.Collections;
 using PrimeTween;
 using TMPro;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 public class LevelIntro : MonoBehaviour
 {
-    public CanvasGroup introCanvas;
+    public CanvasGroup canvas;
     public TMP_Text levelText;
     public InventoryUI inventoryUI;
 
@@ -22,9 +23,9 @@ public class LevelIntro : MonoBehaviour
     
     public IEnumerator PlayLevelIntro()
     {
-        introCanvas.alpha = 0f;
-        yield return Tween.Alpha(introCanvas, 1f, introTime).ToYieldInstruction();
-        yield return Tween.Alpha(introCanvas, 0f, outroTime).ToYieldInstruction();
+        canvas.alpha = 0f;
+        yield return Tween.Alpha(canvas, 1f, introTime).ToYieldInstruction();
+        yield return Tween.Alpha(canvas, 0f, outroTime).ToYieldInstruction();
         inventoryUI.ShowUI();
         gameObject.SetActive(false);
     }

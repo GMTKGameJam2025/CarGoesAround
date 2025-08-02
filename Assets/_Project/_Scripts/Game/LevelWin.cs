@@ -1,23 +1,22 @@
-using System;
 using System.Collections;
 using PrimeTween;
-using TMPro;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
-public class LevelLose : MonoBehaviour
+public class LevelWin : MonoBehaviour
 {
     public CanvasGroup canvas;
     public InventoryUI inventoryUI;
     public BuildingManager buildingManager;
-    public TMP_Text gameOverMessageText;
 
     public float waitBeforeStart = 5f;
     public float introTime = 1f;
+
+    private int _currentLevel;
     
-    public void Initialize(string message)
+    public void Initialize(int currentLevel)
     {
-        gameOverMessageText.text = message;
+        _currentLevel = currentLevel;
         gameObject.SetActive(true);
     }
 
@@ -33,6 +32,11 @@ public class LevelLose : MonoBehaviour
         canvas.interactable = true;
     }
 
+    public void NextLevel()
+    {
+        SceneManager.LoadScene("Level " + (_currentLevel + 1), LoadSceneMode.Single);
+    }
+    
     public void RestartLevel()
     {
         SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);

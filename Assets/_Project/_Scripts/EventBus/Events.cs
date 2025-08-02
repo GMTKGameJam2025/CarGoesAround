@@ -7,3 +7,5 @@ public struct GameOverEvent : IGameEvent
         GameOverMessage = message;
     }
 }
+
+public struct WinEvent : IGameEvent { }

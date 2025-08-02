@@ -8,25 +8,32 @@ public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int levelNumber;
     [SerializeField] private LevelIntro intro;
+    [SerializeField] private LevelWin win;
     [SerializeField] private LevelLose lose;
     [SerializeField] private InventoryUI inventoryUI;
 
     private void OnEnable()
     {
         EventBus.Subscribe<GameOverEvent>(StartLose);
+        EventBus.Subscribe<WinEvent>(StartWin);
     }
 
     private void OnDisable()
     {
         EventBus.Unsubscribe<GameOverEvent>(StartLose);
+        EventBus.Unsubscribe<WinEvent>(StartWin);
     }
 
     private void Start()
     {
-        StartLevelSequence();
+        intro.gameObject.SetActive(false);
+        win.gameObject.SetActive(false);
+        lose.gameObject.SetActive(false);
+        
+        StartIntro();
     }
 
-    private void StartLevelSequence()
+    private void StartIntro()
     {
         intro.Initialize(levelNumber);
         StartCoroutine(intro.PlayLevelIntro());
@@ -38,4 +45,9 @@ public class LevelManager : MonoBehaviour
         StartCoroutine(lose.PlayLevelLose());
     }
     
+    private void StartWin(WinEvent @event)
+    {
+        win.Initialize(levelNumber);
+        StartCoroutine(win.PlayLevelLose());
+    }
 }
