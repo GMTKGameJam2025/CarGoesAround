@@ -88,8 +88,6 @@ public class RemovingStateWithInventory : IBuildingState
     // Helper method to get placement data - you'll need to add this to GridData
     private PlacementData GetPlacementDataAt(Vector3Int gridPosition)
     {
-        // This assumes you add a method to GridData to get PlacementData
-        // You may need to modify your GridData class to expose this
-        return null; // Placeholder - implement based on your GridData structure
+        return gridData.GetPlacementDataAt(gridPosition);
     }
 }

@@ -16,7 +16,7 @@ MonoBehaviour:
   items:
   - itemName: Curve
     itemIcon: {fileID: 0}
-    initialQuantity: 3
+    initialQuantity: 4
     buildPieceData:
       <Name>k__BackingField: Curve
       <ID>k__BackingField: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
       <Prefab>k__BackingField: {fileID: 6217271706261539556, guid: 42501f8dde7486645874fc3806819f30, type: 3}
   - itemName: Straight
     itemIcon: {fileID: 0}
-    initialQuantity: 5
+    initialQuantity: 10
     buildPieceData:
       <Name>k__BackingField: Straight
       <ID>k__BackingField: 1
@@ -35,14 +35,14 @@ MonoBehaviour:
     initialQuantity: 1
     buildPieceData:
       <Name>k__BackingField: Car
-      <ID>k__BackingField: 0
+      <ID>k__BackingField: 2
       <Size>k__BackingField: {x: 1, y: 1}
       <Prefab>k__BackingField: {fileID: 9045399163814008155, guid: 1031038ccc6ab174ab344b14dfb4b683, type: 3}
-  - itemName: 
+  - itemName: Rock
     itemIcon: {fileID: 0}
-    initialQuantity: 0
+    initialQuantity: 7
     buildPieceData:
-      <Name>k__BackingField: 
-      <ID>k__BackingField: 0
-      <Size>k__BackingField: {x: 0, y: 0}
-      <Prefab>k__BackingField: {fileID: 0}
+      <Name>k__BackingField: Rock
+      <ID>k__BackingField: 3
+      <Size>k__BackingField: {x: 1, y: 1}
+      <Prefab>k__BackingField: {fileID: 2967099605207635103, guid: 2a4e053f04e5ac74f9eede7585325655, type: 3}

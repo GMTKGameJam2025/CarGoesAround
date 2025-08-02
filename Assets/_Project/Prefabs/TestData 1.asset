@@ -13,10 +13,10 @@ MonoBehaviour:
   m_Name: TestData 1
   m_EditorClassIdentifier: 
   objectsData:
-  - <Name>k__BackingField: TrackNode
+  - <Name>k__BackingField: Curve
     <ID>k__BackingField: 0
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 9156869744410658743, guid: a5581b2f318eeff43b62015da6a2c1ff, type: 3}
+    <Prefab>k__BackingField: {fileID: 6217271706261539556, guid: 42501f8dde7486645874fc3806819f30, type: 3}
   - <Name>k__BackingField: StraightRoad
     <ID>k__BackingField: 1
     <Size>k__BackingField: {x: 1, y: 1}

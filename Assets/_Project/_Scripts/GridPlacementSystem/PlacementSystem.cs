@@ -15,7 +15,7 @@ public class PlacementSystem : MonoBehaviour
     private ObjectsDatabaseSO database;
     [SerializeField]
     private GameObject gridVisualization;
-    
+
     [SerializeField]
     private PreviewSystem preview;
 
@@ -72,7 +72,7 @@ public class PlacementSystem : MonoBehaviour
     {
         if (_buildingState != null)
         {
-            ((PlacementState)_buildingState).OnRotate();
+            ((PlacementStateWithInventory)_buildingState).OnRotate();
         }
     }
 

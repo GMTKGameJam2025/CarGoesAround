@@ -47,9 +47,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Initialize the UI elements based on inventory preset
-    /// </summary>
+    // Initialize the UI elements based on inventory preset
     private void InitializeUI()
     {
         // Clear existing UI elements
@@ -66,9 +64,8 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Create UI element for a single inventory item
-    /// </summary>
+
+    // Create UI element for a single inventory item
     private void CreateItemUI(InventoryItem item)
     {
         GameObject itemUIObj = Instantiate(itemUIPrefab, itemContainer);
@@ -95,9 +92,7 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Handle item selection from UI
-    /// </summary>
+    // Handle item selection from UI
     private void OnItemSelected(InventoryItem item)
     {
         // Check if we have enough items
@@ -116,9 +111,7 @@ public class InventoryUI : MonoBehaviour
         Debug.Log($"Selected item: {item.ItemName} for building");
     }
 
-    /// <summary>
-    /// Update quantity display for a specific item
-    /// </summary>
+    // Update quantity display for a specific item
     private void UpdateItemQuantity(int itemID, int newQuantity)
     {
         if (itemUIElements.TryGetValue(itemID, out InventoryItemUI itemUI))
@@ -133,9 +126,6 @@ public class InventoryUI : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Clear all UI elements
-    /// </summary>
     private void ClearUI()
     {
         foreach (var kvp in itemUIElements)
@@ -148,9 +138,6 @@ public class InventoryUI : MonoBehaviour
         itemUIElements.Clear();
     }
 
-    /// <summary>
-    /// Refresh the entire UI
-    /// </summary>
     public void RefreshUI()
     {
         InitializeUI();

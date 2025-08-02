@@ -498,7 +498,7 @@ MonoBehaviour:
   iconImage: {fileID: 8188892835445006932}
   quantityText: {fileID: 2391314848952420109}
   nameText: {fileID: 7927366034809159271}
-  itemButton: {fileID: 6981604846767907077}
+  itemButton: {fileID: 0}
   backgroundImage: {fileID: 0}
   normalColor: {r: 1, g: 1, b: 1, a: 1}
   unavailableColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
