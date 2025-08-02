@@ -82,7 +82,6 @@ public class PreviewSystem : MonoBehaviour
     {
         Quaternion rotation = Quaternion.Euler(0, rotationAngle, 0);
         _previewObject.transform.rotation = rotation;
-        cellIndicator.transform.rotation = rotation;
     }
 
     // Object highlighting during removal
@@ -135,11 +134,11 @@ public class PreviewSystem : MonoBehaviour
         _originalMaterials = null;
     }
 
-    public void UpdatePosition(Vector3 position, bool isValid)
+    public void UpdatePosition(Vector3 position, Vector3 offset, bool isValid)
     {
         if (_previewObject != null)
         {
-            MovePreview(position);
+            MovePreview(position + offset);
             ApplyFeedbackToPreview(isValid);
         }
 

@@ -48,25 +48,51 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public bool CanBuildOnCell(Vector2Int originPosition)
+    public GridBuildPiece RemoveObjectFromGrid(Vector2Int originPosition)
+    {
+        GridCell cell = grid.GetGridObject(originPosition.x, originPosition.y);
+        GridBuildPiece piece = cell.RemoveTopGridBuildPiece();
+        
+        if (piece != null)
+            foreach (Vector2Int pos in piece.occupiedPositions)
+            {
+                //According to logic, this should only remove the top piece from each cell if there is nothing else placed on top
+                if (pos == originPosition) continue;
+                GridCell occupiedCell = grid.GetGridObject(pos.x, pos.y);
+                occupiedCell.RemoveTopGridBuildPiece();
+            }
+
+        return piece;
+    }
+
+    public bool CanBuildOnCell(Vector2Int originPosition, BuildLayer layer)
     {
         if (grid.IsGridObjectInGrid(originPosition))
             return false;
         
         GridCell cell = grid.GetGridObject(originPosition.x, originPosition.y);
-        return cell.CanBuild();
+        return cell.CanBuild() && cell.CompareCurrentTopLayer(layer);
     }
     
-    public bool CanBuildOnCell(Vector2Int originPosition, Vector2Int size, Direction direction = Direction.Down)
+    public bool CanBuildOnCell(Vector2Int originPosition, Vector2Int size, BuildLayer layer, Direction direction = Direction.Down)
     {
         List<Vector2Int> positions = originPosition.GetGridPositionList(size, direction);
-        return positions.All(pos => grid.IsGridObjectInGrid(pos) && grid.GetGridObject(pos.x, pos.y).CanBuild());
+        return positions.All(
+            pos => grid.IsGridObjectInGrid(pos) && 
+            grid.GetGridObject(pos.x, pos.y).CanBuild() && 
+            grid.GetGridObject(pos.x, pos.y).CompareCurrentTopLayer(layer));
     }
 
     public bool CanRemoveOnCell(Vector2Int position)
     {
         GridCell cell = grid.GetGridObject(position.x, position.y);
-        return cell.CanRemove();
+        return cell != null && cell.CanRemove();
+    }
+
+    public GridBuildPiece GetTopLevelObject(Vector2Int position)
+    {
+        GridCell cell = grid.GetGridObject(position.x, position.y);
+        return cell?.GetTopGridObject();
     }
 }
 
@@ -80,6 +106,17 @@ public enum Direction
 
 public static class GridHelper
 {
+    public static bool CanBuildOnLayer(BuildLayer baseLayer, BuildLayer newLayer)
+    {
+        return (baseLayer & newLayer) != 0;
+    }
+    
+    public static bool CanBuildOnLayer(GridBuildPiece basePiece, GridBuildPiece newPiece)
+    {
+        // Check if the base piece's layer is allowed by the new piece's build-on layers
+        return (newPiece.canBeBuiltOnLayers & basePiece.layer) != 0;
+    }
+    
     public static List<Vector2Int> GetGridPositionList(this Vector2Int startPosition, Vector2Int size, Direction dir) {
         List<Vector2Int> gridPositionList = new();
         switch (dir) {

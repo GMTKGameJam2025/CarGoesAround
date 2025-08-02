@@ -7,8 +7,8 @@ public class PlacementSystem : MonoBehaviour
 {
     [SerializeField] private InputManager inputManager;
     [SerializeField] private GridManager gridManager;
-    
-    public GridBuildPiece currentGridBuildPiece;
+    [SerializeField] private InventoryManager inventoryManager;
+    [SerializeField] private BuildPieceDatabaseSO database;
     
     [Header("Feedback")]
     [SerializeField] private GameObject gridVisualization;
@@ -22,11 +22,11 @@ public class PlacementSystem : MonoBehaviour
     {
         OnExit();
     }
-    public void StartPlacement()
+    public void StartPlacement(int id)
     {
         OnExit();
         gridVisualization.SetActive(true);
-        _buildingState = new BuildState(currentGridBuildPiece, this, gridManager, preview, soundFeedback);
+        _buildingState = new BuildState(id, database, this, inventoryManager, gridManager, preview, soundFeedback);
         inputManager.OnClick += OnClick;
         inputManager.OnExit += OnExit;
         inputManager.OnRotate += OnRotate;
@@ -36,7 +36,7 @@ public class PlacementSystem : MonoBehaviour
     {
         OnExit();
         gridVisualization.SetActive(true);
-        //_buildingState = new RemovingState(grid, preview, soundFeedback);
+        _buildingState = new RemoveState(this, gridManager, inventoryManager, preview, soundFeedback);
         inputManager.OnClick += OnClick;
         inputManager.OnExit += OnExit;
     }
@@ -96,8 +96,20 @@ public class PlacementSystem : MonoBehaviour
         _lastDetectedPosition = gridPosition;
     }
 
-    public GridBuildPiece CreateBuildPiece(GridBuildPiece piece, Vector3 position, Quaternion rotation)
+    public GridBuildPiece CreateBuildPiece(BuildPieceData pieceData, Vector3 position, Quaternion rotation)
     {
-        return Instantiate(piece, position, rotation);
+        GameObject pieceObj = Instantiate(pieceData.Prefab, position, rotation);
+        if (!pieceObj.TryGetComponent(out GridBuildPiece pieceComponent))
+        {
+            pieceComponent = pieceObj.AddComponent<GridBuildPiece>();
+        }
+
+        pieceComponent.Init(pieceData);
+        return pieceComponent;
+    }
+
+    public void DestroyBuildPiece(GridBuildPiece piece)
+    {
+        Destroy(piece.gameObject);
     }
 }
