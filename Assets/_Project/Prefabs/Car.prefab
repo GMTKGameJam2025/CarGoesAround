@@ -250,7 +250,6 @@ GameObject:
   - component: {fileID: 4745169920859789134}
   - component: {fileID: 4813384275934881065}
   - component: {fileID: 1049797297032759983}
-  - component: {fileID: 8772094265416415921}
   - component: {fileID: 105943342815320218}
   - component: {fileID: 3321955783376844079}
   m_Layer: 0
@@ -289,7 +288,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 1049797297032759983}
-  fuel: {fileID: 8772094265416415921}
 --- !u!114 &1049797297032759983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -316,22 +314,6 @@ MonoBehaviour:
   groundCheckMask:
     serializedVersion: 2
     m_Bits: 256
---- !u!114 &8772094265416415921
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7676503539925731885}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 74e339760f04c484c934cc21f24602de, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  maxFuel: 100
-  fuel: 0
-  fuelDepletionTime: 1
-  fuelDepletionAmount: 0.5
 --- !u!65 &105943342815320218
 BoxCollider:
   m_ObjectHideFlags: 0
