@@ -1496,7 +1496,10 @@ MonoBehaviour:
   itemContainer: {fileID: 974771538}
   itemUIPrefab: {fileID: 9198573823233751836, guid: 107768e1ad6ff8342afa371e1de4e90a, type: 3}
   buildingManager: {fileID: 905280072}
+  canvasGroup: {fileID: 0}
   hideItemsWithZeroQuantity: 0
+  hideUIDistance: 300
+  hideDuration: 1
 --- !u!114 &1254065609
 MonoBehaviour:
   m_ObjectHideFlags: 0
