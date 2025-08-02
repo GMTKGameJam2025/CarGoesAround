@@ -21,17 +21,6 @@ public class CarMovement : MonoBehaviour
     public float groundCheckLength = 10f;
     public LayerMask groundCheckMask;
 
-    [Header("Road settings")]
-    public LayerMask roadLayer;
-    public float roadCheckDistance = 1f;
-
-    [Header("Explosion settings")]
-    public float explosionForce = 500f;
-    public float explosionRadius = 5f;
-    public float explosionUpwardModifier = 3f;
-    public GameObject explosionEffectPrefab; // Optional particle effect
-    public AudioClip explosionSound; // Optional sound effect
-
     private TrackNode _destNode;
     private Rigidbody _rb;
     private Vector3 _currentDirection;
@@ -88,85 +77,6 @@ public class CarMovement : MonoBehaviour
         // Rotate the car
         Quaternion targetRotation = Quaternion.LookRotation(flatDirection, Vector3.up);
         _rb.MoveRotation(Quaternion.RotateTowards(_rb.rotation, targetRotation, turnSpeed * Time.fixedDeltaTime));
-    }
-
-    void OnCollisionEnter(Collision collision)
-    {
-        // Alternative check using collision instead of trigger
-        if (((1 << collision.gameObject.layer) & groundCheckMask) != 0 && !_isDestroyed)
-        {
-            // Only explode if we're NOT on a road
-            if (!IsOnRoad())
-            {
-                ExplodeCar();
-            }
-        }
-    }
-
-    private void ExplodeCar()
-    {
-        if (_isDestroyed) return;
-        _isDestroyed = true;
-
-        // Stop car movement
-        _rb.linearVelocity = Vector3.zero;
-        _rb.angularVelocity = Vector3.zero;
-
-        // Play explosion effect
-        if (explosionEffectPrefab != null)
-        {
-            Instantiate(explosionEffectPrefab, transform.position, Quaternion.identity);
-        }
-
-        // Play explosion sound
-        if (explosionSound != null)
-        {
-            AudioSource.PlayClipAtPoint(explosionSound, transform.position);
-        }
-
-        // Create explosion force on car parts
-        StartCoroutine(ExplodeCarParts());
-    }
-
-    private IEnumerator ExplodeCarParts()
-    {
-        // Get all child objects (car parts)
-        Transform[] carParts = GetComponentsInChildren<Transform>();
-
-        foreach (Transform part in carParts)
-        {
-            if (part == transform) continue; // Skip the parent object
-
-            // Add Rigidbody to each part if it doesn't have one
-            Rigidbody partRb = part.GetComponent<Rigidbody>();
-            if (partRb == null)
-            {
-                partRb = part.gameObject.AddComponent<Rigidbody>();
-                partRb.mass = 0.5f; // Light parts
-            }
-
-            // Detach from parent
-            part.SetParent(null);
-
-            // Apply explosion force
-            Vector3 explosionPosition = transform.position - Vector3.up * 1f;
-            partRb.AddExplosionForce(explosionForce, explosionPosition, explosionRadius, explosionUpwardModifier);
-
-            // Add some random torque for realistic spinning
-            Vector3 randomTorque = new Vector3(
-                UnityEngine.Random.Range(-10f, 10f),
-                UnityEngine.Random.Range(-10f, 10f),
-                UnityEngine.Random.Range(-10f, 10f)
-            );
-            partRb.AddTorque(randomTorque, ForceMode.Impulse);
-
-            // Destroy the part after some time
-            Destroy(part.gameObject, UnityEngine.Random.Range(3f, 8f));
-        }
-
-        // Wait a frame then destroy the main car object
-        yield return null;
-        Destroy(gameObject, 0.5f);
     }
 
     private void ApplyDiveIfFalling()
@@ -267,14 +177,6 @@ public class CarMovement : MonoBehaviour
         _rb.angularVelocity = Vector3.zero;
     }
 
-    private bool IsOnRoad()
-    {
-        Vector3 rayStart = transform.position;
-        Vector3 rayEnd = transform.position + Vector3.down * roadCheckDistance;
-
-        return Physics.Linecast(rayStart, rayEnd, roadLayer);
-    }
-
     private bool IsGrounded()
     {
         return Physics.CheckCapsule(
@@ -298,6 +200,18 @@ public class CarMovement : MonoBehaviour
             .FirstOrDefault();
     }
 
+    // Public method to set destroyed state (called by CarExplosionHandler)
+    public void SetDestroyed(bool destroyed)
+    {
+        _isDestroyed = destroyed;
+    }
+
+    // Public method to check if car is destroyed
+    public bool IsDestroyed()
+    {
+        return _isDestroyed;
+    }
+
     private void OnDrawGizmosSelected()
     {
         if (_destNode)
@@ -318,13 +232,5 @@ public class CarMovement : MonoBehaviour
         Gizmos.color = Color.yellow;
         Vector3 probeOrigin = transform.position + transform.forward * probeDistance * 0.5f;
         Gizmos.DrawWireSphere(probeOrigin, probeRadius);
-
-        // Draw explosion radius
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireSphere(transform.position, explosionRadius);
-
-        // Draw road check sphere
-        Gizmos.color = Color.blue;
-        Gizmos.DrawWireSphere(transform.position + Vector3.down * (roadCheckDistance * 0.5f), roadCheckDistance);
     }
 }
