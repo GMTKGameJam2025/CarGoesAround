@@ -52,6 +52,7 @@ public class PreviewSystem : MonoBehaviour
         {
             cellIndicator.transform.localScale = new Vector3(size.x, 1, size.y);
             _cellIndicatorRender.material.mainTextureScale = size;
+            cellIndicator.transform.rotation = Quaternion.identity;
         }
     }
 
@@ -82,6 +83,7 @@ public class PreviewSystem : MonoBehaviour
     {
         Quaternion rotation = Quaternion.Euler(0, rotationAngle, 0);
         _previewObject.transform.rotation = rotation;
+        cellIndicator.transform.rotation = rotation;
     }
 
     // Object highlighting during removal
@@ -142,7 +144,7 @@ public class PreviewSystem : MonoBehaviour
             ApplyFeedbackToPreview(isValid);
         }
 
-        MoveCursor(position);
+        MoveCursor(position  + offset);
         ApplyFeedbackToCursor(isValid);
     }
 
