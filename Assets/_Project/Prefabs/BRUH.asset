@@ -16,4 +16,12 @@ MonoBehaviour:
   - <Name>k__BackingField: TrackNode
     <ID>k__BackingField: 0
     <Size>k__BackingField: {x: 1, y: 1}
-    <Prefab>k__BackingField: {fileID: 3328432016516603170, guid: 8f5852ce4e3ac4e44a3248593463f93a, type: 3}
+    <Prefab>k__BackingField: {fileID: 9156869744410658743, guid: a5581b2f318eeff43b62015da6a2c1ff, type: 3}
+  - <Name>k__BackingField: Straight
+    <ID>k__BackingField: 1
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 6074070163660748456, guid: a4b873cfa82d1b240b270a7babebd20a, type: 3}
+  - <Name>k__BackingField: Car
+    <ID>k__BackingField: 2
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 9045399163814008155, guid: 1031038ccc6ab174ab344b14dfb4b683, type: 3}

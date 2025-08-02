@@ -13,9 +13,5 @@ public class CarBrain : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!fuel.IsFuelDepleted())
-        {
-            movement.MoveCar();
-        }
     }
 }
