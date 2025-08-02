@@ -95,11 +95,20 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 1024
   roadCheckDistance: 1
+  crashLayerMask:
+    serializedVersion: 2
+    m_Bits: 4096
+  minCrashSpeed: 3
   explosionForce: 500
   explosionRadius: 5
   explosionUpwardModifier: 3
   explosionEffectPrefab: {fileID: 0}
   explosionSound: {fileID: 0}
+  crashForce: 200
+  crashRadius: 3
+  crashDownwardModifier: 2
+  crashEffectPrefab: {fileID: 0}
+  crashSound: {fileID: 0}
 --- !u!65 &105943342815320218
 BoxCollider:
   m_ObjectHideFlags: 0
