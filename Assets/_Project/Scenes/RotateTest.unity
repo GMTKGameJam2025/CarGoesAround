@@ -2465,7 +2465,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba510e2cfb40ae44a78c934670851e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryPreset: {fileID: 11400000, guid: 18f3acbaa3fa83e49a5c89df0fa88674, type: 2}
+  inventoryPreset: {fileID: 11400000, guid: d6ecf0e9c8fc71d42ac6a3073d35176e, type: 2}
 --- !u!4 &1515732608
 Transform:
   m_ObjectHideFlags: 0

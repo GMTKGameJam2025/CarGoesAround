@@ -14,7 +14,7 @@ public class InventoryPreset : ScriptableObject
     // Get an item by its BuildPieceData ID
     public InventoryItem GetItemByID(int id)
     {
-        return items.Find(item => item.BuildPieceData != null && item.BuildPieceData.ID == id);
+        return items.Find(item => item.ID == id);
     }
 
     // Get an item by its name
