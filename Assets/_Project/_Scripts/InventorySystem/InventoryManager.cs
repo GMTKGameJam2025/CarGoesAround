@@ -41,7 +41,6 @@ public class InventoryManager : MonoBehaviour
         }
 
         OnInventoryInitialized?.Invoke();
-        Debug.Log($"Inventory initialized with {_currentQuantities.Count} items from preset: {inventoryPreset.PresetName}");
     }
 
 
@@ -57,14 +56,12 @@ public class InventoryManager : MonoBehaviour
     {
         if (!HasEnoughItems(itemID, quantity))
         {
-            Debug.LogWarning($"Not enough items to consume. ItemID: {itemID}, Required: {quantity}, Available: {GetCurrentQuantity(itemID)}");
             return false;
         }
 
         _currentQuantities[itemID] -= quantity;
         OnQuantityChanged?.Invoke(itemID, _currentQuantities[itemID]);
 
-        Debug.Log($"Consumed {quantity} of item {itemID}. Remaining: {_currentQuantities[itemID]}");
         return true;
     }
 
@@ -78,7 +75,6 @@ public class InventoryManager : MonoBehaviour
         }
 
         OnQuantityChanged?.Invoke(itemID, _currentQuantities[itemID]);
-        Debug.Log($"Added {quantity} of item {itemID}. New total: {_currentQuantities[itemID]}");
     }
 
 
