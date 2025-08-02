@@ -43,5 +43,5 @@ MonoBehaviour:
     <Prefab>k__BackingField: {fileID: 2967099605207635103, guid: 2a4e053f04e5ac74f9eede7585325655, type: 3}
     canBuildOnTop: 0
     storeThisToGrid: 1
-    layer: 4
+    layer: 8
     canBeBuiltOnLayers: 3

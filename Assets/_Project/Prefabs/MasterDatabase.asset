@@ -1,0 +1,183 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33917622c9dcdab498a66444f6848fb0, type: 3}
+  m_Name: MasterDatabase
+  m_EditorClassIdentifier: 
+  objectsData:
+  - <Name>k__BackingField: Curved Road
+    <ID>k__BackingField: 0
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 6217271706261539556, guid: 42501f8dde7486645874fc3806819f30, type: 3}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+  - <Name>k__BackingField: Straight Road
+    <ID>k__BackingField: 1
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 5368853562604980480, guid: 20fceaea706eb7948842245893422f2f, type: 3}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+  - <Name>k__BackingField: Dead Road
+    <ID>k__BackingField: 2
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2369006511277820619, guid: b2b0528aaa07256489fbb24bab46d15c, type: 3}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+  - <Name>k__BackingField: Dead-End Road
+    <ID>k__BackingField: 3
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 550027533101951921, guid: e3f1c73f43c83e94aa8cd729804fe121, type: 3}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+  - <Name>k__BackingField: T-Shape Road
+    <ID>k__BackingField: 4
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3163100364040915918, guid: a7ce802854703fb4ca22365c290f507c, type: 3}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+  - <Name>k__BackingField: Rock (2x2)
+    <ID>k__BackingField: 5
+    <Size>k__BackingField: {x: 2, y: 2}
+    <Prefab>k__BackingField: {fileID: 1591844101485228978, guid: 9a4f95171cf032d41a615e2f75c0b0be, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: Rock (1x1)
+    <ID>k__BackingField: 6
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 8843667460676721544, guid: 57229b0e0678dfb4b8eb9d9ee28f457c, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: 'Rock Alt (2x2) '
+    <ID>k__BackingField: 7
+    <Size>k__BackingField: {x: 2, y: 2}
+    <Prefab>k__BackingField: {fileID: 5164299799648553631, guid: f4686691b4dac264d9f2f4fc1afede5c, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: Rock Alt (1x1)
+    <ID>k__BackingField: 8
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2967099605207635103, guid: 2a4e053f04e5ac74f9eede7585325655, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: Rock (2x1)
+    <ID>k__BackingField: 9
+    <Size>k__BackingField: {x: 2, y: 1}
+    <Prefab>k__BackingField: {fileID: 8895618767188301141, guid: 4537f51f71d65da428a9fe759a8fea21, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: 'Stump '
+    <ID>k__BackingField: 10
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4601971631586463796, guid: 6a026c73ec1ea7c499153728c3f3970a, type: 3}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: Stump Alt
+    <ID>k__BackingField: 11
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 7626207146532803464, guid: 6334a47c21b7df6489588c8ce9b342be, type: 3}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: TreeBranch
+    <ID>k__BackingField: 12
+    <Size>k__BackingField: {x: 2, y: 1}
+    <Prefab>k__BackingField: {fileID: 7491712109824923912, guid: 6937faaad2faeba4dba25be7281c0502, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: BarrelRoll
+    <ID>k__BackingField: 13
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 6136668099116342902, guid: 09c4ba58edead1c4fa7bb5dedd9bc9ec, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 8
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: Barrel
+    <ID>k__BackingField: 14
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 2506597508904553469, guid: 7363b5c18efe80f41932cf93bffc6f28, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 4
+    canBeBuiltOnLayers: 9
+  - <Name>k__BackingField: JerryCan
+    <ID>k__BackingField: 15
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 8332033860579373925, guid: e2f5ba4f93679854181d3eae07954af5, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 4
+    canBeBuiltOnLayers: 9
+  - <Name>k__BackingField: Tree (1x1)
+    <ID>k__BackingField: 16
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 3897343750224456574, guid: ccaa5f9e14429a445a14df2c491fd4dc, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 4
+    canBeBuiltOnLayers: 9
+  - <Name>k__BackingField: Tree Alt (1x1)
+    <ID>k__BackingField: 17
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 4076170295652524540, guid: b3b61d8725f4c9e48b5a5637c2df3704, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 4
+    canBeBuiltOnLayers: 9
+  - <Name>k__BackingField: Tree (2x2)
+    <ID>k__BackingField: 18
+    <Size>k__BackingField: {x: 2, y: 2}
+    <Prefab>k__BackingField: {fileID: 6773528478591667974, guid: 0b55e8fe4facefc4a88528dfaf0733bd, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 4
+    canBeBuiltOnLayers: 9
+  - <Name>k__BackingField: Car
+    <ID>k__BackingField: 30
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 9045399163814008155, guid: 1031038ccc6ab174ab344b14dfb4b683, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    layer: 0
+    canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: 
+    <ID>k__BackingField: 0
+    <Size>k__BackingField: {x: 0, y: 0}
+    <Prefab>k__BackingField: {fileID: 0}
+    canBuildOnTop: 0
+    storeThisToGrid: 0
+    layer: 0
+    canBeBuiltOnLayers: 0
