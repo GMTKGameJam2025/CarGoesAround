@@ -13,5 +13,7 @@ public class CarSpawner : MonoBehaviour, IBuildable
         dropPosition.y += dropHeight;
         Quaternion lookRotation = carVisual.transform.rotation;
         Instantiate(carPrefab, dropPosition, lookRotation);
+
+        Destroy(gameObject);
     }
 }
