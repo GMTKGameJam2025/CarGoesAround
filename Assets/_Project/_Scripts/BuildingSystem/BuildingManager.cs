@@ -109,7 +109,7 @@ public class BuildingManager : MonoBehaviour
             pieceComponent = pieceObj.AddComponent<GridBuildPiece>();
         }
 
-        pieceComponent.Init(gridManager, pieceData);
+        pieceComponent.Init(pieceData);
         return pieceComponent;
     }
 
