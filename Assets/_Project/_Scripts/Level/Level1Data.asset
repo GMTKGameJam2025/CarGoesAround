@@ -9,7 +9,40 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 33917622c9dcdab498a66444f6848fb0, type: 3}
+  m_Script: {fileID: 11500000, guid: cf6e23547cf697145a5943977015a555, type: 3}
   m_Name: Level1Data
   m_EditorClassIdentifier: 
-  objectsData: []
+  presetName: 
+  items:
+  - itemName: Curve
+    itemIcon: {fileID: 0}
+    initialQuantity: 4
+    buildPieceData:
+      <Name>k__BackingField: Curve
+      <ID>k__BackingField: 0
+      <Size>k__BackingField: {x: 1, y: 1}
+      <Prefab>k__BackingField: {fileID: 6217271706261539556, guid: 42501f8dde7486645874fc3806819f30, type: 3}
+  - itemName: Straight
+    itemIcon: {fileID: 0}
+    initialQuantity: 10
+    buildPieceData:
+      <Name>k__BackingField: Straight
+      <ID>k__BackingField: 1
+      <Size>k__BackingField: {x: 1, y: 1}
+      <Prefab>k__BackingField: {fileID: 5368853562604980480, guid: 20fceaea706eb7948842245893422f2f, type: 3}
+  - itemName: Car
+    itemIcon: {fileID: 0}
+    initialQuantity: 1
+    buildPieceData:
+      <Name>k__BackingField: Car
+      <ID>k__BackingField: 2
+      <Size>k__BackingField: {x: 1, y: 1}
+      <Prefab>k__BackingField: {fileID: 9045399163814008155, guid: 1031038ccc6ab174ab344b14dfb4b683, type: 3}
+  - itemName: Rock
+    itemIcon: {fileID: 0}
+    initialQuantity: 7
+    buildPieceData:
+      <Name>k__BackingField: Rock
+      <ID>k__BackingField: 3
+      <Size>k__BackingField: {x: 1, y: 1}
+      <Prefab>k__BackingField: {fileID: 2967099605207635103, guid: 2a4e053f04e5ac74f9eede7585325655, type: 3}
