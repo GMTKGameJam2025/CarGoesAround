@@ -29,6 +29,9 @@ public class PlacementSystem : MonoBehaviour
     [SerializeField]
     private SoundFeedback soundFeedback;
 
+    [SerializeField]
+    private InventoryManager inventoryManager;
+
     private void Start()
     {
         StopPlacement();
@@ -37,7 +40,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);
-        _buildingState = new PlacementState(id, grid, preview, database, objectPlacer, soundFeedback);
+        _buildingState = new PlacementStateWithInventory(id, grid, preview, database, objectPlacer, soundFeedback, inventoryManager);
         inputManager.OnClick += PlaceStructure;
         inputManager.OnExit += StopPlacement;
         inputManager.OnRotate += RotateObject;
@@ -47,7 +50,7 @@ public class PlacementSystem : MonoBehaviour
     {
         StopPlacement();
         gridVisualization.SetActive(true);
-        _buildingState = new RemovingState(grid, preview, objectPlacer, soundFeedback);
+        _buildingState = new RemovingStateWithInventory(grid, preview, objectPlacer, soundFeedback, inventoryManager, database);
         inputManager.OnClick += PlaceStructure;
         inputManager.OnExit += StopPlacement;
     }
