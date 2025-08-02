@@ -4,7 +4,7 @@ public class BuildState : IBuildingState
 {
     private int _id;
     private BuildPieceData _piece;
-    private PlacementSystem _placementSystem;
+    private BuildingManager _buildingManager;
     private GridManager _gridManager;
     private InventoryManager _inventoryManager;
     private PreviewSystem _previewSystem;
@@ -16,7 +16,7 @@ public class BuildState : IBuildingState
     public BuildState(
         int id,
         BuildPieceDatabaseSO pieceDatabase,
-        PlacementSystem placementSystem, 
+        BuildingManager buildingManager, 
         InventoryManager inventoryManager,
         GridManager gridManager, 
         PreviewSystem previewSystem, 
@@ -24,7 +24,7 @@ public class BuildState : IBuildingState
     {
         _id = id;
         _piece = pieceDatabase.objectsData.Find(piece => piece.ID == id);
-        _placementSystem = placementSystem;
+        _buildingManager = buildingManager;
         _gridManager = gridManager;
         _inventoryManager = inventoryManager;
         _previewSystem = previewSystem;
@@ -67,7 +67,7 @@ public class BuildState : IBuildingState
 
         Vector2Int offset = _currentDirection.GetRotationOffset(_piece.Size);
         
-        GridBuildPiece piece = _placementSystem.CreateBuildPiece(_piece, _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, 0, offset.y), Quaternion.Euler(0, rotationAngle, 0));
+        GridBuildPiece piece = _buildingManager.CreateBuildPiece(_piece, _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, 0, offset.y), Quaternion.Euler(0, rotationAngle, 0));
         
         if (piece.storeThisToGrid)
         {

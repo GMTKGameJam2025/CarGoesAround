@@ -1,13 +1,14 @@
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using UnityEngine.Serialization;
 
 public class InventoryUI : MonoBehaviour
 {
     [Header("UI References")]
     [SerializeField] private Transform itemContainer;
     [SerializeField] private GameObject itemUIPrefab;
-    [SerializeField] private PlacementSystem placementSystem; // Reference to your building system
+    [FormerlySerializedAs("placementSystem")] [SerializeField] private BuildingManager buildingManager; // Reference to your building system
 
     [Header("UI Settings")]
     [SerializeField] private bool hideItemsWithZeroQuantity = true;
@@ -103,9 +104,9 @@ public class InventoryUI : MonoBehaviour
         }
 
         // Start placement in building system
-        if (placementSystem != null)
+        if (buildingManager != null)
         {
-            placementSystem.StartPlacement(item.ID);
+            buildingManager.StartPlacement(item.ID);
         }
 
         Debug.Log($"Selected item: {item.ItemName} for building");

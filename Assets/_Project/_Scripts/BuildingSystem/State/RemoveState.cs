@@ -1,15 +1,15 @@
 using UnityEngine;
 public class RemoveState : IBuildingState
 {
-    private PlacementSystem _placementSystem;
+    private BuildingManager _buildingManager;
     private GridManager _gridManager;
     private InventoryManager _inventoryManager;
     private PreviewSystem _previewSystem;
     private SoundFeedback _soundFeedback;
 
-    public RemoveState(PlacementSystem placementSystem, GridManager gridManager, InventoryManager inventoryManager, PreviewSystem previewSystem, SoundFeedback soundFeedback)
+    public RemoveState(BuildingManager buildingManager, GridManager gridManager, InventoryManager inventoryManager, PreviewSystem previewSystem, SoundFeedback soundFeedback)
     {
-        _placementSystem = placementSystem;
+        _buildingManager = buildingManager;
         _gridManager = gridManager;
         _inventoryManager = inventoryManager;
         _previewSystem = previewSystem;
@@ -36,7 +36,7 @@ public class RemoveState : IBuildingState
             GridBuildPiece piece = _gridManager.RemoveObjectFromGrid(gridPos);
             
             _inventoryManager.AddItems(piece.id);
-            _placementSystem.DestroyBuildPiece(piece);
+            _buildingManager.DestroyBuildPiece(piece);
             
             _soundFeedback.PlaySound(SoundType.Remove);
         }
