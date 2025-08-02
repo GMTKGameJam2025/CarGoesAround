@@ -79,7 +79,7 @@ public class BuildState : IBuildingState
     private bool CheckPlacementValidity(Vector3Int gridPosition, Vector2Int objectSize, Direction direction)
     {
         //TODO: remember to change back to Vector2Int
-        return _gridManager.CanBuildOnCell(new Vector2Int(gridPosition.x, gridPosition.y), objectSize, _piece.layer, direction);
+        return _gridManager.CanBuildOnCell(new Vector2Int(gridPosition.x, gridPosition.y), objectSize, _piece.canBeBuiltOnLayers, direction);
     }
 
     public void UpdateState(Vector3Int gridPosition)

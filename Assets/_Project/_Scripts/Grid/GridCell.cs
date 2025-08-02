@@ -27,12 +27,24 @@ public class GridCell
     
     public GridBuildPiece RemoveTopGridBuildPiece()
     {
-        return _buildPieces.Count > 0 ? _buildPieces.Pop() : null;
+        if (_buildPieces.Count <= 0)
+        {
+            return null;
+        }
+        
+        GridBuildPiece topPiece = _buildPieces.Pop();
+
+        if (_buildPieces.TryPeek(out GridBuildPiece nextTopPiece))
+        {
+            nextTopPiece.gridObjectsOnTop.Remove(topPiece);
+        } 
+        
+        return topPiece;
     }
 
     public bool CompareCurrentTopLayer(BuildLayer layer)
     {
-        return _buildPieces.Count <= 0 || GridHelper.CanBuildOnLayer(layer, GetTopGridObject().canBeBuiltOnLayers);
+        return _buildPieces.Count <= 0 || GridHelper.CanBuildOnLayer(layer, GetTopGridObject().layer);
     }
     
     public bool CanBuild()
