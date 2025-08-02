@@ -20,14 +20,18 @@ public class GridBuildPiece : MonoBehaviour
 
     public List<GridBuildPiece> gridObjectsOnTop;
     public List<Vector2Int> occupiedPositions;
+
+    private GridManager _gridManager;
     
-    public void Init(BuildPieceData data)
+    public void Init(GridManager gridManager, BuildPieceData data)
     {
         if (data == null)
         {
             Debug.LogError("BuildPieceData is null.");
             return;
         }
+
+        _gridManager = gridManager;
 
         id = data.ID;
         sizeOnGrid = data.Size;

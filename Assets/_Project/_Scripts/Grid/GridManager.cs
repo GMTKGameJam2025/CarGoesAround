@@ -8,14 +8,14 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Vector2Int gridSize = new Vector2Int(10, 10);
     [SerializeField] private float cellSize = 1f;
     
-    public GridXZ<GridCell> grid;
+    public GridXZ<GridCell> Grid;
     
     public bool showDebugGrid;
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     private void Start()
     {
-        grid = new GridXZ<GridCell>(
+        Grid = new GridXZ<GridCell>(
             gridSize.x, gridSize.y, 
             cellSize, 
             transform.position, 
@@ -28,7 +28,7 @@ public class GridManager : MonoBehaviour
     // Update is called once per frame
     public void AddObjectToGrid(GridBuildPiece obj, Vector2Int originPosition)
     {
-        GridCell cell = grid.GetGridObject(originPosition.x, originPosition.y);
+        GridCell cell = Grid.GetGridObject(originPosition.x, originPosition.y);
         obj.occupiedPositions.Add(originPosition);
         cell.AddGridBuildPiece(obj);
     }
@@ -50,7 +50,7 @@ public class GridManager : MonoBehaviour
 
     public GridBuildPiece RemoveObjectFromGrid(Vector2Int originPosition)
     {
-        GridCell cell = grid.GetGridObject(originPosition.x, originPosition.y);
+        GridCell cell = Grid.GetGridObject(originPosition.x, originPosition.y);
         GridBuildPiece piece = cell.RemoveTopGridBuildPiece();
         
         if (piece != null)
@@ -58,7 +58,7 @@ public class GridManager : MonoBehaviour
             {
                 //According to logic, this should only remove the top piece from each cell if there is nothing else placed on top
                 if (pos == originPosition) continue;
-                GridCell occupiedCell = grid.GetGridObject(pos.x, pos.y);
+                GridCell occupiedCell = Grid.GetGridObject(pos.x, pos.y);
                 occupiedCell.RemoveTopGridBuildPiece();
             }
 
@@ -67,10 +67,10 @@ public class GridManager : MonoBehaviour
 
     public bool CanBuildOnCell(Vector2Int originPosition, BuildLayer layer)
     {
-        if (grid.IsGridObjectInGrid(originPosition))
+        if (Grid.IsGridObjectInGrid(originPosition))
             return false;
         
-        GridCell cell = grid.GetGridObject(originPosition.x, originPosition.y);
+        GridCell cell = Grid.GetGridObject(originPosition.x, originPosition.y);
         return cell.CanBuild() && cell.CompareCurrentTopLayer(layer);
     }
     
@@ -78,20 +78,20 @@ public class GridManager : MonoBehaviour
     {
         List<Vector2Int> positions = originPosition.GetGridPositionList(size, direction);
         return positions.All(
-            pos => grid.IsGridObjectInGrid(pos) && 
-            grid.GetGridObject(pos.x, pos.y).CanBuild() && 
-            grid.GetGridObject(pos.x, pos.y).CompareCurrentTopLayer(layer));
+            pos => Grid.IsGridObjectInGrid(pos) && 
+            Grid.GetGridObject(pos.x, pos.y).CanBuild() && 
+            Grid.GetGridObject(pos.x, pos.y).CompareCurrentTopLayer(layer));
     }
 
     public bool CanRemoveOnCell(Vector2Int position)
     {
-        GridCell cell = grid.GetGridObject(position.x, position.y);
+        GridCell cell = Grid.GetGridObject(position.x, position.y);
         return cell != null && cell.CanRemove();
     }
 
     public GridBuildPiece GetTopLevelObject(Vector2Int position)
     {
-        GridCell cell = grid.GetGridObject(position.x, position.y);
+        GridCell cell = Grid.GetGridObject(position.x, position.y);
         return cell?.GetTopGridObject();
     }
 }

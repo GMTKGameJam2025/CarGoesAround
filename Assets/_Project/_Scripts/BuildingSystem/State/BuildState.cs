@@ -47,33 +47,36 @@ public class BuildState : IBuildingState
             return;
         }
         _soundFeedback.PlaySound(SoundType.Place);
-        
-        // Check inventory before placing
-        if (!_inventoryManager.HasEnoughItems(_id))
+
+        if (_inventoryManager)
         {
-            _soundFeedback.PlaySound(SoundType.wrongPlacement);
-            Debug.Log($"Not enough items in inventory to place object with ID: {_id}");
-            return;
-        }
+            // Check inventory before placing
+            if (!_inventoryManager.HasEnoughItems(_id))
+            {
+                _soundFeedback.PlaySound(SoundType.wrongPlacement);
+                Debug.Log($"Not enough items in inventory to place object with ID: {_id}");
+                return;
+            }
         
-        // Consume inventory item
-        if (!_inventoryManager.ConsumeItems(_id))
-        {
-            _soundFeedback.PlaySound(SoundType.wrongPlacement);
-            return;
+            // Consume inventory item
+            if (!_inventoryManager.ConsumeItems(_id))
+            {
+                _soundFeedback.PlaySound(SoundType.wrongPlacement);
+                return;
+            }
         }
         
         float rotationAngle = _currentRotation;
 
         Vector2Int offset = _currentDirection.GetRotationOffset(_piece.Size);
         
-        GridBuildPiece piece = _buildingManager.CreateBuildPiece(_piece, _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, 0, offset.y), Quaternion.Euler(0, rotationAngle, 0));
+        GridBuildPiece piece = _buildingManager.CreateBuildPiece(_piece, _gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, 0, offset.y), Quaternion.Euler(0, rotationAngle, 0));
         
         if (piece.storeThisToGrid)
         {
             _gridManager.AddObjectToGrid(piece, new Vector2Int(gridPosition.x, gridPosition.y), piece.sizeOnGrid, _currentDirection);
         }
-        _previewSystem.UpdatePosition(_gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y),new Vector3(offset.x, 0, offset.y), false);
+        _previewSystem.UpdatePosition(_gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y),new Vector3(offset.x, 0, offset.y), false);
     }
 
     private bool CheckPlacementValidity(Vector3Int gridPosition, Vector2Int objectSize, Direction direction)
@@ -88,7 +91,7 @@ public class BuildState : IBuildingState
 
         Vector2Int offset = _currentDirection.GetRotationOffset(_piece.Size);
         
-        _previewSystem.UpdatePosition(_gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y), new Vector3(offset.x, 0, offset.y), placementValidity);
+        _previewSystem.UpdatePosition(_gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y), new Vector3(offset.x, 0, offset.y), placementValidity);
     }
     
     public void OnRotate(Vector3Int gridPosition)
@@ -100,7 +103,7 @@ public class BuildState : IBuildingState
         
         bool placementValidity = CheckPlacementValidity(gridPosition, _piece.Size, _currentDirection);
         
-        _previewSystem.UpdatePosition(_gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y), new Vector3(offset.x, 0, offset.y), placementValidity);
+        _previewSystem.UpdatePosition(_gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y), new Vector3(offset.x, 0, offset.y), placementValidity);
         
         _previewSystem.SetRotation(_currentRotation);
         _soundFeedback.PlaySound(SoundType.Click); // Optional: play sound on rotation

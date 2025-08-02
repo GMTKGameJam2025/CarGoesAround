@@ -22,6 +22,7 @@ public class BuildingManager : MonoBehaviour
     {
         OnExit();
     }
+    
     public void StartPlacement(int id)
     {
         OnExit();
@@ -49,7 +50,7 @@ public class BuildingManager : MonoBehaviour
         }
 
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
-        gridManager.grid.GetXZ(mousePosition, out int x, out int z);
+        gridManager.Grid.GetXZ(mousePosition, out int x, out int z);
         Vector3Int gridPosition = new(x, z, 0);
 
         _buildingState.OnAction(gridPosition);
@@ -86,7 +87,7 @@ public class BuildingManager : MonoBehaviour
             return;
 
         Vector3 mousePosition = inputManager.GetSelectedMapPosition();
-        gridManager.grid.GetXZ(mousePosition, out int x, out int z);
+        gridManager.Grid.GetXZ(mousePosition, out int x, out int z);
         Vector3Int gridPosition = new(x, z, 0);
         
         if (_lastDetectedPosition == gridPosition)
@@ -104,7 +105,7 @@ public class BuildingManager : MonoBehaviour
             pieceComponent = pieceObj.AddComponent<GridBuildPiece>();
         }
 
-        pieceComponent.Init(pieceData);
+        pieceComponent.Init(gridManager, pieceData);
         return pieceComponent;
     }
 

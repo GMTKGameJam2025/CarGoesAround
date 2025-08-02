@@ -3,14 +3,14 @@ using UnityEngine;
 
 public class GridCell
 {
-    public GridXZ<GridCell> grid;
-    public Vector2Int position;
+    public GridXZ<GridCell> Grid;
+    public Vector2Int Position;
     private Stack<GridBuildPiece> _buildPieces;
 
     public GridCell(GridXZ<GridCell> grid, Vector2Int position)
     {
-        this.grid = grid;
-        this.position = position;
+        this.Grid = grid;
+        this.Position = position;
         _buildPieces = new Stack<GridBuildPiece>();
     }
 

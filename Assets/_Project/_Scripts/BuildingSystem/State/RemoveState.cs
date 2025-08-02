@@ -34,14 +34,17 @@ public class RemoveState : IBuildingState
         else
         {
             GridBuildPiece piece = _gridManager.RemoveObjectFromGrid(gridPos);
-            
-            _inventoryManager.AddItems(piece.id);
+
+            if (_inventoryManager)
+            {
+                _inventoryManager.AddItems(piece.id);
+            }
             _buildingManager.DestroyBuildPiece(piece);
             
             _soundFeedback.PlaySound(SoundType.Remove);
         }
 
-        Vector3 cellPosition = _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y);
+        Vector3 cellPosition = _gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y);
         _previewSystem.UpdatePosition(cellPosition, Vector3.zero, CheckIfSelectionIsValid(gridPosition));
     }
 
@@ -54,7 +57,7 @@ public class RemoveState : IBuildingState
     public void UpdateState(Vector3Int gridPosition)
     {
         bool isValid = CheckIfSelectionIsValid(gridPosition);
-        Vector3 cellPosition = _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y);
+        Vector3 cellPosition = _gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y);
         _previewSystem.UpdatePosition(cellPosition, Vector3.zero, isValid);
 
         GridBuildPiece piece = _gridManager.GetTopLevelObject(new Vector2Int(gridPosition.x, gridPosition.y));
