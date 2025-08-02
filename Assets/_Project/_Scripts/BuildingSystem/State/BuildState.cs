@@ -37,14 +37,17 @@ public class BuildState : IBuildingState
         }
         _soundFeedback.PlaySound(SoundType.Place);
 
-        float rotationAngle = _currentRotation * 90f;
+        float rotationAngle = _currentRotation;
 
-        Vector2Int offset = _currentDirection.GetRotationOffset(new Vector2Int(gridPosition.x, gridPosition.y));
-        Vector3 actualPosition = _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, offset.y);
+        Vector2Int offset = _currentDirection.GetRotationOffset(_piece.sizeOnGrid);
+        Vector3 actualPosition = _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, 0, offset.y);
         
         GridBuildPiece piece = _placementSystem.CreateBuildPiece(_piece, actualPosition, Quaternion.Euler(0, rotationAngle, 0));
 
-        _gridManager.AddObjectToGrid(piece, new Vector2Int(gridPosition.x, gridPosition.y), piece.sizeOnGrid);
+        if (piece.storeThisToGrid)
+        {
+            _gridManager.AddObjectToGrid(piece, new Vector2Int(gridPosition.x, gridPosition.y), piece.sizeOnGrid);
+        }
         _previewSystem.UpdatePosition(actualPosition, false);
     }
 
@@ -58,16 +61,24 @@ public class BuildState : IBuildingState
     {
         bool placementValidity = CheckPlacementValidity(gridPosition, _piece.sizeOnGrid, _currentDirection);
 
-        Vector2Int offset = _currentDirection.GetRotationOffset(new Vector2Int(gridPosition.x, gridPosition.y));
-        Vector3 actualPosition = _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, offset.y);
+        Vector2Int offset = _currentDirection.GetRotationOffset(_piece.sizeOnGrid);
+        Vector3 actualPosition = _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, 0, offset.y);
         
         _previewSystem.UpdatePosition(actualPosition, placementValidity);
     }
     
-    public void OnRotate()
+    public void OnRotate(Vector3Int gridPosition)
     {
         _currentDirection = _currentDirection.GetNextDirection();// Cycle through 0, 1, 2, 3
         _currentRotation = _currentDirection.GetDirectionRotation();
+        
+        Vector2Int offset = _currentDirection.GetRotationOffset(_piece.sizeOnGrid);
+        Vector3 actualPosition = _gridManager.grid.GetWorldPosition(gridPosition.x, gridPosition.y) + new Vector3(offset.x, 0, offset.y);
+        
+        bool placementValidity = CheckPlacementValidity(gridPosition, _piece.sizeOnGrid, _currentDirection);
+        
+        _previewSystem.UpdatePosition(actualPosition, placementValidity);
+        
         _previewSystem.SetRotation(_currentRotation);
         _soundFeedback.PlaySound(SoundType.Click); // Optional: play sound on rotation
     }

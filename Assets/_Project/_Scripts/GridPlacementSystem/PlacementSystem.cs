@@ -2,8 +2,6 @@ using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using UnityEngine.Serialization;
-
 
 public class PlacementSystem : MonoBehaviour
 {
@@ -61,7 +59,7 @@ public class PlacementSystem : MonoBehaviour
     {
         if (_buildingState is BuildState state)
         {
-            state.OnRotate();
+            state.OnRotate(_lastDetectedPosition);
         }
     }
 

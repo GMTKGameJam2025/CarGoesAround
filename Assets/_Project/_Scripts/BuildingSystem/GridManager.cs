@@ -29,6 +29,7 @@ public class GridManager : MonoBehaviour
     public void AddObjectToGrid(GridBuildPiece obj, Vector2Int originPosition)
     {
         GridCell cell = grid.GetGridObject(originPosition.x, originPosition.y);
+        obj.occupiedPositions.Add(originPosition);
         cell.AddGridBuildPiece(obj);
     }
     public void AddObjectToGrid(GridBuildPiece obj, List<Vector2Int> positions)
@@ -49,6 +50,9 @@ public class GridManager : MonoBehaviour
 
     public bool CanBuildOnCell(Vector2Int originPosition)
     {
+        if (grid.IsGridObjectInGrid(originPosition))
+            return false;
+        
         GridCell cell = grid.GetGridObject(originPosition.x, originPosition.y);
         return cell.CanBuild();
     }
@@ -56,7 +60,7 @@ public class GridManager : MonoBehaviour
     public bool CanBuildOnCell(Vector2Int originPosition, Vector2Int size, Direction direction = Direction.Down)
     {
         List<Vector2Int> positions = originPosition.GetGridPositionList(size, direction);
-        return positions.All(pos => grid.GetGridObject(pos.x, pos.y).CanBuild());
+        return positions.All(pos => grid.IsGridObjectInGrid(pos) && grid.GetGridObject(pos.x, pos.y).CanBuild());
     }
 
     public bool CanRemoveOnCell(Vector2Int position)
