@@ -498,7 +498,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 471439986}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_StaticShadowCaster: 0
@@ -2117,12 +2117,17 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
+    - _FadeEnd: 0.7
+    - _FadeStart: 0
+    - _FadeStrength: 3
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Thickness: 0.05
+    - _UseFade: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _DefaultScale: {r: 10, g: 10, b: 0, a: 0}
+    - _FadeSkewer: {r: 1, g: 1.78, b: 0, a: 0}
     - _Size: {r: 1, g: 1, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
