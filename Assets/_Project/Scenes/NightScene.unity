@@ -1213,27 +1213,27 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 9.11
+      value: 8.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 0.0279795
+      value: 0.027979612
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -8.13
+      value: -9.53
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.065586396
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0.99784696
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalRotation.z
@@ -1245,7 +1245,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 172.479
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: de0ae75450306d64ba32054374653c8e, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -3152,7 +3152,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 926b62838fcc5c543b3ff93501b1f159, type: 2}
+  - {fileID: 2100000, guid: 87d2330df2d0cce46bfd0f01fe9f734c, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

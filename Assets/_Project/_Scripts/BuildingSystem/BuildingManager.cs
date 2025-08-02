@@ -18,8 +18,11 @@ public class BuildingManager : MonoBehaviour
     private Vector3Int _lastDetectedPosition = Vector3Int.zero;
     private IBuildingState _buildingState;
 
+    private Transform _objectsParent;
+
     private void Start()
     {
+        _objectsParent = new GameObject("Build Pieces").transform;
         OnExit();
     }
     
@@ -100,6 +103,7 @@ public class BuildingManager : MonoBehaviour
     public GridBuildPiece CreateBuildPiece(BuildPieceData pieceData, Vector3 position, Quaternion rotation)
     {
         GameObject pieceObj = Instantiate(pieceData.Prefab, position, rotation);
+        pieceObj.transform.parent = _objectsParent;
         if (!pieceObj.TryGetComponent(out GridBuildPiece pieceComponent))
         {
             pieceComponent = pieceObj.AddComponent<GridBuildPiece>();

@@ -16,13 +16,10 @@ public class GridManager : MonoBehaviour
     private void Start()
     {
         Grid = new GridXZ<GridCell>(
-            gridSize.x, gridSize.y, 
-            cellSize, 
-            transform.position, 
-            (g, x, y) => new GridCell(g, new Vector2Int(x, y)))
-        {
-            showDebug = showDebugGrid
-        };
+            gridSize.x, gridSize.y,
+            cellSize,
+            transform.position,
+            (g, x, y) => new GridCell(g, new Vector2Int(x, y)));
     }
 
     // Update is called once per frame
@@ -93,6 +90,29 @@ public class GridManager : MonoBehaviour
     {
         GridCell cell = Grid.GetGridObject(position.x, position.y);
         return cell?.GetTopGridObject();
+    }
+
+    private void OnDrawGizmos()
+    {
+        if (showDebugGrid) {
+            Gizmos.color = Color.white;
+            for (int x = 0; x < gridSize.x; x++) {
+                for (int z = 0; z < gridSize.y; z++) {
+                    Vector3 originPosition = new Vector3(x, 0, z) * cellSize + transform.position;
+                    Vector3 upPosition = new Vector3(x, 0, z + 1) * cellSize + transform.position;
+                    Vector3 rightPosition = new Vector3(x + 1, 0, z) * cellSize + transform.position;
+                    Gizmos.DrawLine(originPosition, upPosition);
+                    Gizmos.DrawLine(originPosition, rightPosition);
+                }
+            }
+            
+            Gizmos.DrawLine(
+                new Vector3(0, 0,gridSize.y) * cellSize + transform.position, 
+                new Vector3(gridSize.x, 0,gridSize.y) * cellSize + transform.position);
+            Gizmos.DrawLine(
+                new Vector3(gridSize.x, 0,0) * cellSize + transform.position,  
+                new Vector3(gridSize.x, 0,gridSize.y) * cellSize + transform.position);
+        }
     }
 }
 
