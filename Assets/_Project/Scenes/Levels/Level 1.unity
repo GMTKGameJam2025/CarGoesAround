@@ -553,7 +553,7 @@ MonoBehaviour:
   inputManager: {fileID: 1710210177}
   gridManager: {fileID: 787481597}
   inventoryManager: {fileID: 1515732607}
-  database: {fileID: 11400000, guid: 62a892c245ddc66469794908868158b6, type: 2}
+  database: {fileID: 11400000, guid: e3c406eacc6c1304896c6e564ac6d738, type: 2}
   gridVisualization: {fileID: 471439986}
   preview: {fileID: 1936944560}
   soundFeedback: {fileID: 1072338397}
@@ -1322,7 +1322,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ba510e2cfb40ae44a78c934670851e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryPreset: {fileID: 11400000, guid: a2a9750522ea73b46a9ddcff25827a96, type: 2}
+  inventoryPreset: {fileID: 11400000, guid: b852b0c3500962d45b63f76252bc1f81, type: 2}
 --- !u!4 &1515732608
 Transform:
   m_ObjectHideFlags: 0
@@ -1677,6 +1677,83 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6591993623a5006458ad9aa67bf55f17, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1815519439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1815519441}
+  - component: {fileID: 1815519442}
+  - component: {fileID: 1815519444}
+  - component: {fileID: 1815519443}
+  m_Layer: 0
+  m_Name: GridExporter
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1815519441
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815519439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1815519442
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815519439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a28bab0b5236408590474faff1e79a5c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  exporter: {fileID: 0}
+  loader: {fileID: 0}
+--- !u!114 &1815519443
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815519439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c3377ac7cfb4c89b262c6c1076bbb0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridManager: {fileID: 787481597}
+  database: {fileID: 11400000, guid: e3c406eacc6c1304896c6e564ac6d738, type: 2}
+  buildingManager: {fileID: 905280072}
+--- !u!114 &1815519444
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1815519439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 65aca51b41704daa870feb0430702a99, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridManager: {fileID: 787481597}
+  database: {fileID: 11400000, guid: e3c406eacc6c1304896c6e564ac6d738, type: 2}
 --- !u!1 &1936944558
 GameObject:
   m_ObjectHideFlags: 0
@@ -2039,6 +2116,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4175700858000201494, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175700858000201494, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175700858000201494, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4175700858000201494, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5439444896988460993, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
       propertyPath: m_Name
       value: InventoryPanel
@@ -2276,3 +2369,4 @@ SceneRoots:
   - {fileID: 1515732608}
   - {fileID: 1161623748}
   - {fileID: 1702177614}
+  - {fileID: 1815519441}
