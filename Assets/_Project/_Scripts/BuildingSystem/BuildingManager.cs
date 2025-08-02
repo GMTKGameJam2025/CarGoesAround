@@ -70,10 +70,11 @@ public class BuildingManager : MonoBehaviour
     private void OnExit()
     {
         soundFeedback.PlaySound(SoundType.Click);
+        gridVisualization.SetActive(false);
+        
         if (_buildingState == null)
             return;
 
-        gridVisualization.SetActive(false);
         _buildingState.EndState();
         
         inputManager.OnClick -= OnClick;
