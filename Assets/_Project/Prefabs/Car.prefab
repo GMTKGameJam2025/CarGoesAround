@@ -314,6 +314,15 @@ MonoBehaviour:
   groundCheckMask:
     serializedVersion: 2
     m_Bits: 256
+  roadLayer:
+    serializedVersion: 2
+    m_Bits: 1024
+  roadCheckDistance: 1
+  explosionForce: 500
+  explosionRadius: 5
+  explosionUpwardModifier: 3
+  explosionEffectPrefab: {fileID: 0}
+  explosionSound: {fileID: 0}
 --- !u!65 &105943342815320218
 BoxCollider:
   m_ObjectHideFlags: 0

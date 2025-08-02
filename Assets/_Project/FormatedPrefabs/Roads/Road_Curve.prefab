@@ -83,7 +83,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2088836495412726862}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 438738619099822302}
-  m_Layer: 0
+  m_Layer: 7
   m_Name: Nodes
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -152,7 +152,8 @@ GameObject:
   - component: {fileID: 7835241901894928376}
   - component: {fileID: 320950249298305643}
   - component: {fileID: 1241389090681787093}
-  m_Layer: 0
+  - component: {fileID: 8516771089931742449}
+  m_Layer: 10
   m_Name: Curve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -227,6 +228,28 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!64 &8516771089931742449
+MeshCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4283363924355787876}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 5
+  m_Convex: 1
+  m_CookingOptions: 30
+  m_Mesh: {fileID: -8168585829983048746, guid: 33ad613dc003c5c408fa5116863b5c66, type: 3}
 --- !u!1 &5547568179231131455
 GameObject:
   m_ObjectHideFlags: 0
@@ -310,7 +333,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4606848616476567771}
   - component: {fileID: 51660361924836171}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Road_Curve
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -429,7 +452,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2394211884078963603}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
