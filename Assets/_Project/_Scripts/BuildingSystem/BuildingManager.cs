@@ -23,29 +23,29 @@ public class BuildingManager : MonoBehaviour
     private void Start()
     {
         _objectsParent = new GameObject("Build Pieces").transform;
-        OnExit();
+        Exit();
     }
     
     public void StartPlacement(int id)
     {
-        OnExit();
+        Exit();
         gridVisualization.SetActive(true);
         _buildingState = new BuildState(id, database, this, inventoryManager, gridManager, preview, soundFeedback);
-        inputManager.OnClick += OnClick;
-        inputManager.OnExit += OnExit;
-        inputManager.OnRotate += OnRotate;
+        inputManager.OnClick += Click;
+        inputManager.OnExit += Exit;
+        inputManager.OnRotate += Rotate;
     }
 
     public void StartRemoving()
     {
-        OnExit();
+        Exit();
         gridVisualization.SetActive(true);
         _buildingState = new RemoveState(this, gridManager, inventoryManager, preview, soundFeedback);
-        inputManager.OnClick += OnClick;
-        inputManager.OnExit += OnExit;
+        inputManager.OnClick += Click;
+        inputManager.OnExit += Exit;
     }
 
-    private void OnClick()
+    private void Click()
     {
         if (inputManager.IsPointerOverUI())
         {
@@ -59,7 +59,7 @@ public class BuildingManager : MonoBehaviour
         _buildingState.OnAction(gridPosition);
     }
 
-    private void OnRotate()
+    private void Rotate()
     {
         if (_buildingState is BuildState state)
         {
@@ -67,19 +67,18 @@ public class BuildingManager : MonoBehaviour
         }
     }
 
-    private void OnExit()
+    public void Exit()
     {
-        soundFeedback.PlaySound(SoundType.Click);
         gridVisualization.SetActive(false);
         
         if (_buildingState == null)
             return;
-
+        
         _buildingState.EndState();
         
-        inputManager.OnClick -= OnClick;
-        inputManager.OnExit -= OnExit;
-        inputManager.OnRotate -= OnRotate;
+        inputManager.OnClick -= Click;
+        inputManager.OnExit -= Exit;
+        inputManager.OnRotate -= Rotate;
         
         _lastDetectedPosition = Vector3Int.zero;
         _buildingState = null;

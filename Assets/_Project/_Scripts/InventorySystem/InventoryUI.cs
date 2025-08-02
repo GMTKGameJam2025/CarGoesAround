@@ -1,6 +1,9 @@
+using System;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.UI;
 using System.Collections.Generic;
+using PrimeTween;
 using UnityEngine.Serialization;
 
 public class InventoryUI : MonoBehaviour
@@ -8,13 +11,24 @@ public class InventoryUI : MonoBehaviour
     [Header("UI References")]
     [SerializeField] private Transform itemContainer;
     [SerializeField] private GameObject itemUIPrefab;
-    [FormerlySerializedAs("placementSystem")] [SerializeField] private BuildingManager buildingManager; // Reference to your building system
+    [SerializeField] private BuildingManager buildingManager; // Reference to your building system
+    [SerializeField] private CanvasGroup canvasGroup;
 
     [Header("UI Settings")]
     [SerializeField] private bool hideItemsWithZeroQuantity = true;
+    [SerializeField] private float hideUIDistance = 300f;
+    [SerializeField] private float hideDuration = 1f;
 
     private InventoryManager _inventoryManager;
     private Dictionary<int, InventoryItemUI> _itemUIElements = new Dictionary<int, InventoryItemUI>();
+    
+    public bool IsUIShown { get; private set; }
+    private Vector3 _originalPosition;
+
+    private void Awake()
+    {
+        _originalPosition = transform.position;
+    }
 
     private void Start()
     {
@@ -140,5 +154,58 @@ public class InventoryUI : MonoBehaviour
     public void RefreshUI()
     {
         InitializeUI();
+    }
+    
+    
+    public void ShowUI(bool instant = false)
+    {
+        if (instant)
+        {
+            transform.position = _originalPosition;
+            canvasGroup.interactable = true;
+            IsUIShown = true;
+            return;
+        }
+        
+        if (IsUIShown) return;
+        
+        StartCoroutine(ShowRoutine());
+
+        IEnumerator ShowRoutine()
+        {
+            yield return Tween.Position(
+                transform, 
+                _originalPosition, 
+                hideDuration).ToYieldInstruction();
+            
+            IsUIShown = true;
+            canvasGroup.interactable = true;
+        }
+    }
+
+    public void HideUI(bool instant = false)
+    {
+        if (instant)
+        {
+            canvasGroup.interactable = false;
+            transform.position = _originalPosition - new Vector3(0, hideUIDistance, 0);
+            IsUIShown = false;
+            return;
+        }
+        
+        if (!IsUIShown) return;
+        
+        StartCoroutine(HideRoutine());
+
+        IEnumerator HideRoutine()
+        {
+            canvasGroup.interactable = false;
+            yield return Tween.Position(
+                transform,
+                _originalPosition - new Vector3(0, hideUIDistance, 0),
+                hideDuration).ToYieldInstruction();
+
+            IsUIShown = false;
+        }
     }
 }
