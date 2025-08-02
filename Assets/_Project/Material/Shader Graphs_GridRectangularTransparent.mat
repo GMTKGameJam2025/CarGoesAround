@@ -51,19 +51,12 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _FadeEnd: 1
-    - _FadeStart: 0.3
-    - _FadeStrength: 6
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Skewer: 1.78
     - _Thickness: 0.05
-    - _UseFade: 0
     m_Colors:
     - _Color: {r: 1, g: 1, b: 1, a: 1}
-    - _DefaultScale: {r: 10, g: 10, b: 0, a: 0}
-    - _FadeSkewer: {r: 1, g: 1.78, b: 0, a: 0}
+    - _DefaultScale: {r: 1, g: 1, b: 0, a: 0}
     - _Size: {r: 1, g: 1, b: 0, a: 0}
-    - _Skewer: {r: 1, g: 1.4, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1

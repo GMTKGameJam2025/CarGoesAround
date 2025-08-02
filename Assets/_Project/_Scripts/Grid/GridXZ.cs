@@ -11,8 +11,6 @@ public class GridXZ<TGridObject> {
         public int z;
     }
 
-    public bool showDebug = true;
-
     private int _width;
     private int _height;
     private float _cellSize;
@@ -31,17 +29,6 @@ public class GridXZ<TGridObject> {
             for (int z = 0; z < _gridArray.GetLength(1); z++) {
                 _gridArray[x, z] = createGridObject(this, x, z);
             }
-        }
-        
-        if (showDebug) {
-            for (int x = 0; x < _gridArray.GetLength(0); x++) {
-                for (int z = 0; z < _gridArray.GetLength(1); z++) {
-                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x, z + 1), Color.white, 100f);
-                    Debug.DrawLine(GetWorldPosition(x, z), GetWorldPosition(x + 1, z), Color.white, 100f);
-                }
-            }
-            Debug.DrawLine(GetWorldPosition(0, height), GetWorldPosition(width, height), Color.white, 100f);
-            Debug.DrawLine(GetWorldPosition(width, 0), GetWorldPosition(width, height), Color.white, 100f);
         }
     }
 
