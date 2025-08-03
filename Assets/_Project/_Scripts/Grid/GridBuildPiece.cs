@@ -49,7 +49,7 @@ public class GridBuildPiece : MonoBehaviour
 
         foreach (IBuildable buildable in allBuildable)
         {
-            buildable.OnBuild();
+            buildable.OnBuild(this);
         }
     }
 }
