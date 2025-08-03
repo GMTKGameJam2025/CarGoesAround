@@ -8,7 +8,7 @@ public class BarrelSpawner : MonoBehaviour, IBuildable
     [SerializeField] private float dropHeight = 2f;
     [SerializeField] private float respawnTime = 5f;
 
-    public void OnBuild()
+    public void OnBuild(GridBuildPiece piece)
     {
         StartCoroutine(SpawnBarrels());
     }
