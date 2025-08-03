@@ -3,8 +3,8 @@ using UnityEngine;
 [RequireComponent(typeof(Rigidbody))]
 public class BarrelRoll : MonoBehaviour
 {
-    [SerializeField] private float moveSpeed = 5f;
-    [SerializeField] private float lifetime = 10f;
+    [SerializeField] private float moveSpeed = 7f;
+    [SerializeField] private float lifetime = 5f;
 
     private Rigidbody rb;
     private Vector3 rollDirection = Vector3.forward; // Default forward direction
@@ -18,7 +18,7 @@ public class BarrelRoll : MonoBehaviour
     void FixedUpdate()
     {
         bool isGrounded = Physics.Raycast(transform.position, Vector3.down, 1f);
-        
+
         if (isGrounded)
         {
             Vector3 velocity = rollDirection * moveSpeed;
