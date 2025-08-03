@@ -665,7 +665,7 @@ MonoBehaviour:
   win: {fileID: 117519178}
   lose: {fileID: 1058543270}
   inventoryUI: {fileID: 1254065608}
-  levelData: {fileID: 4900000, guid: e561844527d18014889c94bc4d2011c4, type: 3}
+  levelData: {fileID: 11400000, guid: 7cbcbc4a88bd97241bd4b01d36b2d31e, type: 2}
   gridExportSystem: {fileID: 1815519442}
 --- !u!4 &1161623748
 Transform:
@@ -1610,6 +1610,9 @@ MonoBehaviour:
   gridManager: {fileID: 79944455}
   database: {fileID: 11400000, guid: e3c406eacc6c1304896c6e564ac6d738, type: 2}
   buildingManager: {fileID: 905280072}
+  currentLevelData: {fileID: 0}
+  defaultSaveFolder: Assets/_Project/LevelData/
+  autoLoadOnStart: 1
   OnGridLoaded:
     m_PersistentCalls:
       m_Calls: []

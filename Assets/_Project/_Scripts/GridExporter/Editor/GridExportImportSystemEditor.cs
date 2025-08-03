@@ -4,35 +4,31 @@ using System.IO;
 using System.Linq;
 
 #if UNITY_EDITOR
-
 [CustomEditor(typeof(GridExportImportSystem))]
 public class GridExportImportSystemEditor : Editor
 {
-    private string fileName = "GridData";
+    private string levelName = "GridLevel";
     private string selectedExportPath = "";
-    private string selectedImportFilePath = "";
-    private GridExportData previewData;
-
+    private GridLevelDataSO selectedImportLevel;
+    private GridLevelDataSO previewData;
+    
     // Tabs
     private int selectedTab = 0;
-    private readonly string[] tabNames =
-    {
-        "Export", "Import"
-    };
-
+    private readonly string[] tabNames = { "Export", "Import", "ScriptableObjects" };
+    
     public override void OnInspectorGUI()
     {
         DrawDefaultInspector();
-
+        
         GridExportImportSystem system = (GridExportImportSystem)target;
-
+        
         EditorGUILayout.Space(10);
-
+        
         // Tab selection
         selectedTab = GUILayout.Toolbar(selectedTab, tabNames);
-
+        
         EditorGUILayout.Space(5);
-
+        
         switch (selectedTab)
         {
             case 0:
@@ -41,26 +37,30 @@ public class GridExportImportSystemEditor : Editor
             case 1:
                 DrawImportTab(system);
                 break;
+            case 2:
+                DrawScriptableObjectTab(system);
+                break;
         }
-
+        
         EditorGUILayout.Space(10);
         DrawValidationSection(system);
     }
-
+    
     private void DrawExportTab(GridExportImportSystem system)
     {
-        EditorGUILayout.LabelField("Grid Export", EditorStyles.boldLabel);
-
-        // File name input
+        EditorGUILayout.LabelField("Grid Export to ScriptableObject", EditorStyles.boldLabel);
+        
+        // Level name input
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("File Name:", GUILayout.Width(70));
-        fileName = EditorGUILayout.TextField(fileName);
+        EditorGUILayout.LabelField("Level Name:", GUILayout.Width(80));
+        levelName = EditorGUILayout.TextField(levelName);
         EditorGUILayout.EndHorizontal();
-
-        // Path selection
+        
+        // Export folder path
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Save Path:", GUILayout.Width(70));
-        EditorGUILayout.LabelField(string.IsNullOrEmpty(selectedExportPath) ? "Assets/" : selectedExportPath, EditorStyles.helpBox);
+        EditorGUILayout.LabelField("Save Folder:", GUILayout.Width(80));
+        string currentPath = string.IsNullOrEmpty(selectedExportPath) ? "Assets/GridLevels/" : selectedExportPath;
+        EditorGUILayout.LabelField(currentPath, EditorStyles.helpBox);
         if (GUILayout.Button("Browse", GUILayout.Width(60)))
         {
             string path = EditorUtility.SaveFolderPanel("Select Save Location", "Assets", "");
@@ -78,242 +78,336 @@ public class GridExportImportSystemEditor : Editor
             }
         }
         EditorGUILayout.EndHorizontal();
-
+        
         EditorGUILayout.Space(5);
-
+        
         // Export button
         GUI.backgroundColor = Color.green;
-        if (GUILayout.Button("Export Grid Data", GUILayout.Height(30)))
+        if (GUILayout.Button("Export Grid to ScriptableObject", GUILayout.Height(30)))
         {
-            ExportGrid(system);
+            ExportToScriptableObject(system);
         }
         GUI.backgroundColor = Color.white;
-
+        
         EditorGUILayout.Space(5);
-
+        
         // Quick export buttons
         EditorGUILayout.LabelField("Quick Export Options:", EditorStyles.miniLabel);
         EditorGUILayout.BeginHorizontal();
-
-        if (GUILayout.Button("Export to Desktop"))
+        
+        if (GUILayout.Button("Export to Default Folder"))
         {
-            string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-            ExportToPath(system, desktopPath);
+            ExportToDefaultFolder(system);
         }
-
-        if (GUILayout.Button("Export to StreamingAssets"))
+        
+        if (GUILayout.Button("Export & Set as Current"))
         {
-            string streamingPath = Path.Combine(Application.streamingAssetsPath);
-            if (!Directory.Exists(streamingPath))
-            {
-                Directory.CreateDirectory(streamingPath);
-            }
-            ExportToPath(system, streamingPath);
+            ExportAndSetAsCurrent(system);
         }
-
+        
         EditorGUILayout.EndHorizontal();
     }
-
+    
     private void DrawImportTab(GridExportImportSystem system)
     {
-        EditorGUILayout.LabelField("Grid Import", EditorStyles.boldLabel);
-
-        // File selection
+        EditorGUILayout.LabelField("Grid Import from ScriptableObject", EditorStyles.boldLabel);
+        
+        // ScriptableObject selection
         EditorGUILayout.BeginHorizontal();
-        EditorGUILayout.LabelField("Import File:", GUILayout.Width(70));
-        EditorGUILayout.LabelField(string.IsNullOrEmpty(selectedImportFilePath) ? "No file selected" : Path.GetFileName(selectedImportFilePath), EditorStyles.helpBox);
-        if (GUILayout.Button("Browse", GUILayout.Width(60)))
-        {
-            string path = EditorUtility.OpenFilePanel("Select Grid Data File", "Assets", "json");
-            if (!string.IsNullOrEmpty(path))
-            {
-                selectedImportFilePath = path;
-                LoadPreviewData(system);
-            }
-        }
+        EditorGUILayout.LabelField("Import Level:", GUILayout.Width(80));
+        selectedImportLevel = (GridLevelDataSO)EditorGUILayout.ObjectField(
+            selectedImportLevel, 
+            typeof(GridLevelDataSO), 
+            false
+        );
         EditorGUILayout.EndHorizontal();
-
+        
         EditorGUILayout.Space(5);
-
+        
         // Preview information
-        if (previewData != null)
+        if (selectedImportLevel != null)
         {
-            EditorGUILayout.LabelField("File Preview:", EditorStyles.boldLabel);
-            EditorGUILayout.LabelField($"Grid Size: {previewData.gridSize.x} x {previewData.gridSize.y}");
-            EditorGUILayout.LabelField($"Cell Size: {previewData.cellSize}");
-            EditorGUILayout.LabelField($"Build Pieces: {previewData.buildPieces.Count}");
-            EditorGUILayout.LabelField($"Grid Origin: {previewData.gridOrigin}");
-
+            EditorGUILayout.LabelField("Level Preview:", EditorStyles.boldLabel);
+            EditorGUILayout.LabelField($"Level Name: {selectedImportLevel.levelName}");
+            EditorGUILayout.LabelField($"Grid Size: {selectedImportLevel.gridSize.x} x {selectedImportLevel.gridSize.y}");
+            EditorGUILayout.LabelField($"Cell Size: {selectedImportLevel.cellSize}");
+            EditorGUILayout.LabelField($"Build Pieces: {selectedImportLevel.buildPieces.Count}");
+            EditorGUILayout.LabelField($"Grid Origin: {selectedImportLevel.gridOrigin}");
+            EditorGUILayout.LabelField($"Created: {selectedImportLevel.creationDate}");
+            EditorGUILayout.LabelField($"Modified: {selectedImportLevel.lastModified}");
+            
+            if (!string.IsNullOrEmpty(selectedImportLevel.description))
+            {
+                EditorGUILayout.Space(3);
+                EditorGUILayout.LabelField("Description:", EditorStyles.boldLabel);
+                EditorGUILayout.LabelField(selectedImportLevel.description, EditorStyles.wordWrappedLabel);
+            }
+            
             EditorGUILayout.Space(5);
-
+            
             // Show piece breakdown
-            if (previewData.buildPieces.Count > 0)
+            if (selectedImportLevel.buildPieces.Count > 0)
             {
                 EditorGUILayout.LabelField("Piece Breakdown:", EditorStyles.miniLabel);
-                var pieceGroups = previewData.buildPieces.GroupBy(p => p.pieceId);
+                var pieceGroups = selectedImportLevel.buildPieces.GroupBy(p => p.pieceId);
                 foreach (var group in pieceGroups)
                 {
-                    EditorGUILayout.LabelField($"  ID {group.Key}: {group.Count()} pieces", EditorStyles.miniLabel);
+                    EditorGUILayout.LabelField($" ID {group.Key}: {group.Count()} pieces", EditorStyles.miniLabel);
                 }
             }
         }
-
+        
         EditorGUILayout.Space(5);
-
+        
         // Import button
         GUI.backgroundColor = Color.cyan;
-        GUI.enabled = !string.IsNullOrEmpty(selectedImportFilePath) && previewData != null;
+        GUI.enabled = selectedImportLevel != null;
         if (GUILayout.Button("Import Grid Data", GUILayout.Height(30)))
         {
-            ImportGrid(system);
+            ImportFromScriptableObject(system);
         }
         GUI.enabled = true;
         GUI.backgroundColor = Color.white;
-
+        
         EditorGUILayout.Space(5);
-
+        
         // Quick import buttons
         EditorGUILayout.LabelField("Quick Import Options:", EditorStyles.miniLabel);
         EditorGUILayout.BeginHorizontal();
-
-        if (GUILayout.Button("Import from Desktop"))
+        
+        if (GUILayout.Button("Browse GridLevels Folder"))
         {
-            string desktopPath = System.Environment.GetFolderPath(System.Environment.SpecialFolder.Desktop);
-            QuickImportFromPath(system, desktopPath);
+            BrowseGridLevelsFolder(system);
         }
-
-        if (GUILayout.Button("Import from StreamingAssets"))
+        
+        if (GUILayout.Button("Import from Current Level"))
         {
-            string streamingPath = Path.Combine(Application.streamingAssetsPath);
-            QuickImportFromPath(system, streamingPath);
+            ImportCurrentLevel(system);
         }
-
+        
         EditorGUILayout.EndHorizontal();
-
+        
         // Warning about clearing existing data
-        if (previewData != null)
+        if (selectedImportLevel != null)
         {
             EditorGUILayout.Space(5);
             EditorGUILayout.HelpBox("⚠️ WARNING: Importing will clear all existing grid data!", MessageType.Warning);
         }
     }
     
+    private void DrawScriptableObjectTab(GridExportImportSystem system)
+    {
+        EditorGUILayout.LabelField("ScriptableObject Management", EditorStyles.boldLabel);
+        
+        // Current level display
+        EditorGUILayout.BeginHorizontal();
+        EditorGUILayout.LabelField("Current Level:", GUILayout.Width(90));
+        GridLevelDataSO currentLevel = system.GetCurrentLevel();
+        EditorGUILayout.ObjectField(currentLevel, typeof(GridLevelDataSO), false);
+        EditorGUILayout.EndHorizontal();
+        
+        if (currentLevel != null)
+        {
+            EditorGUILayout.Space(3);
+            EditorGUILayout.LabelField($"Level: {currentLevel.levelName}");
+            EditorGUILayout.LabelField($"Pieces: {currentLevel.pieceCount}");
+            EditorGUILayout.LabelField($"Modified: {currentLevel.lastModified}");
+        }
+        
+        EditorGUILayout.Space(10);
+        
+        // Level management buttons
+        EditorGUILayout.LabelField("Level Management:", EditorStyles.boldLabel);
+        
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Create New Level"))
+        {
+            CreateNewLevel();
+        }
+        
+        if (GUILayout.Button("Load Current Level"))
+        {
+            if (currentLevel != null)
+            {
+                ImportFromScriptableObject(system, currentLevel);
+            }
+            else
+            {
+                EditorUtility.DisplayDialog("No Level", "No current level assigned!", "OK");
+            }
+        }
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.Space(5);
+        
+        // Utility buttons
+        EditorGUILayout.LabelField("Utilities:", EditorStyles.boldLabel);
+        
+        EditorGUILayout.BeginHorizontal();
+        if (GUILayout.Button("Find All Grid Levels"))
+        {
+            FindAllGridLevels();
+        }
+        
+        if (GUILayout.Button("Convert JSON to SO"))
+        {
+            system.ConvertJSONToScriptableObject();
+        }
+        EditorGUILayout.EndHorizontal();
+        
+        EditorGUILayout.Space(5);
+        
+        // Auto-load settings
+        SerializedProperty autoLoadProp = serializedObject.FindProperty("autoLoadOnStart");
+        EditorGUILayout.PropertyField(autoLoadProp, new GUIContent("Auto Load on Start"));
+        
+        SerializedProperty defaultFolderProp = serializedObject.FindProperty("defaultSaveFolder");
+        EditorGUILayout.PropertyField(defaultFolderProp, new GUIContent("Default Save Folder"));
+        
+        if (GUI.changed)
+        {
+            serializedObject.ApplyModifiedProperties();
+        }
+    }
+    
     private void DrawValidationSection(GridExportImportSystem system)
     {
         EditorGUILayout.LabelField("Validation", EditorStyles.boldLabel);
-
+        
         bool hasErrors = false;
-
+        
         if (system.gridManager == null)
         {
             EditorGUILayout.HelpBox("GridManager reference is missing!", MessageType.Error);
             hasErrors = true;
         }
-
+        
         if (system.database == null)
         {
             EditorGUILayout.HelpBox("BuildPieceDatabaseSO reference is missing!", MessageType.Error);
             hasErrors = true;
         }
-
+        
         if (system.buildingManager == null)
         {
             EditorGUILayout.HelpBox("BuildingManager reference is missing!", MessageType.Error);
             hasErrors = true;
         }
-
+        
+        if (!Application.isPlaying)
+        {
+            EditorGUILayout.HelpBox("Grid operations only work in Play Mode!", MessageType.Warning);
+        }
+        
         if (!hasErrors)
         {
             EditorGUILayout.HelpBox("All references are properly assigned!", MessageType.Info);
         }
     }
-
+    
     #region Export Methods
-
-    private void ExportGrid(GridExportImportSystem system)
-    {
-        string savePath = string.IsNullOrEmpty(selectedExportPath) ? "Assets" : selectedExportPath;
-        ExportToPath(system, savePath);
-    }
-
-    private void ExportToPath(GridExportImportSystem system, string path)
+    
+    private void ExportToScriptableObject(GridExportImportSystem system)
     {
         if (!Application.isPlaying)
         {
-            EditorUtility.DisplayDialog("Export Error", "Grid export only works in Play Mode!\nPlease enter Play Mode and try again.", "OK");
+            EditorUtility.DisplayDialog("Export Error", 
+                "Grid export only works in Play Mode!\nPlease enter Play Mode and try again.", "OK");
             return;
         }
-
-        GridExportData data = system.ExportGrid();
-        if (data != null)
+        
+        GridLevelDataSO levelData = system.ExportGridToScriptableObject(levelName);
+        if (levelData != null)
         {
-            string fullPath = Path.Combine(path, fileName + ".json");
-
-            if (system.SaveToFile(data, fullPath))
+            string savePath = string.IsNullOrEmpty(selectedExportPath) ? "Assets/GridLevels/" : selectedExportPath;
+            string fileName = levelName + ".asset";
+            
+            // Ensure directory exists
+            if (!Directory.Exists(savePath))
             {
-                EditorUtility.DisplayDialog("Export Successful",
-                    $"Grid data exported successfully!\n\nFile: {fileName}.json\nLocation: {path}\nPieces exported: {data.buildPieces.Count}",
-                    "OK");
-
-                // Refresh the asset database if saving to Assets folder
-                if (path.StartsWith("Assets"))
-                {
-                    AssetDatabase.Refresh();
-                }
+                Directory.CreateDirectory(savePath);
             }
-            else
-            {
-                EditorUtility.DisplayDialog("Export Failed", "Failed to save grid data to file.", "OK");
-            }
+            
+            string fullPath = Path.Combine(savePath, fileName);
+            
+            // Create the asset
+            AssetDatabase.CreateAsset(levelData, fullPath);
+            AssetDatabase.SaveAssets();
+            AssetDatabase.Refresh();
+            
+            EditorUtility.DisplayDialog("Export Successful", 
+                $"Grid level exported successfully!\n\nFile: {fileName}\nLocation: {savePath}\nPieces exported: {levelData.buildPieces.Count}", "OK");
+            
+            // Select the created asset
+            EditorUtility.FocusProjectWindow();
+            Selection.activeObject = levelData;
         }
         else
         {
             EditorUtility.DisplayDialog("Export Failed", "Failed to export grid data.", "OK");
         }
     }
-
-    #endregion
-
-    #region Import Methods
-
-    private void LoadPreviewData(GridExportImportSystem system)
+    
+    private void ExportToDefaultFolder(GridExportImportSystem system)
     {
-        try
-        {
-            if (!File.Exists(selectedImportFilePath))
-            {
-                Debug.LogError($"File does not exist: {selectedImportFilePath}");
-                previewData = null;
-                return;
-            }
-
-            string json = File.ReadAllText(selectedImportFilePath);
-            previewData = JsonUtility.FromJson<GridExportData>(json);
-        }
-        catch (System.Exception e)
-        {
-            Debug.LogError($"Failed to load preview data: {e.Message}");
-            previewData = null;
-        }
+        selectedExportPath = "Assets/GridLevels/";
+        ExportToScriptableObject(system);
     }
-
-    private void ImportGrid(GridExportImportSystem system)
+    
+    private void ExportAndSetAsCurrent(GridExportImportSystem system)
     {
         if (!Application.isPlaying)
         {
-            EditorUtility.DisplayDialog("Import Error", "Grid import only works in Play Mode!\nPlease enter Play Mode and try again.", "OK");
+            EditorUtility.DisplayDialog("Export Error", 
+                "Grid export only works in Play Mode!\nPlease enter Play Mode and try again.", "OK");
             return;
         }
-
-        if (EditorUtility.DisplayDialog("Confirm Import",
-            $"This will clear all existing grid data and import {previewData.buildPieces.Count} build pieces.\n\nAre you sure you want to continue?",
+        
+        GridLevelDataSO levelData = system.ExportGridToScriptableObject(levelName);
+        if (levelData != null)
+        {
+            // Save to default folder
+            if (system.SaveScriptableObjectToFile(levelData, levelName + ".asset"))
+            {
+                // Set as current level
+                SerializedProperty currentLevelProp = serializedObject.FindProperty("currentLevelData");
+                currentLevelProp.objectReferenceValue = levelData;
+                serializedObject.ApplyModifiedProperties();
+                
+                EditorUtility.DisplayDialog("Export & Set Successful", 
+                    $"Grid level exported and set as current level!\n\nLevel: {levelData.levelName}\nPieces: {levelData.buildPieces.Count}", "OK");
+            }
+        }
+    }
+    
+    #endregion
+    
+    #region Import Methods
+    
+    private void ImportFromScriptableObject(GridExportImportSystem system, GridLevelDataSO levelToImport = null)
+    {
+        if (!Application.isPlaying)
+        {
+            EditorUtility.DisplayDialog("Import Error", 
+                "Grid import only works in Play Mode!\nPlease enter Play Mode and try again.", "OK");
+            return;
+        }
+        
+        GridLevelDataSO levelData = levelToImport ?? selectedImportLevel;
+        if (levelData == null)
+        {
+            EditorUtility.DisplayDialog("Import Error", "No level selected for import!", "OK");
+            return;
+        }
+        
+        if (EditorUtility.DisplayDialog("Confirm Import", 
+            $"This will clear all existing grid data and import level '{levelData.levelName}' with {levelData.buildPieces.Count} build pieces.\n\nAre you sure you want to continue?", 
             "Import", "Cancel"))
         {
-            if (system.LoadGrid(previewData))
+            if (system.LoadFromScriptableObject(levelData))
             {
-                EditorUtility.DisplayDialog("Import Successful",
-                    $"Grid data imported successfully!\n\nPieces imported: {previewData.buildPieces.Count}",
-                    "OK");
+                EditorUtility.DisplayDialog("Import Successful", 
+                    $"Grid level '{levelData.levelName}' imported successfully!\n\nPieces imported: {levelData.buildPieces.Count}", "OK");
             }
             else
             {
@@ -321,43 +415,111 @@ public class GridExportImportSystemEditor : Editor
             }
         }
     }
-
-    private void QuickImportFromPath(GridExportImportSystem system, string basePath)
+    
+    private void BrowseGridLevelsFolder(GridExportImportSystem system)
     {
-        if (!Directory.Exists(basePath))
+        string gridLevelsPath = "Assets/GridLevels/";
+        if (!Directory.Exists(gridLevelsPath))
         {
-            EditorUtility.DisplayDialog("Path Not Found", $"Directory does not exist: {basePath}", "OK");
+            EditorUtility.DisplayDialog("Folder Not Found", 
+                $"GridLevels folder not found at: {gridLevelsPath}\n\nCreate some levels first or check the default save folder setting.", "OK");
             return;
         }
-
-        string[] jsonFiles = Directory.GetFiles(basePath, "*.json");
-        if (jsonFiles.Length == 0)
+        
+        string[] levelFiles = Directory.GetFiles(gridLevelsPath, "*.asset");
+        if (levelFiles.Length == 0)
         {
-            EditorUtility.DisplayDialog("No Files Found", $"No JSON files found in {basePath}", "OK");
+            EditorUtility.DisplayDialog("No Levels Found", 
+                $"No .asset files found in {gridLevelsPath}", "OK");
             return;
         }
-
-        // Show file selection dialog
-        string[] fileNames = new string[jsonFiles.Length];
-        for (int i = 0; i < jsonFiles.Length; i++)
-        {
-            fileNames[i] = Path.GetFileName(jsonFiles[i]);
-        }
-
-        // Create a simple popup menu (using GenericMenu as a workaround)
+        
+        // Show level selection menu
         GenericMenu menu = new GenericMenu();
-        for (int i = 0; i < jsonFiles.Length; i++)
+        foreach (string filePath in levelFiles)
         {
-            string filePath = jsonFiles[i];
-            menu.AddItem(new GUIContent(fileNames[i]), false, () =>
+            GridLevelDataSO level = AssetDatabase.LoadAssetAtPath<GridLevelDataSO>(filePath);
+            if (level != null)
             {
-                selectedImportFilePath = filePath;
-                LoadPreviewData(system);
-            });
+                string displayName = $"{level.levelName} ({level.pieceCount} pieces)";
+                menu.AddItem(new GUIContent(displayName), false, () => {
+                    selectedImportLevel = level;
+                    Repaint();
+                });
+            }
         }
         menu.ShowAsContext();
     }
-
+    
+    private void ImportCurrentLevel(GridExportImportSystem system)
+    {
+        GridLevelDataSO currentLevel = system.GetCurrentLevel();
+        if (currentLevel != null)
+        {
+            ImportFromScriptableObject(system, currentLevel);
+        }
+        else
+        {
+            EditorUtility.DisplayDialog("No Current Level", 
+                "No current level assigned to the GridExportImportSystem!", "OK");
+        }
+    }
+    
+    #endregion
+    
+    #region Utility Methods
+    
+    private void CreateNewLevel()
+    {
+        GridLevelDataSO newLevel = ScriptableObject.CreateInstance<GridLevelDataSO>();
+        newLevel.levelName = "NewGridLevel";
+        
+        string savePath = "Assets/GridLevels/";
+        if (!Directory.Exists(savePath))
+        {
+            Directory.CreateDirectory(savePath);
+        }
+        
+        string fileName = AssetDatabase.GenerateUniqueAssetPath(Path.Combine(savePath, "NewGridLevel.asset"));
+        AssetDatabase.CreateAsset(newLevel, fileName);
+        AssetDatabase.SaveAssets();
+        AssetDatabase.Refresh();
+        
+        EditorUtility.FocusProjectWindow();
+        Selection.activeObject = newLevel;
+        
+        EditorUtility.DisplayDialog("Level Created", 
+            $"New grid level created at:\n{fileName}", "OK");
+    }
+    
+    private void FindAllGridLevels()
+    {
+        string[] guids = AssetDatabase.FindAssets("t:GridLevelDataSO");
+        
+        if (guids.Length == 0)
+        {
+            EditorUtility.DisplayDialog("No Levels Found", 
+                "No GridLevelDataSO assets found in the project.", "OK");
+            return;
+        }
+        
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+        sb.AppendLine($"Found {guids.Length} Grid Level(s):\n");
+        
+        foreach (string guid in guids)
+        {
+            string path = AssetDatabase.GUIDToAssetPath(guid);
+            GridLevelDataSO level = AssetDatabase.LoadAssetAtPath<GridLevelDataSO>(path);
+            if (level != null)
+            {
+                sb.AppendLine($"• {level.levelName} ({level.pieceCount} pieces) - {path}");
+            }
+        }
+        
+        EditorUtility.DisplayDialog("Grid Levels Found", sb.ToString(), "OK");
+    }
+    
     #endregion
 }
+
 #endif
