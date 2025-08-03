@@ -39,7 +39,7 @@ MonoBehaviour:
     inventoryPreset: {fileID: 11400000, guid: 1406970131141aa44b2296b0efb8e4f5, type: 2}
     sceneName: Level
   - levelNumber: 6
-    subtitle: Sprialling Out Of Controll
+    subtitle: Spiralling Out Of Controll
     gridData: {fileID: 11400000, guid: 968f9fc5e98f8334ea11702c269a2f2b, type: 2}
     inventoryPreset: {fileID: 11400000, guid: d4ba50c4f42d0324c9fecec9b08efefa, type: 2}
     sceneName: Level

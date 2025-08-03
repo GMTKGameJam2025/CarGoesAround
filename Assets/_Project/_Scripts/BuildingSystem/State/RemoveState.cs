@@ -51,7 +51,7 @@ public class RemoveState : IBuildingState
     private bool CheckIfSelectionIsValid(Vector3Int gridPosition)
     {
         Vector2Int gridPos = new Vector2Int(gridPosition.x, gridPosition.y);
-        return !(_gridManager.CanRemoveOnCell(gridPos));
+        return (_gridManager.CanRemoveOnCell(gridPos));
     }
 
     public void UpdateState(Vector3Int gridPosition)
