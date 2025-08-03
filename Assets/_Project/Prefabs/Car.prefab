@@ -50,6 +50,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movement: {fileID: 1049797297032759983}
+  engineSound: {fileID: 8300000, guid: 7e680c312130abe4fa1b4986f82e7f07, type: 3}
+  minPitch: 0.8
+  maxPitch: 1.5
+  minVolume: 0.3
+  maxVolume: 0.8
 --- !u!114 &1049797297032759983
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -104,7 +109,7 @@ MonoBehaviour:
   explosionRadius: 5
   explosionUpwardModifier: 3
   explosionEffectPrefab: {fileID: 5259346939413582324, guid: be6c3ec469c3ec94f9412b47092c5c78, type: 3}
-  explosionSound: {fileID: 0}
+  explosionSound: {fileID: 8300000, guid: 0020f1ef5f565b840b61d93bd6d1c0ad, type: 3}
   crashForce: 200
   crashRadius: 3
   crashDownwardModifier: 2
