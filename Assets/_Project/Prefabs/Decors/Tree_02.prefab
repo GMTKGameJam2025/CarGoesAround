@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 681118149996984433}
-  m_Layer: 0
+  - component: {fileID: 2081248630050584766}
+  m_Layer: 11
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +33,27 @@ Transform:
   - {fileID: 1346171788424140175}
   m_Father: {fileID: 7863884804436902628}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &2081248630050584766
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1159046832163209420}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.75587445, z: 0}
 --- !u!1 &4076170295652524540
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +63,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7863884804436902628}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Tree_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -75,7 +97,7 @@ GameObject:
   - component: {fileID: 3370470151250213060}
   - component: {fileID: 677511339206193014}
   - component: {fileID: 3238310770504958591}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: tree_02
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +181,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1346171788424140175}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}

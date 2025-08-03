@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1919842393550738776}
-  m_Layer: 0
+  - component: {fileID: 7097664093295852773}
+  m_Layer: 11
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -32,6 +33,27 @@ Transform:
   - {fileID: 2085304687965475395}
   m_Father: {fileID: 6111221247580266969}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &7097664093295852773
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 602309285877026364}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 2, y: 1.4, z: 2}
+  m_Center: {x: 0, y: 0.69, z: 0}
 --- !u!1 &5164299799648553631
 GameObject:
   m_ObjectHideFlags: 0
@@ -41,7 +63,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6111221247580266969}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rock_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2085304687965475395}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -107,7 +129,7 @@ GameObject:
   - component: {fileID: 2077094857973230231}
   - component: {fileID: 1390897467360645873}
   - component: {fileID: 1425028538669202266}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rock_03
   m_TagString: Untagged
   m_Icon: {fileID: 0}

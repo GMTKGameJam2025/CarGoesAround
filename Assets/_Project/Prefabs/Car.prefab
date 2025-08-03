@@ -98,7 +98,7 @@ MonoBehaviour:
   roadCheckDistance: 1
   crashLayerMask:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 2048
   explosionForce: 500
   explosionRadius: 5
   explosionUpwardModifier: 3

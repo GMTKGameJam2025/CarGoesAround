@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 9018650262814270532}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41,7 +41,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3415718419459397162}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Barrel
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -73,7 +73,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3296435952668298003}
-  m_Layer: 0
+  - component: {fileID: 4093307804465839491}
+  m_Layer: 11
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,6 +97,27 @@ Transform:
   - {fileID: 9018650262814270532}
   m_Father: {fileID: 3415718419459397162}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &4093307804465839491
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5713330255209551087}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 1.5, z: 1}
+  m_Center: {x: 0, y: 0.8, z: 0}
 --- !u!1 &6552818794618661513
 GameObject:
   m_ObjectHideFlags: 0
@@ -107,7 +129,7 @@ GameObject:
   - component: {fileID: 745987688423942098}
   - component: {fileID: 9202487091317038045}
   - component: {fileID: 7542727322260025401}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: barrel_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
