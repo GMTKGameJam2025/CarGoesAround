@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -21,17 +22,15 @@ public class GridBuildPiece : MonoBehaviour
     public List<GridBuildPiece> gridObjectsOnTop;
     public List<Vector2Int> occupiedPositions;
 
-    private GridManager _gridManager;
-    
-    public void Init(GridManager gridManager, BuildPieceData data)
+    public string builtSource;
+
+    public void Init(BuildPieceData data, string source = "")
     {
         if (data == null)
         {
             Debug.LogError("BuildPieceData is null.");
             return;
         }
-
-        _gridManager = gridManager;
 
         id = data.ID;
         sizeOnGrid = data.Size;
@@ -44,6 +43,8 @@ public class GridBuildPiece : MonoBehaviour
         gridObjectsOnTop = new List<GridBuildPiece>();
         occupiedPositions = new List<Vector2Int>();
 
+        builtSource = source;
+
         OnBuild();
     }
 
@@ -53,7 +54,7 @@ public class GridBuildPiece : MonoBehaviour
 
         foreach (IBuildable buildable in allBuildable)
         {
-            buildable.OnBuild();
+            buildable.OnBuild(this);
         }
     }
 }

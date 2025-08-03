@@ -5,8 +5,8 @@ public class CarSpawner : MonoBehaviour, IBuildable
     [SerializeField] private GameObject carPrefab;
     [SerializeField] private GameObject carVisual;
     [SerializeField] private float dropHeight;
-    
-    public void OnBuild()
+
+    public void OnBuild(GridBuildPiece piece)
     {
         carVisual.SetActive(false);
         Vector3 dropPosition = carVisual.transform.position;

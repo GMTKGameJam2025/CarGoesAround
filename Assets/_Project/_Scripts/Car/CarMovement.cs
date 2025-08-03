@@ -12,32 +12,48 @@ public class CarMovement : MonoBehaviour
     public float turnSpeed = 30f;
 
     [Header("Node detection settings")]
+    public float spawnYOffset = 0.5f;
     public float probeRadius = 2f;
     public float probeDistance = 5f;
     public LayerMask trackNodeLayer;
+    public FloatingCursor startMarkerPrefab;
 
     [Header("Ground settings")]
     public float groundCheckDistance = 0.5f;
     public float groundCheckLength = 10f;
     public LayerMask groundCheckMask;
-
-    private TrackNode _destNode;
+    
     private Rigidbody _rb;
     private Vector3 _currentDirection;
     private float _currentSpeed;
+    
+    private TrackNode _destNode;
     private TrackNode _previousNode;
+    
     private bool _isGrounded;
     private bool _wasGroundedThisFrame;
     private bool _isDestroyed = false;
+
+    private TrackNode _startNode;
+    private bool _reachedStartNode;
+    private FloatingCursor _startMarker;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _currentDirection = transform.rotation * Vector3.forward;
-
+        
+        if (startMarkerPrefab)
+        {
+            _startMarker = Instantiate(startMarkerPrefab, Vector3.zero, Quaternion.identity);
+            _startMarker.gameObject.SetActive(false);
+        }
+        
         if (!currentNode) return;
 
-        transform.position = currentNode.transform.position;
+        Vector3 spawnPosition = currentNode.transform.position;
+        spawnPosition.y += spawnYOffset;
+        transform.position = spawnPosition;
         _destNode = GetNextNode();
     }
 
@@ -100,6 +116,18 @@ public class CarMovement : MonoBehaviour
 
     private void Update()
     {
+        //Acquiring startNode if not set
+        if (currentNode && !_startNode)
+        {
+            _startNode = currentNode;
+            if (_startMarker)
+            {
+                _startMarker.UpdateCursorPositionInstant(_startNode.transform.position);
+                _startMarker.gameObject.SetActive(true);
+                _startMarker.StartAnimation();
+            }
+        } 
+        
         if (!_destNode)
         {
             if (currentNode) _destNode = GetNextNode();
@@ -134,6 +162,12 @@ public class CarMovement : MonoBehaviour
                 _previousNode = currentNode;
                 currentNode = _destNode;
                 _destNode = GetNextNode();
+
+                if (currentNode == _startNode && !_reachedStartNode)
+                {
+                    _reachedStartNode = true;
+                    EventBus.Fire<WinEvent>(new());
+                }
 
                 // Try to auto-detect curve exit
                 if (_previousNode && currentNode && _destNode)
@@ -204,6 +238,10 @@ public class CarMovement : MonoBehaviour
     public void SetDestroyed(bool destroyed)
     {
         _isDestroyed = destroyed;
+        if (_isDestroyed)
+        {
+            Destroy(_startMarker.gameObject);
+        }
     }
 
     // Public method to check if car is destroyed
@@ -232,5 +270,13 @@ public class CarMovement : MonoBehaviour
         Gizmos.color = Color.yellow;
         Vector3 probeOrigin = transform.position + transform.forward * probeDistance * 0.5f;
         Gizmos.DrawWireSphere(probeOrigin, probeRadius);
+
+        if (!Application.IsPlaying(this) && currentNode)
+        {
+            Vector3 spawnPosition = currentNode.transform.position;
+            spawnPosition.y += spawnYOffset;
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(currentNode.transform.position, spawnPosition);
+        }
     }
 }

@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 3
   tags:
   - CinemachineTarget
+  - Previewable
   layers:
   - Default
   - TransparentFX
@@ -17,8 +18,8 @@ TagManager:
   - Ground
   - 
   - Road
-  - 
-  - 
+  - Obstacle
+  - Decor
   - 
   - 
   - 

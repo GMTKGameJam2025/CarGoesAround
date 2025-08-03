@@ -48,6 +48,7 @@ public class CarExplosionHandler : MonoBehaviour
             if (!IsOnRoad())
             {
                 ExplodeCar();
+                EventBus.Fire<GameOverEvent>(new("You let the car off the road"));
                 return;
             }
         }
@@ -56,6 +57,7 @@ public class CarExplosionHandler : MonoBehaviour
         if (((1 << collision.gameObject.layer) & crashLayerMask) != 0)
         {
             CrashCar();
+            EventBus.Fire<GameOverEvent>(new("You let the car crashed into something"));
         }
     }
 

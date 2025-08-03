@@ -17,8 +17,8 @@ public class InventoryItemUI : MonoBehaviour
     [SerializeField] private Color normalColor = Color.white;
     [SerializeField] private Color unavailableColor = Color.gray;
 
-    private InventoryItem inventoryItem;
-    private int currentQuantity;
+    private InventoryItem _inventoryItem;
+    private int _currentQuantity;
 
     public event Action OnItemClicked;
 
@@ -35,8 +35,8 @@ public class InventoryItemUI : MonoBehaviour
     // Setup the UI element with inventory item data
     public void Setup(InventoryItem item, int quantity)
     {
-        inventoryItem = item;
-        currentQuantity = quantity;
+        _inventoryItem = item;
+        _currentQuantity = quantity;
 
         // Set icon
         if (iconImage != null && item.ItemIcon != null)
@@ -57,7 +57,7 @@ public class InventoryItemUI : MonoBehaviour
     // Update the quantity display
     public void UpdateQuantity(int newQuantity)
     {
-        currentQuantity = newQuantity;
+        _currentQuantity = newQuantity;
 
         // Update quantity text
         if (quantityText != null)
@@ -91,6 +91,6 @@ public class InventoryItemUI : MonoBehaviour
         }
     }
 
-    public InventoryItem GetInventoryItem() => inventoryItem;
-    public int GetCurrentQuantity() => currentQuantity;
+    public InventoryItem GetInventoryItem() => _inventoryItem;
+    public int GetCurrentQuantity() => _currentQuantity;
 }
