@@ -370,6 +370,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trackNodeParent: {fileID: 438738619099822302}
   trackNodes: []
+  trackRenderer: {fileID: 1241389090681787093}
+  defaultMaterial: {fileID: 2100000, guid: 825e1b17c5be8fa4998b3223dcdb6486, type: 2}
+  lockedMaterial: {fileID: 2100000, guid: 80569722b3a50bc4587d3c166c86c9ec, type: 2}
 --- !u!1 &7946580379013448048
 GameObject:
   m_ObjectHideFlags: 0

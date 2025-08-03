@@ -30,7 +30,7 @@ public class BuildState : IBuildingState
         _previewSystem = previewSystem;
         _soundFeedback = soundFeedback;
         
-        previewSystem.StartShowingPlacementPreview(_piece.Prefab, _piece.Size);
+        previewSystem.StartShowingPlacementPreview(_piece.PreviewPrefab ? _piece.PreviewPrefab : _piece.Prefab, _piece.Size);
     }
     
     public void EndState()
