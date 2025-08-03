@@ -3,14 +3,14 @@ using System.Collections;
 using TMPro;
 using UnityEngine;
 
-public class CarWarehouse : MonoBehaviour, IBuildable
+public class CarWarehouse : MonoBehaviour
 {
     [SerializeField] private float startDuration = 15f;
     [SerializeField] private TMP_Text text;
     [SerializeField] private GameObject car;
 
     private float _currentTime;
-    private bool _hasCarStarted;
+    private bool _isTimerActive;
     
     private void OnEnable()
     {
@@ -22,43 +22,32 @@ public class CarWarehouse : MonoBehaviour, IBuildable
         EventBus.Unsubscribe<GameStartedEvent>(GameStarted);
     }
 
-    private void Awake()
+    private void Start()
     {
         car.SetActive(false);
+        _currentTime = startDuration;
+        _isTimerActive = false;
+        text.text = Mathf.RoundToInt(startDuration).ToString();
     }
 
-    public void GameStarted(GameStartedEvent @event)
+    private void GameStarted(GameStartedEvent @event)
     {
-        _currentTime = startDuration;
-    }
-
-    public void OnBuild(GridBuildPiece piece)
-    {
-        if (piece.builtSource == "GridLoader")
-        {
-            return;
-        }
-
-        Debug.Log("Warehouse Built from GridLoader");
-        _currentTime = startDuration;
+        _isTimerActive = true;
     }
 
     private void Update()
     {
-        if (!_hasCarStarted)
+        if (!_isTimerActive)
+            return;
+        if (_currentTime > 0)
         {
-            if (_currentTime > 0)
-            {
-                _currentTime -= Time.deltaTime;
-                text.text = Mathf.RoundToInt(_currentTime).ToString();
-            }
-            else
-            {
-                if (_hasCarStarted) return;
-
-                _hasCarStarted = true;
-                car.SetActive(true);
-            }
+            _currentTime -= Time.deltaTime;
+            text.text = Mathf.RoundToInt(_currentTime).ToString();
+        }
+        else
+        {
+            _isTimerActive = false;
+            car.SetActive(true);
         }
     }
 }

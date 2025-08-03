@@ -541,11 +541,13 @@ public class GridImporter
             // Use BuildingManager to create the piece properly
             Vector3 position = pieceData.worldPosition;
             Quaternion rotation = Quaternion.Euler(pieceData.rotation);
-            GridBuildPiece piece = _system.buildingManager.CreateBuildPiece(buildData, position, rotation);
+            
+            // Create the piece using BuildingManager (this will call Init internally)
+            GridBuildPiece piece = _system.buildingManager.CreateBuildPiece(buildData, position, rotation, "GridLoader");
 
-            // Apply saved data BEFORE calling Init
-            ApplySavedDataBeforeInit(piece, pieceData);
-            piece.Init(buildData, "GridLoader");
+            // Apply saved data AFTER the piece is created and initialized
+            // This overwrites the default values with the saved ones
+            ApplySavedDataAfterInit(piece, pieceData);
 
             idToPieceMap[pieceData.uniqueId] = piece;
         }
@@ -622,8 +624,10 @@ public class GridImporter
         }
     }
 
-    private void ApplySavedDataBeforeInit(GridBuildPiece piece, GridBuildPieceData savedData)
+    private void ApplySavedDataAfterInit(GridBuildPiece piece, GridBuildPieceData savedData)
     {
+        // Override the initialized values with saved data
+        // Note: ID should already be correct from BuildPieceData, but ensure it matches
         piece.id = savedData.pieceId;
         piece.sizeOnGrid = savedData.sizeOnGrid;
         piece.canBuildOnTop = savedData.canBuildOnTop;
@@ -632,9 +636,16 @@ public class GridImporter
         piece.layer = savedData.layer;
         piece.canBeBuiltOnLayers = savedData.canBeBuiltOnLayers;
         
-        // Initialize collections to avoid null references
+        // Replace the occupied positions with saved data
         piece.occupiedPositions = new List<Vector2Int>(savedData.occupiedPositions);
-        piece.gridObjectsOnTop = new List<GridBuildPiece>(); // Will be populated in RestoreRelationships
+        
+        // Initialize gridObjectsOnTop if null, otherwise clear it
+        // (Will be populated later in RestoreRelationships)
+        if (piece.gridObjectsOnTop == null)
+            piece.gridObjectsOnTop = new List<GridBuildPiece>();
+        else
+            piece.gridObjectsOnTop.Clear();
+            
     }
 
     private void ClearGrid()

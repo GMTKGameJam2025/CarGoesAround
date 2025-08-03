@@ -22,6 +22,8 @@ public class TrackPiece : MonoBehaviour, IBuildable
     public Renderer trackRenderer;
     public Material defaultMaterial;
     public Material lockedMaterial;
+
+    private GridBuildPiece _piece;
     
     void Awake()
     {
@@ -51,12 +53,8 @@ public class TrackPiece : MonoBehaviour, IBuildable
                 node.AutoConnect();
             }
         }
-        
-        // Set visual material based on whether it can be removed
-        if (trackRenderer != null)
-        {
-            trackRenderer.material = piece.canBeRemovedFromGrid ? defaultMaterial : lockedMaterial;
-        }
+
+        _piece = piece;
     }
     
     
@@ -73,12 +71,19 @@ public class TrackPiece : MonoBehaviour, IBuildable
             }
         }
     }
-    
+
+    private void OnEnable()
+    {
+        EventBus.Subscribe<BuildModeChangedEvent>(OnBuildModeChanged);
+    }
+
     /// <summary>
     /// Called when the object is being destroyed
     /// </summary>
     private void OnDisable()
     {
+        EventBus.Unsubscribe<BuildModeChangedEvent>(OnBuildModeChanged);
+        
         // Emergency cleanup in case RemoveTrackPiece() wasn't called
         if (trackNodes != null)
         {
@@ -132,5 +137,14 @@ public class TrackPiece : MonoBehaviour, IBuildable
             }
         }
         return totalConnections;
+    }
+
+    public void OnBuildModeChanged(BuildModeChangedEvent @event)
+    {
+        // Set visual material based on whether it can be removed
+        if (trackRenderer != null)
+        {
+            trackRenderer.material = !_piece.canBeRemovedFromGrid && @event.currentBuildMode == BuildMode.Remove ? lockedMaterial : defaultMaterial;
+        }
     }
 }

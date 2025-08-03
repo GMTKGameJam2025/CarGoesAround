@@ -3,6 +3,23 @@ using System.Collections;
 using System.Collections.Generic;
 using System;
 
+public enum BuildMode
+{
+    None,
+    Build,
+    Remove
+}
+
+public struct BuildModeChangedEvent : IGameEvent
+{
+    public BuildMode currentBuildMode;
+
+    public BuildModeChangedEvent(BuildMode mode)
+    {
+        currentBuildMode = mode;
+    }
+}
+
 public class BuildingManager : MonoBehaviour
 {
     [SerializeField] private InputManager inputManager;
@@ -31,6 +48,9 @@ public class BuildingManager : MonoBehaviour
         Exit();
         gridVisualization.SetActive(true);
         _buildingState = new BuildState(id, database, this, inventoryManager, gridManager, preview, soundFeedback);
+        
+        EventBus.Fire(new BuildModeChangedEvent(BuildMode.Build));
+        
         inputManager.OnClick += Click;
         inputManager.OnExit += Exit;
         inputManager.OnRotate += Rotate;
@@ -41,6 +61,9 @@ public class BuildingManager : MonoBehaviour
         Exit();
         gridVisualization.SetActive(true);
         _buildingState = new RemoveState(this, gridManager, inventoryManager, preview, soundFeedback);
+        
+        EventBus.Fire(new BuildModeChangedEvent(BuildMode.Remove));
+        
         inputManager.OnClick += Click;
         inputManager.OnExit += Exit;
     }
@@ -82,6 +105,8 @@ public class BuildingManager : MonoBehaviour
         
         _lastDetectedPosition = Vector3Int.zero;
         _buildingState = null;
+        
+        EventBus.Fire(new BuildModeChangedEvent(BuildMode.None));
     }
 
     private void Update()
@@ -100,7 +125,7 @@ public class BuildingManager : MonoBehaviour
         _lastDetectedPosition = gridPosition;
     }
 
-    public GridBuildPiece CreateBuildPiece(BuildPieceData pieceData, Vector3 position, Quaternion rotation)
+    public GridBuildPiece CreateBuildPiece(BuildPieceData pieceData, Vector3 position, Quaternion rotation, string source = "")
     {
         GameObject pieceObj = Instantiate(pieceData.Prefab, position, rotation);
         pieceObj.transform.parent = _objectsParent;
@@ -109,7 +134,7 @@ public class BuildingManager : MonoBehaviour
             pieceComponent = pieceObj.AddComponent<GridBuildPiece>();
         }
 
-        pieceComponent.Init(pieceData);
+        pieceComponent.Init(pieceData, source);
         return pieceComponent;
     }
 
