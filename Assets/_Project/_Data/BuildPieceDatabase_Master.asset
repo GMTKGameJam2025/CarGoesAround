@@ -134,6 +134,7 @@ MonoBehaviour:
     <ID>k__BackingField: 13
     <Size>k__BackingField: {x: 1, y: 1}
     <Prefab>k__BackingField: {fileID: 1973920285503336503, guid: af0da0bfa31afce47baf13b03bcccfbf, type: 3}
+    <PreviewPrefab>k__BackingField: {fileID: 0}
     canBuildOnTop: 0
     storeThisToGrid: 1
     layer: 8
@@ -183,6 +184,15 @@ MonoBehaviour:
     storeThisToGrid: 1
     layer: 4
     canBeBuiltOnLayers: 9
+  - <Name>k__BackingField: Grass Tile
+    <ID>k__BackingField: 19
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 859175231012714912, guid: 1f18428fc694abd40924ed33ac282a89, type: 3}
+    <PreviewPrefab>k__BackingField: {fileID: 0}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    layer: 1
+    canBeBuiltOnLayers: -1
   - <Name>k__BackingField: Car
     <ID>k__BackingField: 30
     <Size>k__BackingField: {x: 1, y: 1}

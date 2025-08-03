@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 1274625695578128345}
   m_Layer: 11
   m_Name: barrel_02
-  m_TagString: Untagged
+  m_TagString: Previewable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -217,14 +217,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveSpeed: 5
   lifetime: 10
-  radius: 0.5
-  groundCheckDistance: 0.5
-  groundCheckLength: 2
-  groundCheckMask:
-    serializedVersion: 2
-    m_Bits: 1280
-  enableGridSnapping: 1
-  gridSize: 0.5
 --- !u!1 &7677011361577055384
 GameObject:
   m_ObjectHideFlags: 0

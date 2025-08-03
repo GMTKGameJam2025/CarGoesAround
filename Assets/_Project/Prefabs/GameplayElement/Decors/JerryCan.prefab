@@ -9,7 +9,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5222429093042193733}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 6660659237406639276}
   - component: {fileID: 6279460804562345555}
   - component: {fileID: 5437916940101851139}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Jerry Can
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -127,7 +127,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1182238145435348962}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -159,7 +159,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1099637303456669444}
-  m_Layer: 0
+  m_Layer: 8
   m_Name: JerryCan
   m_TagString: Untagged
   m_Icon: {fileID: 0}

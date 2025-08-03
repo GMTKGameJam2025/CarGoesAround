@@ -90,6 +90,10 @@ MonoBehaviour:
     itemName: Tree (2x2)
     itemIcon: {fileID: 21300000, guid: 87f1e1066c175bb4b80ca7fd9f0f4963, type: 3}
     initialQuantity: 999
+  - itemId: 19
+    itemName: Grass Tile
+    itemIcon: {fileID: 21300000, guid: 590cf07c7775bfc4aa329c9a3427c2bb, type: 3}
+    initialQuantity: 999
   - itemId: 30
     itemName: Car
     itemIcon: {fileID: 21300000, guid: 374e90f52827a2645b023d3790ea5ef2, type: 3}
