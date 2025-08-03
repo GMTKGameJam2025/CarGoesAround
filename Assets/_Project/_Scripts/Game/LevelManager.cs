@@ -19,6 +19,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private InventoryManager inventory;
 
     private LevelData _levelData;
+    private bool _levelEnded;
     
     private void OnEnable()
     {
@@ -38,6 +39,8 @@ public class LevelManager : MonoBehaviour
         win.gameObject.SetActive(false);
         lose.gameObject.SetActive(false);
 
+        _levelEnded = false;
+
         _levelData = GameManager.Instance.GetCurrentLevelData();
         gridExportSystem.LoadFromScriptableObject(_levelData.gridData);
         inventory.SetInventoryPreset(_levelData.inventoryPreset);
@@ -54,13 +57,17 @@ public class LevelManager : MonoBehaviour
 
     private void StartLose(GameOverEvent @event)
     {
+        if (_levelEnded) return;
         lose.Initialize(@event.GameOverMessage);
+        _levelEnded = false;
         StartCoroutine(lose.PlayLevelLose());
     }
     
     private void StartWin(WinEvent @event)
     {
+        if (_levelEnded) return;
         win.Initialize(_levelData.levelNumber);
+        _levelEnded = true;
         StartCoroutine(win.PlayLevelWin());
     }
 }
