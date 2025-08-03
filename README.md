@@ -2,7 +2,7 @@
 
 A grid-based building and puzzle game where players construct tracks and guide cars through challenging levels.
 
-**Itch.io link[https://therealnovelist.itch.io/car-goes-around] 
+** [Itch.io link](https://therealnovelist.itch.io/car-goes-around) **
 
 ## 🎮 Game Overview
 
