@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-#if UNITY_EDITOR
-using UnityEditor;
-#endif
 
-// ScriptableObject version of GridExportData
+[System.Serializable]
+public class GridExportData
+{
+    public List<GridBuildPieceData> buildPieces = new List<GridBuildPieceData>();
+    public Vector2Int gridSize;
+    public float cellSize;
+    public Vector3 gridOrigin;
+}
 
 [System.Serializable]
 public class GridBuildPieceData
 {
-    public string uniqueId;
-    public int pieceId;
+    public string uniqueId; // Generated unique ID for this piece
+    public int pieceId; // The original ID from BuildPieceData
     public Vector3 worldPosition;
     public Vector3 rotation;
     public Vector2Int sizeOnGrid;
@@ -21,7 +25,9 @@ public class GridBuildPieceData
     public BuildLayer layer;
     public BuildLayer canBeBuiltOnLayers;
     public List<Vector2Int> occupiedPositions = new List<Vector2Int>();
-    public List<string> objectsOnTopIds = new List<string>();
+    public List<string> objectsOnTopIds = new List<string>(); // References to other pieces on top
+    
+    // Additional data for reconstruction
     public Direction placementDirection;
     public Vector2Int originGridPosition;
 }
@@ -33,38 +39,14 @@ public class GridExportImportSystem : MonoBehaviour
     public BuildPieceDatabaseSO database;
     public BuildingManager buildingManager;
     
-    [Header("ScriptableObject Settings")]
-    [SerializeField] private GridLevelDataSO currentLevelData;
-    [SerializeField] private string defaultSaveFolder = "Assets/GridLevels/";
-    [SerializeField] private bool autoLoadOnStart = true;
-    
     [Header("Events")]
-    public UnityEngine.Events.UnityEvent<GridLevelDataSO> OnGridLoaded;
+    public UnityEngine.Events.UnityEvent<GridExportData> OnGridLoaded;
     public UnityEngine.Events.UnityEvent OnGridLoadFailed;
-    public UnityEngine.Events.UnityEvent<GridLevelDataSO> OnGridExported;
-
-    private void Start()
-    {
-        if (autoLoadOnStart && currentLevelData != null)
-        {
-            StartCoroutine(InitializeAndLoad());
-        }
-    }
-
-    private System.Collections.IEnumerator InitializeAndLoad()
-    {
-        // Wait for grid initialization
-        while (gridManager?.Grid == null)
-        {
-            yield return new WaitForEndOfFrame();
-        }
-        
-        LoadFromScriptableObject(currentLevelData);
-    }
-
+    public UnityEngine.Events.UnityEvent<GridExportData> OnGridExported;
+    
     #region Export Methods
     
-    public GridLevelDataSO ExportGridToScriptableObject(string fileName = null)
+    public GridExportData ExportGrid()
     {
         if (gridManager?.Grid == null)
         {
@@ -72,34 +54,21 @@ public class GridExportImportSystem : MonoBehaviour
             return null;
         }
 
-        // Create new ScriptableObject instance
-        GridLevelDataSO levelData = ScriptableObject.CreateInstance<GridLevelDataSO>();
-        
-        // Set basic data
-        levelData.levelName = fileName ?? $"GridLevel_{DateTime.Now:yyyyMMdd_HHmmss}";
-        levelData.gridSize = new Vector2Int(gridManager.Grid.GetWidth(), gridManager.Grid.GetHeight());
-        levelData.cellSize = gridManager.Grid.GetCellSize();
-        levelData.gridOrigin = gridManager.transform.position;
-        levelData.creationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
+        GridExportData exportData = new GridExportData
+        {
+            gridSize = new Vector2Int(gridManager.Grid.GetWidth(), gridManager.Grid.GetHeight()),
+            cellSize = gridManager.Grid.GetCellSize(),
+            gridOrigin = gridManager.transform.position
+        };
 
-        // Export grid pieces
-        ExportGridPieces(levelData);
-
-        Debug.Log($"Exported {levelData.buildPieces.Count} build pieces to ScriptableObject.");
-        OnGridExported?.Invoke(levelData);
-        
-        return levelData;
-    }
-
-    private void ExportGridPieces(GridLevelDataSO levelData)
-    {
+        // Dictionary to map GridBuildPiece instances to their unique IDs
         Dictionary<GridBuildPiece, string> pieceToIdMap = new Dictionary<GridBuildPiece, string>();
         HashSet<GridBuildPiece> processedPieces = new HashSet<GridBuildPiece>();
 
         // First pass: Collect all unique build pieces and assign IDs
-        for (int x = 0; x < levelData.gridSize.x; x++)
+        for (int x = 0; x < exportData.gridSize.x; x++)
         {
-            for (int z = 0; z < levelData.gridSize.y; z++)
+            for (int z = 0; z < exportData.gridSize.y; z++)
             {
                 GridCell cell = gridManager.Grid.GetGridObject(x, z);
                 if (cell != null)
@@ -120,8 +89,12 @@ public class GridExportImportSystem : MonoBehaviour
             string uniqueId = kvp.Value;
 
             GridBuildPieceData pieceData = CreatePieceData(piece, uniqueId, pieceToIdMap);
-            levelData.buildPieces.Add(pieceData);
+            exportData.buildPieces.Add(pieceData);
         }
+
+        Debug.Log($"Exported {exportData.buildPieces.Count} build pieces from grid.");
+        OnGridExported?.Invoke(exportData);
+        return exportData;
     }
 
     private void CollectAllPiecesInStack(GridCell cell, HashSet<GridBuildPiece> processedPieces, Dictionary<GridBuildPiece, string> pieceToIdMap)
@@ -205,112 +178,96 @@ public class GridExportImportSystem : MonoBehaviour
         Vector2Int second = occupiedPositions[1];
         Vector2Int diff = second - origin;
 
+        // Determine direction based on how positions are laid out
         if (diff.x == 1 && diff.y == 0) return Direction.Down;
         if (diff.x == 0 && diff.y == 1) return Direction.Left;
-        return Direction.Down;
+        
+        return Direction.Down; // Default
     }
 
-    #if UNITY_EDITOR
-    public bool SaveScriptableObjectToFile(GridLevelDataSO levelData, string fileName = null)
+    public bool SaveToFile(GridExportData data, string filePath)
     {
         try
         {
-            if (levelData == null)
-            {
-                Debug.LogError("LevelData is null!");
-                return false;
-            }
-
-            // Ensure the directory exists
-            if (!System.IO.Directory.Exists(defaultSaveFolder))
-            {
-                System.IO.Directory.CreateDirectory(defaultSaveFolder);
-            }
-
-            // Generate filename if not provided
-            if (string.IsNullOrEmpty(fileName))
-            {
-                fileName = $"{levelData.levelName}.asset";
-            }
-            else if (!fileName.EndsWith(".asset"))
-            {
-                fileName += ".asset";
-            }
-
-            string fullPath = System.IO.Path.Combine(defaultSaveFolder, fileName);
-
-            // Create the asset
-            AssetDatabase.CreateAsset(levelData, fullPath);
-            AssetDatabase.SaveAssets();
-            AssetDatabase.Refresh();
-
-            Debug.Log($"Grid level saved to: {fullPath}");
-            
-            // Select the created asset in the Project window
-            EditorUtility.FocusProjectWindow();
-            Selection.activeObject = levelData;
-
+            string json = JsonUtility.ToJson(data, true);
+            System.IO.File.WriteAllText(filePath, json);
+            Debug.Log($"Grid data saved to: {filePath}");
             return true;
         }
         catch (System.Exception e)
         {
-            Debug.LogError($"Failed to save ScriptableObject: {e.Message}");
+            Debug.LogError($"Failed to save grid data: {e.Message}");
             return false;
         }
     }
-    #endif
 
     #endregion
 
     #region Import Methods
-
-    public bool LoadFromScriptableObject(GridLevelDataSO levelData)
+    // Load from file path
+    public bool LoadFromFile(string filePath)
     {
-        if (levelData == null)
+        try
         {
-            Debug.LogError("Level data is null!");
+            if (!System.IO.File.Exists(filePath))
+            {
+                Debug.LogError($"File does not exist: {filePath}");
+                return false;
+            }
+
+            string json = System.IO.File.ReadAllText(filePath);
+            GridExportData data = JsonUtility.FromJson<GridExportData>(json);
+            return LoadGrid(data);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to load grid data: {e.Message}");
             OnGridLoadFailed?.Invoke();
             return false;
         }
-
-        if (!levelData.IsValid())
+    }
+    
+    public bool LoadFromTextAsset(TextAsset asset)
+    {
+        try
         {
-            Debug.LogError($"Level data '{levelData.name}' is invalid!");
+            string json = asset.text;
+            GridExportData data = JsonUtility.FromJson<GridExportData>(json);
+            return LoadGrid(data);
+        }
+        catch (System.Exception e)
+        {
+            Debug.LogError($"Failed to load grid data: {e.Message}");
             OnGridLoadFailed?.Invoke();
             return false;
         }
+    }
 
-        if (gridManager?.Grid == null)
+    // Core load method
+    public bool LoadGrid(GridExportData exportData)
+    {
+        if (exportData == null || gridManager?.Grid == null)
         {
-            Debug.LogError("GridManager or Grid is null!");
+            Debug.LogError("Export data or GridManager is null!");
             OnGridLoadFailed?.Invoke();
             return false;
         }
-
-        Debug.Log($"Loading level: {levelData.levelName}");
 
         // Clear existing grid
         ClearGrid();
 
-        // Set current level
-        currentLevelData = levelData;
-
         // Verify grid dimensions match
-        if (gridManager.Grid.GetWidth() != levelData.gridSize.x || gridManager.Grid.GetHeight() != levelData.gridSize.y)
+        if (gridManager.Grid.GetWidth() != exportData.gridSize.x || 
+            gridManager.Grid.GetHeight() != exportData.gridSize.y)
         {
             Debug.LogWarning("Grid size mismatch! Current grid size may not match saved data.");
         }
 
-        // Load the pieces
-        return LoadGridPieces(levelData);
-    }
-
-    private bool LoadGridPieces(GridLevelDataSO levelData)
-    {
+        // Dictionary to map unique IDs back to GridBuildPiece instances
         Dictionary<string, GridBuildPiece> idToPieceMap = new Dictionary<string, GridBuildPiece>();
 
         // First pass: Create all GameObjects and GridBuildPiece components
-        foreach (GridBuildPieceData pieceData in levelData.buildPieces)
+        foreach (GridBuildPieceData pieceData in exportData.buildPieces)
         {
             BuildPieceData buildData = database.objectsData.Find(p => p.ID == pieceData.pieceId);
             if (buildData == null)
@@ -324,18 +281,22 @@ public class GridExportImportSystem : MonoBehaviour
             Quaternion rotation = Quaternion.Euler(pieceData.rotation);
             GridBuildPiece piece = buildingManager.CreateBuildPiece(buildData, position, rotation);
 
-            // Apply saved data BEFORE calling Init
+            // Apply saved data BEFORE calling Init so OnBuild uses the saved state
             ApplySavedDataBeforeInit(piece, pieceData);
-            piece.Init(buildData);
+
+            // Initialize the piece - this will call OnBuild with the saved data already applied
+            piece.Init(buildData, "GridLoader");
 
             idToPieceMap[pieceData.uniqueId] = piece;
         }
 
-        // Second pass: Rebuild relationships
-        foreach (GridBuildPieceData pieceData in levelData.buildPieces)
+        // Second pass: Rebuild relationships and add to grid
+        foreach (GridBuildPieceData pieceData in exportData.buildPieces)
         {
-            if (!idToPieceMap.TryGetValue(pieceData.uniqueId, out GridBuildPiece piece)) continue;
+            if (!idToPieceMap.TryGetValue(pieceData.uniqueId, out GridBuildPiece piece))
+                continue;
 
+            // Rebuild objects on top relationships
             foreach (string topId in pieceData.objectsOnTopIds)
             {
                 if (idToPieceMap.TryGetValue(topId, out GridBuildPiece topPiece))
@@ -345,15 +306,17 @@ public class GridExportImportSystem : MonoBehaviour
             }
         }
 
-        // Third pass: Add pieces to grid in correct order
-        var sortedPieces = SortPiecesByStackOrder(levelData.buildPieces, idToPieceMap);
+        // Third pass: Add pieces to grid in the correct order (bottom to top)
+        var sortedPieces = SortPiecesByStackOrder(exportData.buildPieces, idToPieceMap);
 
         foreach (var pieceData in sortedPieces)
         {
-            if (!idToPieceMap.TryGetValue(pieceData.uniqueId, out GridBuildPiece piece)) continue;
+            if (!idToPieceMap.TryGetValue(pieceData.uniqueId, out GridBuildPiece piece))
+                continue;
 
             if (piece.storeThisToGrid)
             {
+                // Add to grid using the saved occupied positions
                 foreach (Vector2Int pos in piece.occupiedPositions)
                 {
                     if (gridManager.Grid.IsGridObjectInGrid(pos))
@@ -365,13 +328,14 @@ public class GridExportImportSystem : MonoBehaviour
             }
         }
 
-        Debug.Log($"Successfully loaded level '{levelData.levelName}' with {levelData.buildPieces.Count} pieces");
-        OnGridLoaded?.Invoke(levelData);
+        Debug.Log($"Successfully loaded {exportData.buildPieces.Count} build pieces to grid.");
+        OnGridLoaded?.Invoke(exportData);
         return true;
     }
 
     private void ApplySavedDataBeforeInit(GridBuildPiece piece, GridBuildPieceData savedData)
     {
+        // Apply saved data BEFORE calling Init so OnBuild will use this data
         piece.id = savedData.pieceId;
         piece.sizeOnGrid = savedData.sizeOnGrid;
         piece.canBuildOnTop = savedData.canBuildOnTop;
@@ -380,11 +344,14 @@ public class GridExportImportSystem : MonoBehaviour
         piece.layer = savedData.layer;
         piece.canBeBuiltOnLayers = savedData.canBeBuiltOnLayers;
         piece.occupiedPositions = new List<Vector2Int>(savedData.occupiedPositions);
+        
+        // Initialize the gridObjectsOnTop list (relationships will be rebuilt in second pass)
         piece.gridObjectsOnTop = new List<GridBuildPiece>();
     }
 
     private List<GridBuildPieceData> SortPiecesByStackOrder(List<GridBuildPieceData> pieces, Dictionary<string, GridBuildPiece> idToPieceMap)
     {
+        // Create a dependency graph
         Dictionary<string, List<string>> dependencies = new Dictionary<string, List<string>>();
         Dictionary<string, int> inDegree = new Dictionary<string, int>();
 
@@ -394,6 +361,7 @@ public class GridExportImportSystem : MonoBehaviour
             inDegree[piece.uniqueId] = 0;
         }
 
+        // Calculate in-degrees (how many pieces are below each piece)
         foreach (var piece in pieces)
         {
             foreach (string topId in piece.objectsOnTopIds)
@@ -405,9 +373,11 @@ public class GridExportImportSystem : MonoBehaviour
             }
         }
 
+        // Topological sort to ensure bottom pieces are placed first
         Queue<string> queue = new Queue<string>();
         List<GridBuildPieceData> sorted = new List<GridBuildPieceData>();
 
+        // Start with pieces that have no dependencies (bottom pieces)
         foreach (var kvp in inDegree)
         {
             if (kvp.Value == 0)
@@ -425,6 +395,7 @@ public class GridExportImportSystem : MonoBehaviour
                 sorted.Add(currentPiece);
             }
 
+            // Reduce in-degree for dependent pieces
             if (dependencies.ContainsKey(currentId))
             {
                 foreach (string dependentId in dependencies[currentId])
@@ -443,6 +414,7 @@ public class GridExportImportSystem : MonoBehaviour
 
     private void ClearGrid()
     {
+        // Clear all existing build pieces from the grid
         for (int x = 0; x < gridManager.Grid.GetWidth(); x++)
         {
             for (int z = 0; z < gridManager.Grid.GetHeight(); z++)
@@ -464,83 +436,21 @@ public class GridExportImportSystem : MonoBehaviour
     }
 
     #endregion
-
+#if UNITY_EDITOR
     #region Utility Methods
-
-    [ContextMenu("Export Grid to ScriptableObject")]
-    public void QuickExportToScriptableObject()
+    // Quick export with timestamp
+    [ContextMenu("Quick Export")]
+    public void QuickExport()
     {
-        GridLevelDataSO levelData = ExportGridToScriptableObject();
-        if (levelData != null)
+        GridExportData data = ExportGrid();
+        if (data != null)
         {
-            #if UNITY_EDITOR
-            SaveScriptableObjectToFile(levelData);
-            #else
-            Debug.Log("ScriptableObject created but can't save to file outside editor.");
-            #endif
+            string path = System.IO.Path.Combine(Application.streamingAssetsPath, 
+                "GridData_" + System.DateTime.Now.ToString("yyyyMMdd_HHmmss") + ".json");
+            SaveToFile(data, path);
         }
     }
-
-    [ContextMenu("Load Current Level")]
-    public void LoadCurrentLevel()
-    {
-        if (currentLevelData != null)
-        {
-            LoadFromScriptableObject(currentLevelData);
-        }
-        else
-        {
-            Debug.LogWarning("No current level data assigned!");
-        }
-    }
-
-    #if UNITY_EDITOR
-    [ContextMenu("Convert JSON to ScriptableObject")]
-    public void ConvertJSONToScriptableObject()
-    {
-        string jsonPath = EditorUtility.OpenFilePanel("Select JSON file", Application.dataPath, "json");
-        if (!string.IsNullOrEmpty(jsonPath))
-        {
-            try
-            {
-                string json = System.IO.File.ReadAllText(jsonPath);
-                
-                // Parse the old JSON format
-                var jsonData = JsonUtility.FromJson<GridExportDataLegacy>(json);
-                
-                // Create new ScriptableObject
-                GridLevelDataSO levelData = ScriptableObject.CreateInstance<GridLevelDataSO>();
-                levelData.levelName = System.IO.Path.GetFileNameWithoutExtension(jsonPath);
-                levelData.gridSize = jsonData.gridSize;
-                levelData.cellSize = jsonData.cellSize;
-                levelData.gridOrigin = jsonData.gridOrigin;
-                levelData.buildPieces = jsonData.buildPieces;
-                
-                // Save it
-                string fileName = System.IO.Path.GetFileNameWithoutExtension(jsonPath) + ".asset";
-                SaveScriptableObjectToFile(levelData, fileName);
-                
-                Debug.Log($"Successfully converted {jsonPath} to ScriptableObject!");
-            }
-            catch (System.Exception e)
-            {
-                Debug.LogError($"Failed to convert JSON: {e.Message}");
-            }
-        }
-    }
-    #endif
-
-    public GridLevelDataSO GetCurrentLevel() => currentLevelData;
-
     #endregion
+#endif
 }
 
-// Legacy class for JSON conversion
-[System.Serializable]
-public class GridExportDataLegacy
-{
-    public List<GridBuildPieceData> buildPieces = new List<GridBuildPieceData>();
-    public Vector2Int gridSize;
-    public float cellSize;
-    public Vector3 gridOrigin;
-}
