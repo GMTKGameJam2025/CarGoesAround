@@ -76,7 +76,7 @@ public class GameManager : MonoBehaviour
 
     public LevelData GetLevelData(int level)
     {
-        if (level <= 0 || level >= levelData.allLevelData.Count)
+        if (level <= 0 || level > levelData.allLevelData.Count)
         {
             return null;
         }

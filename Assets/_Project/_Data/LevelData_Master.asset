@@ -45,6 +45,6 @@ MonoBehaviour:
     sceneName: Level
   - levelNumber: 7
     subtitle: Sandbox
-    gridData: {fileID: 11400000, guid: 968f9fc5e98f8334ea11702c269a2f2b, type: 2}
-    inventoryPreset: {fileID: 11400000, guid: d4ba50c4f42d0324c9fecec9b08efefa, type: 2}
+    gridData: {fileID: 0}
+    inventoryPreset: {fileID: 0}
     sceneName: LevelEditor
