@@ -469,7 +469,7 @@ GameObject:
   - component: {fileID: 787481596}
   - component: {fileID: 787481597}
   m_Layer: 0
-  m_Name: GridData
+  m_Name: Grid
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1286,8 +1286,8 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 1710210178}
   - {fileID: 905280071}
+  - {fileID: 1710210178}
   - {fileID: 1254139873}
   - {fileID: 1936944559}
   - {fileID: 1072338395}
