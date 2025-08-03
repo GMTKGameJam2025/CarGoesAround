@@ -1,5 +1,8 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+
+public struct TrackPieceRemoved : IGameEvent {}
 
 public class TrackPiece : MonoBehaviour, IBuildable
 {
@@ -7,8 +10,12 @@ public class TrackPiece : MonoBehaviour, IBuildable
 
     public List<TrackNode> trackNodes;
 
+    public Renderer trackRenderer;
+    public Material defaultMaterial;
+    public Material lockedMaterial;
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    void Awake()
     {
         foreach (Transform trackNode in trackNodeParent)
         {
@@ -25,11 +32,12 @@ public class TrackPiece : MonoBehaviour, IBuildable
         {
             node.AutoConnect();
         }
+
+        trackRenderer.material = piece.canBeRemovedFromGrid ? defaultMaterial : lockedMaterial;
     }
 
-    // Update is called once per frame
-    void Update()
+    private void OnDisable()
     {
-
+        EventBus.Fire<TrackPieceRemoved>(new());
     }
 }

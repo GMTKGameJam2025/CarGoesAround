@@ -1,5 +1,8 @@
+using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 using UnityEngine.Rendering;
+
 public class PreviewSystem : MonoBehaviour
 {
     [SerializeField] private float previewYOffset = 0.06f;
@@ -58,7 +61,11 @@ public class PreviewSystem : MonoBehaviour
 
     private void PreparePreview(GameObject previewObject)
     {
-        Renderer[] renderers = previewObject.GetComponentsInChildren<Renderer>();
+        List<Renderer> renderers = previewObject.GetComponentsInChildren<Renderer>().ToList();
+        
+        // Only include renderers tagged with "Previewable"
+        renderers = renderers.Where(rend => rend.CompareTag("Previewable")).ToList();
+        
         foreach (Renderer rend in renderers)
         {
             Material[] materials = rend.materials;
@@ -73,8 +80,7 @@ public class PreviewSystem : MonoBehaviour
     public void StopShowingPreview()
     {
         cellIndicator.SetActive(false);
-        if (_previewObject)
-            Destroy(_previewObject);
+        if (_previewObject) Destroy(_previewObject);
 
         ClearObjectHighlight();
     }
@@ -89,17 +95,16 @@ public class PreviewSystem : MonoBehaviour
     // Object highlighting during removal
     public void HighlightObjectAt(GameObject targetObject)
     {
-        if (targetObject == _currentHighlightedObject)
-            return;
+        if (targetObject == _currentHighlightedObject) return;
 
         // Clear previous highlight
         ClearObjectHighlight();
 
-        if (!targetObject)
-            return;
+        if (!targetObject) return;
 
         _currentHighlightedObject = targetObject;
-        _originalRenderers = targetObject.GetComponentsInChildren<Renderer>();
+        _originalRenderers = targetObject.GetComponentsInChildren<Renderer>()
+            .Where(rend => rend.CompareTag("Previewable")).ToArray(); // Only include Previewable tagged renderers
         _originalMaterials = new Material[_originalRenderers.Length][];
 
         // Store original materials and apply highlight
@@ -124,7 +129,7 @@ public class PreviewSystem : MonoBehaviour
             // Restore original materials
             for (int i = 0; i < _originalRenderers.Length; i++)
             {
-                if (_originalRenderers[i]&& _originalMaterials[i] != null)
+                if (_originalRenderers[i] && _originalMaterials[i] != null)
                 {
                     _originalRenderers[i].materials = _originalMaterials[i];
                 }
@@ -144,7 +149,7 @@ public class PreviewSystem : MonoBehaviour
             ApplyFeedbackToPreview(isValid);
         }
 
-        MoveCursor(position  + offset);
+        MoveCursor(position + offset);
         ApplyFeedbackToCursor(isValid);
     }
 

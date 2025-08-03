@@ -137,6 +137,10 @@ public class InventoryUI : MonoBehaviour
                 itemUI.gameObject.SetActive(newQuantity > 0);
             }
         }
+        else
+        {
+            
+        }
     }
 
     private void ClearUI()

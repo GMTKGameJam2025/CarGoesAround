@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 public class TrackNode : MonoBehaviour
@@ -28,9 +29,44 @@ public class TrackNode : MonoBehaviour
         }
     }
 
-    private void ConnectTo(TrackNode other) {
-        connectedNodes.Add(other);
-        other.connectedNodes.Add(this);
+    public void ConnectTo(TrackNode other) {
+        if (!connectedNodes.Contains(other))
+        {
+            connectedNodes.Add(other);
+        }
+
+        if (!other.connectedNodes.Contains(this))
+        {
+            other.connectedNodes.Add(this);
+        }
+    }
+
+    public void CleanNodeList(TrackPieceRemoved @event)
+    {
+        int pieceNumber = 0;
+        connectedNodes.RemoveAll(x =>
+        {
+            if (x == null)
+            {
+                pieceNumber += 1;
+            }
+            return x == null;
+        });
+
+        if (pieceNumber > 0)
+        {
+            Debug.Log("Removing null pieces");
+        }
+    }
+
+    private void Awake()
+    {
+        EventBus.Subscribe<TrackPieceRemoved>(CleanNodeList);
+    }
+    
+    private void OnDestroy()
+    {
+        EventBus.Unsubscribe<TrackPieceRemoved>(CleanNodeList);
     }
 
     private void OnDrawGizmosSelected()
