@@ -1,0 +1,50 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b65e1b72df2435eb403ef400eb203a5, type: 3}
+  m_Name: LevelData_Master
+  m_EditorClassIdentifier: 
+  allLevelData:
+  - levelNumber: 1
+    subtitle: Loop Around
+    gridData: {fileID: 11400000, guid: e3963e28d218f354b80624f243634dc2, type: 2}
+    inventoryPreset: {fileID: 11400000, guid: 6721b5fd7f5f12046a178e5cf54eb47e, type: 2}
+    sceneName: Level
+  - levelNumber: 2
+    subtitle: Clear The Path
+    gridData: {fileID: 11400000, guid: 72ea15b8aca40a04ab37d1f5802a8ff6, type: 2}
+    inventoryPreset: {fileID: 11400000, guid: cf69823a5c9dac64ca6577c1d59d65a5, type: 2}
+    sceneName: Level
+  - levelNumber: 3
+    subtitle: Too Much Loop
+    gridData: {fileID: 11400000, guid: 7f73c8a0d14d2454cb9d4bb789a170fc, type: 2}
+    inventoryPreset: {fileID: 11400000, guid: 0236b537b91f4924abc2873c709fe7cf, type: 2}
+    sceneName: Level
+  - levelNumber: 4
+    subtitle: Fast Hand
+    gridData: {fileID: 11400000, guid: b2f82a38360a5824092a4ea473cacb0d, type: 2}
+    inventoryPreset: {fileID: 11400000, guid: a5bf27cba25b63b44af891e5e289c29a, type: 2}
+    sceneName: Level
+  - levelNumber: 5
+    subtitle: Do A Barrel Roll
+    gridData: {fileID: 11400000, guid: 32421716cf107324d871e9727aca2347, type: 2}
+    inventoryPreset: {fileID: 11400000, guid: 1406970131141aa44b2296b0efb8e4f5, type: 2}
+    sceneName: Level
+  - levelNumber: 6
+    subtitle: Sprialling Out Of Controll
+    gridData: {fileID: 11400000, guid: 968f9fc5e98f8334ea11702c269a2f2b, type: 2}
+    inventoryPreset: {fileID: 11400000, guid: d4ba50c4f42d0324c9fecec9b08efefa, type: 2}
+    sceneName: Level
+  - levelNumber: 7
+    subtitle: Sandbox
+    gridData: {fileID: 11400000, guid: 968f9fc5e98f8334ea11702c269a2f2b, type: 2}
+    inventoryPreset: {fileID: 11400000, guid: d4ba50c4f42d0324c9fecec9b08efefa, type: 2}
+    sceneName: LevelEditor

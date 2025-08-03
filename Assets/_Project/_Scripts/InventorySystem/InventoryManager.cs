@@ -16,10 +16,16 @@ public class InventoryManager : MonoBehaviour
 
     public InventoryPreset CurrentPreset => inventoryPreset;
 
+    public bool initOnStart = false;
+
     private void Start()
     {
-        InitializeInventory();
+        if (initOnStart)
+        {
+            InitializeInventory();
+        }
     }
+
 
     /// Initialize inventory from the preset
     private void InitializeInventory()

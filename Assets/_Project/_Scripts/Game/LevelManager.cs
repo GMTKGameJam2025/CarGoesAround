@@ -9,16 +9,17 @@ public struct GameStartedEvent : IGameEvent
 
 public class LevelManager : MonoBehaviour
 {
-    [SerializeField] private int levelNumber;
     [SerializeField] private LevelIntro intro;
     [SerializeField] private LevelWin win;
     [SerializeField] private LevelLose lose;
     [SerializeField] private InventoryUI inventoryUI;
 
     [Header("Level")]
-    [SerializeField] private GridLevelDataSO levelData;
     [SerializeField] private GridExportImportSystem gridExportSystem;
+    [SerializeField] private InventoryManager inventory;
 
+    private LevelData _levelData;
+    
     private void OnEnable()
     {
         EventBus.Subscribe<GameOverEvent>(StartLose);
@@ -37,14 +38,16 @@ public class LevelManager : MonoBehaviour
         win.gameObject.SetActive(false);
         lose.gameObject.SetActive(false);
 
-        gridExportSystem.LoadFromScriptableObject(levelData);
+        _levelData = GameManager.Instance.GetCurrentLevelData();
+        gridExportSystem.LoadFromScriptableObject(_levelData.gridData);
+        inventory.SetInventoryPreset(_levelData.inventoryPreset);
         
         StartCoroutine(StartIntro());
     }
 
     private IEnumerator StartIntro()
     {
-        intro.Initialize(levelNumber);
+        intro.Initialize(_levelData.levelNumber, _levelData.subtitle);
         yield return StartCoroutine(intro.PlayLevelIntro());
         EventBus.Fire<GameStartedEvent>(new());
     }
@@ -57,7 +60,7 @@ public class LevelManager : MonoBehaviour
     
     private void StartWin(WinEvent @event)
     {
-        win.Initialize(levelNumber);
-        StartCoroutine(win.PlayLevelLose());
+        win.Initialize(_levelData.levelNumber);
+        StartCoroutine(win.PlayLevelWin());
     }
 }

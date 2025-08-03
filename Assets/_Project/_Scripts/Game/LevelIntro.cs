@@ -9,14 +9,16 @@ public class LevelIntro : MonoBehaviour
 {
     public CanvasGroup canvas;
     public TMP_Text levelText;
+    public TMP_Text subtitleText;
     public InventoryUI inventoryUI;
 
     public float introTime = 1f;
     public float outroTime = 0.5f;
     
-    public void Initialize(int levelNumber)
+    public void Initialize(int levelNumber, string subtitle = "")
     {
         levelText.text = "Level: " + levelNumber;
+        subtitleText.text = subtitle;
         gameObject.SetActive(true);
         inventoryUI.HideUI(true);
     }

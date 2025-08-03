@@ -18,9 +18,11 @@ public class LevelWin : MonoBehaviour
     {
         _currentLevel = currentLevel;
         gameObject.SetActive(true);
+
+        GameManager.Instance.currentMaxLevel = currentLevel + 1;
     }
 
-    public IEnumerator PlayLevelLose()
+    public IEnumerator PlayLevelWin()
     {
         inventoryUI.HideUI();
         canvas.alpha = 0f;
@@ -34,12 +36,12 @@ public class LevelWin : MonoBehaviour
 
     public void NextLevel()
     {
-        SceneManager.LoadScene("Level " + (_currentLevel + 1), LoadSceneMode.Single);
+        GameManager.Instance.LoadLevel(_currentLevel + 1);
     }
     
     public void RestartLevel()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name, LoadSceneMode.Single);
+        GameManager.Instance.LoadLevel(_currentLevel);
     }
     
     public void ToMainMenu()
