@@ -28,7 +28,6 @@ public class GridBuildPieceData
     
     // New fields for better validation
     public int stackDepth; // How deep in the stack this piece is (0 = ground level)
-    public string builtSource;
 }
 
 public class GridExportImportSystem : MonoBehaviour
@@ -40,7 +39,7 @@ public class GridExportImportSystem : MonoBehaviour
 
     [Header("ScriptableObject Settings")]
     [SerializeField] private GridLevelDataSO currentLevelData;
-    public string defaultSaveFolder = "Assets/LevelData/";
+    public string defaultSaveFolder = "Assets/GridLevels/";
     [SerializeField] private bool autoLoadOnStart = true;
 
     [Header("Events")]
@@ -209,11 +208,12 @@ public class GridExporter
             for (int z = 0; z < levelData.gridSize.y; z++)
             {
                 Vector2Int position = new Vector2Int(x, z);
-                GridBuildPiece topPiece = _system.gridManager.GetTopLevelObject(position);
+                GridCell cell = _system.gridManager.Grid.GetGridObject(x, z);
                 
-                if (topPiece != null && !processedPieces.Contains(topPiece))
+                if (cell != null)
                 {
-                    CollectAllPiecesFromPosition(position, processedPieces, pieceToIdMap);
+                    // Collect all unique pieces from this cell (including all stack levels)
+                    CollectAllUniquePiecesFromCell(cell, processedPieces, pieceToIdMap);
                 }
             }
         }
@@ -229,16 +229,12 @@ public class GridExporter
         }
     }
 
-    private void CollectAllPiecesFromPosition(Vector2Int position, HashSet<GridBuildPiece> processedPieces, Dictionary<GridBuildPiece, string> pieceToIdMap)
+    private void CollectAllUniquePiecesFromCell(GridCell cell, HashSet<GridBuildPiece> processedPieces, Dictionary<GridBuildPiece, string> pieceToIdMap)
     {
-        // Get all pieces in the stack at this position using GridManager
-        GridCell cell = _system.gridManager.Grid.GetGridObject(position.x, position.y);
-        if (cell == null) return;
-
-        // Collect all pieces in the stack without modifying the grid
+        // Get all pieces in the stack without modifying the grid
         List<GridBuildPiece> stackPieces = GetAllPiecesInStackNonDestructive(cell);
 
-        // Assign unique IDs to all pieces in the stack
+        // Process each piece only once across the entire grid
         foreach (GridBuildPiece piece in stackPieces)
         {
             if (!processedPieces.Contains(piece))
@@ -254,21 +250,22 @@ public class GridExporter
         List<GridBuildPiece> pieces = new List<GridBuildPiece>();
         Stack<GridBuildPiece> tempStack = new Stack<GridBuildPiece>();
 
-        // Safely extract all pieces
+        // Safely extract all pieces from bottom to top
         while (cell.GetTopGridObject() != null)
         {
             GridBuildPiece piece = cell.RemoveTopGridBuildPiece();
             if (piece != null)
             {
                 tempStack.Push(piece);
-                pieces.Add(piece);
             }
         }
 
-        // Restore the stack in correct order
+        // Convert to list (bottom to top order) and restore stack
         while (tempStack.Count > 0)
         {
-            cell.AddGridBuildPiece(tempStack.Pop());
+            GridBuildPiece piece = tempStack.Pop();
+            pieces.Add(piece); // Bottom piece first, top piece last
+            cell.AddGridBuildPiece(piece);
         }
 
         return pieces;
@@ -289,7 +286,6 @@ public class GridExporter
             layer = piece.layer,
             canBeBuiltOnLayers = piece.canBeBuiltOnLayers,
             occupiedPositions = new List<Vector2Int>(piece.occupiedPositions),
-            builtSource = piece.builtSource,
             stackDepth = CalculateStackDepth(piece)
         };
 
@@ -340,11 +336,13 @@ public class GridExporter
         if (cell == null) return 0;
 
         List<GridBuildPiece> stackPieces = GetAllPiecesInStackNonDestructive(cell);
+        
+        // Find the target piece and return its depth (0 = bottom piece)
         for (int i = 0; i < stackPieces.Count; i++)
         {
             if (stackPieces[i] == targetPiece)
             {
-                return stackPieces.Count - 1 - i; // Bottom piece has highest depth
+                return i; // Bottom piece = 0, next = 1, etc.
             }
         }
         return 0;
@@ -547,7 +545,7 @@ public class GridImporter
 
             // Apply saved data BEFORE calling Init
             ApplySavedDataBeforeInit(piece, pieceData);
-            piece.Init(buildData, pieceData.builtSource);
+            piece.Init(buildData, "GridLoader");
 
             idToPieceMap[pieceData.uniqueId] = piece;
         }
@@ -557,6 +555,16 @@ public class GridImporter
 
     private void RestoreRelationships(GridLevelDataSO levelData, Dictionary<string, GridBuildPiece> idToPieceMap)
     {
+        // Clear all existing relationships first to avoid duplicates
+        foreach (var piece in idToPieceMap.Values)
+        {
+            if (piece.gridObjectsOnTop == null)
+                piece.gridObjectsOnTop = new List<GridBuildPiece>();
+            else
+                piece.gridObjectsOnTop.Clear();
+        }
+
+        // Rebuild relationships from saved data
         foreach (GridBuildPieceData pieceData in levelData.buildPieces)
         {
             if (!idToPieceMap.TryGetValue(pieceData.uniqueId, out GridBuildPiece piece)) 
@@ -567,7 +575,11 @@ public class GridImporter
             {
                 if (idToPieceMap.TryGetValue(topId, out GridBuildPiece topPiece))
                 {
-                    piece.gridObjectsOnTop.Add(topPiece);
+                    // Only add if not already present (avoid duplicates)
+                    if (!piece.gridObjectsOnTop.Contains(topPiece))
+                    {
+                        piece.gridObjectsOnTop.Add(topPiece);
+                    }
                 }
             }
         }
@@ -575,11 +587,11 @@ public class GridImporter
 
     private void AddPiecesToGrid(GridLevelDataSO levelData, Dictionary<string, GridBuildPiece> idToPieceMap)
     {
-        // Sort pieces by stack depth (bottom pieces first)
+        // Sort pieces by stack depth (bottom pieces first: depth 0, 1, 2...)
         var sortedPieces = levelData.buildPieces
             .Where(p => p.storeThisToGrid) // Only add pieces that should be stored to grid
-            .OrderBy(p => p.stackDepth)
-            .ThenBy(p => p.uniqueId); // Secondary sort for consistency
+            .OrderBy(p => p.stackDepth)    // Bottom to top order
+            .ThenBy(p => p.uniqueId);      // Secondary sort for consistency
 
         foreach (var pieceData in sortedPieces)
         {
@@ -591,8 +603,22 @@ public class GridImporter
             Vector2Int size = pieceData.sizeOnGrid;
             Direction direction = pieceData.placementDirection;
 
+            // Validate the position is within grid bounds
+            if (!_system.gridManager.Grid.IsGridObjectInGrid(originPosition))
+            {
+                Debug.LogWarning($"Piece {piece.id} has invalid origin position {originPosition}. Skipping.");
+                continue;
+            }
+
             // Add to grid using GridManager's method
-            _system.gridManager.AddObjectToGrid(piece, originPosition, size, direction);
+            try
+            {
+                _system.gridManager.AddObjectToGrid(piece, originPosition, size, direction);
+            }
+            catch (System.Exception e)
+            {
+                Debug.LogError($"Failed to add piece {piece.id} to grid at {originPosition}: {e.Message}");
+            }
         }
     }
 
@@ -605,8 +631,10 @@ public class GridImporter
         piece.canBeRemovedFromGrid = savedData.canBeRemovedFromGrid;
         piece.layer = savedData.layer;
         piece.canBeBuiltOnLayers = savedData.canBeBuiltOnLayers;
+        
+        // Initialize collections to avoid null references
         piece.occupiedPositions = new List<Vector2Int>(savedData.occupiedPositions);
-        piece.gridObjectsOnTop = new List<GridBuildPiece>();
+        piece.gridObjectsOnTop = new List<GridBuildPiece>(); // Will be populated in RestoreRelationships
     }
 
     private void ClearGrid()
