@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3044903926801536232}
   - component: {fileID: 4137783378973811592}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Orientation
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -63,7 +63,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5568998177333679898}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rock_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6619284548355696254}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -129,7 +129,7 @@ GameObject:
   - component: {fileID: 3970202560449541242}
   - component: {fileID: 2875718699525287879}
   - component: {fileID: 4016833067896261069}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Rock_01
   m_TagString: Untagged
   m_Icon: {fileID: 0}
