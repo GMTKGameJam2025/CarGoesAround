@@ -1528,7 +1528,7 @@ MonoBehaviour:
   database: {fileID: 11400000, guid: e3c406eacc6c1304896c6e564ac6d738, type: 2}
   buildingManager: {fileID: 905280072}
   currentLevelData: {fileID: 0}
-  defaultSaveFolder: Assets/GridLevels/
+  defaultSaveFolder: Assets/LevelData/
   autoLoadOnStart: 1
   OnGridLoaded:
     m_PersistentCalls:

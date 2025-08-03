@@ -88,6 +88,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &2404447410310393724
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -118,6 +119,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3914917971756969713}
+  - component: {fileID: 5137272024523130224}
   m_Layer: 10
   m_Name: Road_T-Shape
   m_TagString: Untagged
@@ -141,6 +143,23 @@ Transform:
   - {fileID: 1954186075445192213}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5137272024523130224
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3163100364040915918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0e2bc1549e1829a4283f51ad22d5f4b7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trackNodeParent: {fileID: 3914917971756969713}
+  trackNodes: []
+  trackRenderer: {fileID: 314253151269633836}
+  defaultMaterial: {fileID: 2100000, guid: 825e1b17c5be8fa4998b3223dcdb6486, type: 2}
+  lockedMaterial: {fileID: 2100000, guid: 80569722b3a50bc4587d3c166c86c9ec, type: 2}
 --- !u!1 &3460746521135413333
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,6 +245,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &1129675991255159368
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -331,6 +351,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &967763485113260195
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -513,6 +534,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &4122294277825405912
 SphereCollider:
   m_ObjectHideFlags: 0
