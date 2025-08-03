@@ -1434,8 +1434,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1815519441}
   - component: {fileID: 1815519442}
-  - component: {fileID: 1815519444}
-  - component: {fileID: 1815519443}
   m_Layer: 0
   m_Name: GridExporter
   m_TagString: Untagged
@@ -1467,40 +1465,21 @@ MonoBehaviour:
   m_GameObject: {fileID: 1815519439}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a28bab0b5236408590474faff1e79a5c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  exporter: {fileID: 0}
-  loader: {fileID: 0}
---- !u!114 &1815519443
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815519439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6c3377ac7cfb4c89b262c6c1076bbb0b, type: 3}
+  m_Script: {fileID: 11500000, guid: 51fc41625be14d56a2db52b1bc884c1b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   gridManager: {fileID: 787481597}
   database: {fileID: 11400000, guid: e3c406eacc6c1304896c6e564ac6d738, type: 2}
   buildingManager: {fileID: 905280072}
---- !u!114 &1815519444
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1815519439}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 65aca51b41704daa870feb0430702a99, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gridManager: {fileID: 787481597}
-  database: {fileID: 11400000, guid: e3c406eacc6c1304896c6e564ac6d738, type: 2}
+  OnGridLoaded:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGridLoadFailed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnGridExported:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &1936944558
 GameObject:
   m_ObjectHideFlags: 0
