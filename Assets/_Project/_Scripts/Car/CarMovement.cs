@@ -238,6 +238,10 @@ public class CarMovement : MonoBehaviour
     public void SetDestroyed(bool destroyed)
     {
         _isDestroyed = destroyed;
+        if (_isDestroyed)
+        {
+            Destroy(_startMarker.gameObject);
+        }
     }
 
     // Public method to check if car is destroyed
