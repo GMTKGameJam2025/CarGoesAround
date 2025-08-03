@@ -7,15 +7,25 @@ public class BarrelSpawner : MonoBehaviour, IBuildable
     [SerializeField] private GameObject barrelVisual;
     [SerializeField] private float dropHeight = 2f;
     [SerializeField] private float respawnTime = 5f;
+    [SerializeField] private float initialDelay = 2f;
+
+    private bool isSpawning = false;
+    private Coroutine spawnCoroutine;
 
     public void OnBuild(GridBuildPiece piece)
     {
-        StartCoroutine(SpawnBarrels());
+        if (!isSpawning)
+        {
+            isSpawning = true;
+            spawnCoroutine = StartCoroutine(SpawnBarrels());
+        }
     }
 
     private IEnumerator SpawnBarrels()
     {
-        while (true)
+        yield return new WaitForSeconds(initialDelay);
+
+        while (isSpawning)
         {
             SpawnBarrel();
             yield return new WaitForSeconds(respawnTime);
@@ -34,15 +44,32 @@ public class BarrelSpawner : MonoBehaviour, IBuildable
 
         GameObject spawnedBarrel = Instantiate(barrelPrefab, spawnPosition, spawnRotation);
 
-        // Set the barrel's roll direction to match spawner's forward direction
         BarrelRoll barrelRoll = spawnedBarrel.GetComponent<BarrelRoll>();
         if (barrelRoll != null)
         {
             barrelRoll.SetRollDirection(transform.forward);
         }
 
-        // Show visual again after spawn
         if (barrelVisual != null)
             barrelVisual.SetActive(true);
+    }
+
+    public void StopSpawning()
+    {
+        isSpawning = false;
+        if (spawnCoroutine != null)
+        {
+            StopCoroutine(spawnCoroutine);
+            spawnCoroutine = null;
+        }
+    }
+
+    void OnGUI()
+    {
+        if (Application.isEditor)
+        {
+            GUI.Label(new Rect(10, 10 + (transform.GetInstanceID() % 3) * 20, 200, 20),
+                     $"Spawner {gameObject.name}: {(isSpawning ? "Active" : "Inactive")}");
+        }
     }
 }
