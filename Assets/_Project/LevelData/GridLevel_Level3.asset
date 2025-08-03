@@ -1,0 +1,1234 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2eeab19f85134dbd80a02b71753ab3f7, type: 3}
+  m_Name: GridLevel_Level3
+  m_EditorClassIdentifier: 
+  levelName: GridLevel_Level3
+  description: 
+  gridSize: {x: 16, y: 10}
+  cellSize: 1
+  gridOrigin: {x: -8, y: 0, z: -5}
+  buildPieces:
+  - uniqueId: 294149a7-82d2-4a4d-b0e6-55c0f722ad63
+    pieceId: 8
+    worldPosition: {x: -8, y: 0, z: 2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 0, y: 7}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 0, y: 7}
+    stackDepth: 0
+  - uniqueId: 385e505c-01fb-442a-81dc-ceed2a8af3d0
+    pieceId: 5
+    worldPosition: {x: -8, y: 0, z: 3}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 2, y: 2}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 0, y: 8}
+    - {x: 0, y: 9}
+    - {x: 1, y: 8}
+    - {x: 1, y: 9}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 0, y: 8}
+    stackDepth: 0
+  - uniqueId: 679f5274-0c7a-4da1-872b-118f6255407f
+    pieceId: 0
+    worldPosition: {x: -5, y: 0, z: -3}
+    rotation: {x: 0, y: 270, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 2, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 2, y: 2}
+    stackDepth: 0
+  - uniqueId: ffb13e0f-4afe-41aa-906a-535570e02ddd
+    pieceId: 1
+    worldPosition: {x: -6, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 2, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 2, y: 3}
+    stackDepth: 0
+  - uniqueId: ee896f7c-571c-4a0f-a58d-efc3b735f841
+    pieceId: 1
+    worldPosition: {x: -6, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 2, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 2, y: 4}
+    stackDepth: 0
+  - uniqueId: 881aecc6-e3d4-4abb-b53c-1f2b5099f5fe
+    pieceId: 12
+    worldPosition: {x: -6, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 2, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 2, y: 6}
+    - {x: 3, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 2, y: 6}
+    stackDepth: 0
+  - uniqueId: ab9fb98b-b9b0-46ac-80fa-a8fc599c5208
+    pieceId: 8
+    worldPosition: {x: -6, y: 0, z: 4}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 2, y: 9}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 2, y: 9}
+    stackDepth: 0
+  - uniqueId: 2e57d42f-1fd8-46ff-bda4-e188b1e0db0c
+    pieceId: 1
+    worldPosition: {x: -5, y: 0, z: -2}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 3, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 3, y: 2}
+    stackDepth: 0
+  - uniqueId: 19122317-bc47-4910-9a8b-fb137623e587
+    pieceId: 12
+    worldPosition: {x: -5, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 2, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 3, y: 3}
+    - {x: 4, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 3, y: 3}
+    stackDepth: 0
+  - uniqueId: c4d49221-3b03-45ae-a377-f444833a71bf
+    pieceId: 10
+    worldPosition: {x: -5, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 3, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 3, y: 4}
+    stackDepth: 0
+  - uniqueId: 2f6cefe0-4ed9-4b96-96a4-a8f33a8486c7
+    pieceId: 11
+    worldPosition: {x: -5, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 3, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 3, y: 5}
+    stackDepth: 0
+  - uniqueId: f3df0d18-979d-4fe3-8b5c-ea5acd9c9079
+    pieceId: 1
+    worldPosition: {x: -4, y: 0, z: -2}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 4, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 4, y: 2}
+    stackDepth: 0
+  - uniqueId: d08bca35-06ab-4d1e-9107-c7e5e3769cf6
+    pieceId: 11
+    worldPosition: {x: -4, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 4, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 4, y: 4}
+    stackDepth: 0
+  - uniqueId: 04e41774-27fb-46d4-be54-15e407397ea2
+    pieceId: 10
+    worldPosition: {x: -4, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 4, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 4, y: 5}
+    stackDepth: 0
+  - uniqueId: 5c18f0c8-f491-449e-a464-ecc1f26a4774
+    pieceId: 11
+    worldPosition: {x: -4, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 4, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 4, y: 6}
+    stackDepth: 0
+  - uniqueId: ff55ff5c-43c9-46db-a082-b7cc0b4fb3f9
+    pieceId: 0
+    worldPosition: {x: -2, y: 0, z: -3}
+    rotation: {x: 0, y: 270, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 5, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 5, y: 2}
+    stackDepth: 0
+  - uniqueId: 568038fb-e1cb-4d54-8e22-bfec7becf772
+    pieceId: 1
+    worldPosition: {x: -3, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 5, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 5, y: 3}
+    stackDepth: 0
+  - uniqueId: 0d091df6-c2c5-4aea-95ae-336c3d68005a
+    pieceId: 1
+    worldPosition: {x: -3, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 5, y: 4}
+    objectsOnTopIds:
+    - e94e2b45-4f27-4747-b00a-6bdccf628e17
+    placementDirection: 0
+    originGridPosition: {x: 5, y: 4}
+    stackDepth: 0
+  - uniqueId: e94e2b45-4f27-4747-b00a-6bdccf628e17
+    pieceId: 14
+    worldPosition: {x: -3, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 4
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 5, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 5, y: 4}
+    stackDepth: 1
+  - uniqueId: 8b99ed8d-3b8e-4b65-a5d6-84cb38e6d069
+    pieceId: 1
+    worldPosition: {x: -3, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 5, y: 5}
+    objectsOnTopIds:
+    - 8c241d2c-523b-4c70-b466-91ee09b50011
+    placementDirection: 0
+    originGridPosition: {x: 5, y: 5}
+    stackDepth: 0
+  - uniqueId: 8c241d2c-523b-4c70-b466-91ee09b50011
+    pieceId: 14
+    worldPosition: {x: -3, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 4
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 5, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 5, y: 5}
+    stackDepth: 1
+  - uniqueId: a4a39e33-9e32-406d-932c-2dd2d52f3a78
+    pieceId: 14
+    worldPosition: {x: -3, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 4
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 5, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 5, y: 6}
+    stackDepth: 0
+  - uniqueId: 697285a1-9a28-4266-9513-142b53645811
+    pieceId: 1
+    worldPosition: {x: -3, y: 0, z: 4}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 5, y: 8}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 5, y: 8}
+    stackDepth: 0
+  - uniqueId: 50b23523-a333-4b02-b333-d71fe4b638db
+    pieceId: 1
+    worldPosition: {x: -2, y: 0, z: -2}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 6, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 6, y: 2}
+    stackDepth: 0
+  - uniqueId: 042a7970-6621-4df2-9042-e4e7b39aa527
+    pieceId: 6
+    worldPosition: {x: -2, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 6, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 6, y: 3}
+    stackDepth: 0
+  - uniqueId: 4b6b3684-520f-4ab1-a371-100915b7e3b7
+    pieceId: 11
+    worldPosition: {x: -2, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 6, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 6, y: 4}
+    stackDepth: 0
+  - uniqueId: 178047ee-2597-44ae-bcd6-efc335766249
+    pieceId: 10
+    worldPosition: {x: -2, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 6, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 6, y: 5}
+    stackDepth: 0
+  - uniqueId: 9e8fce65-2f85-4866-b923-c5f3f694f4c0
+    pieceId: 11
+    worldPosition: {x: -2, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 6, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 6, y: 6}
+    stackDepth: 0
+  - uniqueId: 54548fef-b5d3-4484-9bd5-c4f67dc6f52e
+    pieceId: 1
+    worldPosition: {x: -2, y: 0, z: 4}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 6, y: 8}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 6, y: 8}
+    stackDepth: 0
+  - uniqueId: ec0e91d9-f901-4f70-9e18-d7b5de11657d
+    pieceId: 1
+    worldPosition: {x: -1, y: 0, z: -2}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 7, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 7, y: 2}
+    stackDepth: 0
+  - uniqueId: 28c4a2f1-fc32-497b-a023-55671daa8728
+    pieceId: 8
+    worldPosition: {x: -1, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 7, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 7, y: 3}
+    stackDepth: 0
+  - uniqueId: b71ade09-0e75-4106-986a-8323b81c24c3
+    pieceId: 10
+    worldPosition: {x: -1, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 7, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 7, y: 4}
+    stackDepth: 0
+  - uniqueId: 488f8770-8ef8-4a9e-b629-bf6b287f48ab
+    pieceId: 11
+    worldPosition: {x: -1, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 7, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 7, y: 5}
+    stackDepth: 0
+  - uniqueId: 2dea63e8-75ed-4434-aa4b-0c0c7b3e23c2
+    pieceId: 10
+    worldPosition: {x: -1, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 7, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 7, y: 6}
+    stackDepth: 0
+  - uniqueId: 6197c7a9-3501-499d-8768-2604f5a946d5
+    pieceId: 1
+    worldPosition: {x: -1, y: 0, z: 4}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 7, y: 8}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 7, y: 8}
+    stackDepth: 0
+  - uniqueId: 45c0d741-1830-4215-8f51-edbd2627a2a7
+    pieceId: 1
+    worldPosition: {x: 0, y: 0, z: -2}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 8, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 8, y: 2}
+    stackDepth: 0
+  - uniqueId: f3381b7a-c5ab-4890-94cc-d4667a878971
+    pieceId: 6
+    worldPosition: {x: 0, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 8, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 8, y: 3}
+    stackDepth: 0
+  - uniqueId: 25f9ddc7-0434-46a6-9be8-a058f84ba7a6
+    pieceId: 11
+    worldPosition: {x: 0, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 8, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 8, y: 4}
+    stackDepth: 0
+  - uniqueId: 19b0b85d-8ac7-47fc-b9d5-321abad81a46
+    pieceId: 10
+    worldPosition: {x: 0, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 8, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 8, y: 5}
+    stackDepth: 0
+  - uniqueId: 060a897f-5d31-4f59-a996-3c617c8e229a
+    pieceId: 11
+    worldPosition: {x: 0, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 8, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 8, y: 6}
+    stackDepth: 0
+  - uniqueId: 3db22014-9036-4719-854c-05bdce670b46
+    pieceId: 1
+    worldPosition: {x: 0, y: 0, z: 4}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 8, y: 8}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 8, y: 8}
+    stackDepth: 0
+  - uniqueId: 11ea20e5-23b5-4c09-9801-a6c05d00d5f7
+    pieceId: 0
+    worldPosition: {x: 2, y: 0, z: -3}
+    rotation: {x: 0, y: 270, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 9, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 9, y: 2}
+    stackDepth: 0
+  - uniqueId: aeb2390f-bfcf-4e6a-9f17-4fd7892d58c8
+    pieceId: 1
+    worldPosition: {x: 1, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 9, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 9, y: 3}
+    stackDepth: 0
+  - uniqueId: f6277a03-739c-4387-8223-3ec919e78a0f
+    pieceId: 1
+    worldPosition: {x: 1, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 9, y: 4}
+    objectsOnTopIds:
+    - bcc0b9b1-cca7-4fc7-ac3f-dfde2ffe8624
+    - bcc0b9b1-cca7-4fc7-ac3f-dfde2ffe8624
+    placementDirection: 0
+    originGridPosition: {x: 9, y: 4}
+    stackDepth: 0
+  - uniqueId: bcc0b9b1-cca7-4fc7-ac3f-dfde2ffe8624
+    pieceId: 14
+    worldPosition: {x: 1, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 4
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 9, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 9, y: 4}
+    stackDepth: 1
+  - uniqueId: 20ac7255-8945-404c-8aac-0b0411c2ff12
+    pieceId: 14
+    worldPosition: {x: 1, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 4
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 9, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 9, y: 5}
+    stackDepth: 0
+  - uniqueId: 36fa546d-cf47-464d-839e-04d478157949
+    pieceId: 14
+    worldPosition: {x: 1, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 4
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 9, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 9, y: 6}
+    stackDepth: 0
+  - uniqueId: fab402cc-0c1d-4c8a-b712-47fa9563db4d
+    pieceId: 1
+    worldPosition: {x: 1, y: 0, z: 4}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 9, y: 8}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 9, y: 8}
+    stackDepth: 0
+  - uniqueId: ffa32831-38fe-410a-a19b-0ac239ed860b
+    pieceId: 1
+    worldPosition: {x: 2, y: 0, z: -2}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 10, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 10, y: 2}
+    stackDepth: 0
+  - uniqueId: e7608c4e-d95e-4f55-9d05-3c7e4d171c66
+    pieceId: 12
+    worldPosition: {x: 2, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 2, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 10, y: 3}
+    - {x: 11, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 10, y: 3}
+    stackDepth: 0
+  - uniqueId: 29491b43-3822-4417-9a61-546741afea5c
+    pieceId: 10
+    worldPosition: {x: 2, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 10, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 10, y: 4}
+    stackDepth: 0
+  - uniqueId: 9f8b0440-0c7f-4234-8f81-54a10173c7f1
+    pieceId: 10
+    worldPosition: {x: 2, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 10, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 10, y: 5}
+    stackDepth: 0
+  - uniqueId: f52f207f-b391-4abb-9b8e-b0e3e29584c5
+    pieceId: 10
+    worldPosition: {x: 2, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 10, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 10, y: 6}
+    stackDepth: 0
+  - uniqueId: af46b4d9-c551-4bfe-b6a8-0fdb535aedc3
+    pieceId: 1
+    worldPosition: {x: 2, y: 0, z: 4}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 10, y: 8}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 10, y: 8}
+    stackDepth: 0
+  - uniqueId: 26c5d1e6-9f8d-4309-b10c-3171aab294f4
+    pieceId: 1
+    worldPosition: {x: 3, y: 0, z: -2}
+    rotation: {x: -0, y: 90, z: -0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 11, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 11, y: 2}
+    stackDepth: 0
+  - uniqueId: deca8d91-69fa-4581-a417-00ed61d2483b
+    pieceId: 10
+    worldPosition: {x: 3, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 11, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 11, y: 4}
+    stackDepth: 0
+  - uniqueId: 7e6e5463-6f47-4664-b8a6-5a2a3dda5496
+    pieceId: 10
+    worldPosition: {x: 3, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 11, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 11, y: 5}
+    stackDepth: 0
+  - uniqueId: 8da55e6d-12b5-498d-9b4f-161b8dffbf01
+    pieceId: 10
+    worldPosition: {x: 3, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 11, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 11, y: 6}
+    stackDepth: 0
+  - uniqueId: 7a15b7ca-f0cb-4b40-9ac6-49aeae45ed29
+    pieceId: 0
+    worldPosition: {x: 5, y: 0, z: -2}
+    rotation: {x: 0, y: 180, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 12, y: 2}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 12, y: 2}
+    stackDepth: 0
+  - uniqueId: 76c53faa-5f35-49f0-ad8a-4e3ed488c23d
+    pieceId: 1
+    worldPosition: {x: 4, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 12, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 12, y: 3}
+    stackDepth: 0
+  - uniqueId: 642f32bf-6847-4b9c-bcdd-ee4e5938ed0c
+    pieceId: 1
+    worldPosition: {x: 4, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 12, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 12, y: 4}
+    stackDepth: 0
+  - uniqueId: 0dcb9df1-84e6-4e2e-9542-a22d41d9a862
+    pieceId: 31
+    worldPosition: {x: 5, y: 0, z: 1}
+    rotation: {x: 0, y: 180, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 0
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 12, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 12, y: 5}
+    stackDepth: 0
+  - uniqueId: 2952c951-98e5-4329-a311-07f6a72479c2
+    pieceId: 1
+    worldPosition: {x: 5, y: 0, z: 2}
+    rotation: {x: 0, y: 180, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 12, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 12, y: 6}
+    stackDepth: 0
+  - uniqueId: 8799e0d2-c635-4b8a-a839-5438de5d55a2
+    pieceId: 1
+    worldPosition: {x: 5, y: 0, z: 3}
+    rotation: {x: 0, y: 180, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 1
+    layer: 2
+    canBeBuiltOnLayers: 1
+    occupiedPositions:
+    - {x: 12, y: 7}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 12, y: 7}
+    stackDepth: 0
+  - uniqueId: bacfe4e2-0472-4a2d-b1a5-972610955e41
+    pieceId: 6
+    worldPosition: {x: 5, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 13, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 13, y: 3}
+    stackDepth: 0
+  - uniqueId: e12de868-4ba2-427e-b039-ef45553ed63b
+    pieceId: 11
+    worldPosition: {x: 5, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 13, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 13, y: 4}
+    stackDepth: 0
+  - uniqueId: 7d4ca987-f9fd-4937-9ccc-d16a1b8c280a
+    pieceId: 10
+    worldPosition: {x: 5, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 13, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 13, y: 5}
+    stackDepth: 0
+  - uniqueId: 456d8d3a-d11b-4244-ad97-115d218b8db3
+    pieceId: 11
+    worldPosition: {x: 5, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 13, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 13, y: 6}
+    stackDepth: 0
+  - uniqueId: d1ed6d12-8c16-4e3e-8041-1356a0488ad1
+    pieceId: 12
+    worldPosition: {x: 6, y: 0, z: -2}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 2, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 14, y: 3}
+    - {x: 15, y: 3}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 14, y: 3}
+    stackDepth: 0
+  - uniqueId: 67852927-3574-4982-8c38-bc47d447009a
+    pieceId: 10
+    worldPosition: {x: 6, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 14, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 14, y: 4}
+    stackDepth: 0
+  - uniqueId: 24af537b-f457-4a1d-ae23-5095a0144f22
+    pieceId: 11
+    worldPosition: {x: 6, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 14, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 14, y: 5}
+    stackDepth: 0
+  - uniqueId: c958e0e2-e96e-47fe-aabc-b3b54827fa92
+    pieceId: 10
+    worldPosition: {x: 6, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 14, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 14, y: 6}
+    stackDepth: 0
+  - uniqueId: 65cd2362-95d2-41da-afcb-4ecf64538512
+    pieceId: 11
+    worldPosition: {x: 7, y: 0, z: -1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 15, y: 4}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 15, y: 4}
+    stackDepth: 0
+  - uniqueId: 59475e41-d46a-47a6-8c3c-49854daefe74
+    pieceId: 10
+    worldPosition: {x: 7, y: 0, z: 0}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 0
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 15, y: 5}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 15, y: 5}
+    stackDepth: 0
+  - uniqueId: cacaa799-3b6a-4a4a-b656-de66b1c3fecb
+    pieceId: 11
+    worldPosition: {x: 7, y: 0, z: 1}
+    rotation: {x: -0, y: 0, z: 0}
+    sizeOnGrid: {x: 1, y: 1}
+    canBuildOnTop: 1
+    storeThisToGrid: 1
+    canBeRemovedFromGrid: 0
+    layer: 8
+    canBeBuiltOnLayers: 3
+    occupiedPositions:
+    - {x: 15, y: 6}
+    objectsOnTopIds: []
+    placementDirection: 0
+    originGridPosition: {x: 15, y: 6}
+    stackDepth: 0
+  creationDate: 2025-08-03 19:24:02
+  lastModified: 
+  pieceCount: 0
