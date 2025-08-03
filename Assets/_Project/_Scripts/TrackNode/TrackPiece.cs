@@ -39,8 +39,6 @@ public class TrackPiece : MonoBehaviour, IBuildable
                 }
             }
         }
-        
-        Debug.Log($"TrackPiece {name} found {trackNodes.Count} track nodes");
     }
     
     public void OnBuild(GridBuildPiece piece)
@@ -59,8 +57,6 @@ public class TrackPiece : MonoBehaviour, IBuildable
         {
             trackRenderer.material = piece.canBeRemovedFromGrid ? defaultMaterial : lockedMaterial;
         }
-        
-        Debug.Log($"TrackPiece {name} built with {trackNodes.Count} connected nodes");
     }
     
     
@@ -76,8 +72,6 @@ public class TrackPiece : MonoBehaviour, IBuildable
                 node.AutoDisconnect();
             }
         }
-        
-        Debug.Log($"TrackPiece {name} disconnected all nodes");
     }
     
     /// <summary>

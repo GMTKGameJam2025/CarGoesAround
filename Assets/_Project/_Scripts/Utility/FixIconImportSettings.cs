@@ -1,6 +1,7 @@
 using UnityEditor;
 using UnityEngine;
 
+#if UNITY_EDITOR
 public class FixIconImportSettings
 {
     [MenuItem("Tools/Fix Icon Import Settings")]
@@ -42,3 +43,4 @@ public class FixIconImportSettings
         Debug.Log($"[IconFix] Done. Updated {fixedCount} icons to Sprite.");
     }
 }
+#endif

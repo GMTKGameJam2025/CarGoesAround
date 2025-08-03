@@ -59,8 +59,6 @@ public class TrackNode : MonoBehaviour
         { 
             other.connectedNodes.Add(this); 
         }
-        
-        Debug.Log($"Connected {name} to {other.name}");
     }
     
     /// <summary>
@@ -78,8 +76,6 @@ public class TrackNode : MonoBehaviour
         
         // Clear the list
         connectedNodes.Clear();
-        
-        Debug.Log($"TrackNode {name} disconnected from all nodes");
     }
     
     /// <summary>
@@ -98,8 +94,6 @@ public class TrackNode : MonoBehaviour
         {
             other.connectedNodes.Remove(this);
         }
-        
-        Debug.Log($"Disconnected {name} from {other.name}");
     }
  
     public void CleanNodeList(TrackPieceRemoved @event) 

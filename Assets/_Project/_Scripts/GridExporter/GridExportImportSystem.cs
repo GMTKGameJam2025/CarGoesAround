@@ -436,7 +436,7 @@ public class GridExportImportSystem : MonoBehaviour
     }
 
     #endregion
-
+#if UNITY_EDITOR
     #region Utility Methods
     // Quick export with timestamp
     [ContextMenu("Quick Export")]
@@ -450,7 +450,7 @@ public class GridExportImportSystem : MonoBehaviour
             SaveToFile(data, path);
         }
     }
-
     #endregion
+#endif
 }
 
