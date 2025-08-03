@@ -1952,10 +1952,6 @@ PrefabInstance:
       propertyPath: m_SizeDelta.x
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 1199364816217755897, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
-      propertyPath: m_ScrollSensitivity
-      value: 25
-      objectReference: {fileID: 0}
     - target: {fileID: 4024035270772463826, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
       propertyPath: m_Pivot.x
       value: 0.5
@@ -2036,37 +2032,9 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 4175700858000201494, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
-      propertyPath: m_AnchorMax.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4175700858000201494, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
-      propertyPath: m_AnchorMin.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4175700858000201494, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
-      propertyPath: m_AnchoredPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4175700858000201494, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 5439444896988460993, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
       propertyPath: m_Name
       value: InventoryPanel
-      objectReference: {fileID: 0}
-    - target: {fileID: 6028511989995197474, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8115063109210506200, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
-      propertyPath: m_SizeDelta.y
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 8115063109210506200, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
-      propertyPath: m_AnchoredPosition.y
-      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 9147683412622153738, guid: 450f7de349cc6dc4cbaf3fa2aa6a8016, type: 3}
       propertyPath: buildingManager
