@@ -7,7 +7,7 @@ public class FixIconImportSettings
     [MenuItem("Tools/Fix Icon Import Settings")]
     public static void SetAllToSprite()
     {
-        string iconPath = "Assets/_Project/2D_Icons";
+        string iconPath = "Assets/_Project/Textures/Fixed_Icons";
         string[] guids = AssetDatabase.FindAssets("t:Texture2D", new[] { iconPath });
         int fixedCount = 0;
 

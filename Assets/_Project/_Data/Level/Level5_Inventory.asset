@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cf6e23547cf697145a5943977015a555, type: 3}
+  m_Name: Level5_Inventory
+  m_EditorClassIdentifier: 
+  presetName: Level 5
+  items:
+  - itemId: 7
+    itemName: Rock (2x2)
+    itemIcon: {fileID: 21300000, guid: f89396d19ebd1074a9d9dc00cf8dfb11, type: 3}
+    initialQuantity: 1
+  - itemId: 12
+    itemName: Tree Branch
+    itemIcon: {fileID: 21300000, guid: 21eb4067ed7c6b44fbc2b5bdb6565cd2, type: 3}
+    initialQuantity: 1
