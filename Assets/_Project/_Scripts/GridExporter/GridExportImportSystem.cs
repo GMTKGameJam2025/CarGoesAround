@@ -40,7 +40,7 @@ public class GridExportImportSystem : MonoBehaviour
 
     [Header("ScriptableObject Settings")]
     [SerializeField] private GridLevelDataSO currentLevelData;
-    public string defaultSaveFolder = "Assets/GridLevels/";
+    public string defaultSaveFolder = "Assets/LevelData/";
     [SerializeField] private bool autoLoadOnStart = true;
 
     [Header("Events")]
@@ -203,15 +203,17 @@ public class GridExporter
         Dictionary<GridBuildPiece, string> pieceToIdMap = new Dictionary<GridBuildPiece, string>();
         HashSet<GridBuildPiece> processedPieces = new HashSet<GridBuildPiece>();
 
-        // First pass: Collect all unique build pieces and assign IDs
+        // First pass: Collect all unique build pieces and assign IDs using GridManager
         for (int x = 0; x < levelData.gridSize.x; x++)
         {
             for (int z = 0; z < levelData.gridSize.y; z++)
             {
-                GridCell cell = _system.gridManager.Grid.GetGridObject(x, z);
-                if (cell != null)
+                Vector2Int position = new Vector2Int(x, z);
+                GridBuildPiece topPiece = _system.gridManager.GetTopLevelObject(position);
+                
+                if (topPiece != null && !processedPieces.Contains(topPiece))
                 {
-                    CollectAllPiecesInCell(cell, processedPieces, pieceToIdMap);
+                    CollectAllPiecesFromPosition(position, processedPieces, pieceToIdMap);
                 }
             }
         }
@@ -227,10 +229,14 @@ public class GridExporter
         }
     }
 
-    private void CollectAllPiecesInCell(GridCell cell, HashSet<GridBuildPiece> processedPieces, Dictionary<GridBuildPiece, string> pieceToIdMap)
+    private void CollectAllPiecesFromPosition(Vector2Int position, HashSet<GridBuildPiece> processedPieces, Dictionary<GridBuildPiece, string> pieceToIdMap)
     {
-        // Get all pieces in the stack without modifying the cell
-        List<GridBuildPiece> stackPieces = GetAllPiecesInStack(cell);
+        // Get all pieces in the stack at this position using GridManager
+        GridCell cell = _system.gridManager.Grid.GetGridObject(position.x, position.y);
+        if (cell == null) return;
+
+        // Collect all pieces in the stack without modifying the grid
+        List<GridBuildPiece> stackPieces = GetAllPiecesInStackNonDestructive(cell);
 
         // Assign unique IDs to all pieces in the stack
         foreach (GridBuildPiece piece in stackPieces)
@@ -243,7 +249,7 @@ public class GridExporter
         }
     }
 
-    private List<GridBuildPiece> GetAllPiecesInStack(GridCell cell)
+    private List<GridBuildPiece> GetAllPiecesInStackNonDestructive(GridCell cell)
     {
         List<GridBuildPiece> pieces = new List<GridBuildPiece>();
         Stack<GridBuildPiece> tempStack = new Stack<GridBuildPiece>();
@@ -315,19 +321,25 @@ public class GridExporter
         int maxDepth = 0;
         foreach (Vector2Int pos in piece.occupiedPositions)
         {
-            GridCell cell = _system.gridManager.Grid.GetGridObject(pos.x, pos.y);
-            if (cell != null)
+            if (_system.gridManager.Grid.IsGridObjectInGrid(pos))
             {
-                int depth = GetDepthInStack(cell, piece);
-                maxDepth = Mathf.Max(maxDepth, depth);
+                GridBuildPiece topPiece = _system.gridManager.GetTopLevelObject(pos);
+                if (topPiece != null)
+                {
+                    int depth = GetDepthInStackUsingGridManager(pos, piece);
+                    maxDepth = Mathf.Max(maxDepth, depth);
+                }
             }
         }
         return maxDepth;
     }
 
-    private int GetDepthInStack(GridCell cell, GridBuildPiece targetPiece)
+    private int GetDepthInStackUsingGridManager(Vector2Int position, GridBuildPiece targetPiece)
     {
-        List<GridBuildPiece> stackPieces = GetAllPiecesInStack(cell);
+        GridCell cell = _system.gridManager.Grid.GetGridObject(position.x, position.y);
+        if (cell == null) return 0;
+
+        List<GridBuildPiece> stackPieces = GetAllPiecesInStackNonDestructive(cell);
         for (int i = 0; i < stackPieces.Count; i++)
         {
             if (stackPieces[i] == targetPiece)
@@ -528,7 +540,7 @@ public class GridImporter
                 continue;
             }
 
-            // Create the piece at the saved position and rotation
+            // Use BuildingManager to create the piece properly
             Vector3 position = pieceData.worldPosition;
             Quaternion rotation = Quaternion.Euler(pieceData.rotation);
             GridBuildPiece piece = _system.buildingManager.CreateBuildPiece(buildData, position, rotation);
@@ -565,6 +577,7 @@ public class GridImporter
     {
         // Sort pieces by stack depth (bottom pieces first)
         var sortedPieces = levelData.buildPieces
+            .Where(p => p.storeThisToGrid) // Only add pieces that should be stored to grid
             .OrderBy(p => p.stackDepth)
             .ThenBy(p => p.uniqueId); // Secondary sort for consistency
 
@@ -573,18 +586,13 @@ public class GridImporter
             if (!idToPieceMap.TryGetValue(pieceData.uniqueId, out GridBuildPiece piece)) 
                 continue;
 
-            if (piece.storeThisToGrid)
-            {
-                // Add to all occupied positions
-                foreach (Vector2Int pos in piece.occupiedPositions)
-                {
-                    if (_system.gridManager.Grid.IsGridObjectInGrid(pos))
-                    {
-                        GridCell cell = _system.gridManager.Grid.GetGridObject(pos.x, pos.y);
-                        cell.AddGridBuildPiece(piece);
-                    }
-                }
-            }
+            // Use GridManager's AddObjectToGrid method with the proper parameters
+            Vector2Int originPosition = pieceData.originGridPosition;
+            Vector2Int size = pieceData.sizeOnGrid;
+            Direction direction = pieceData.placementDirection;
+
+            // Add to grid using GridManager's method
+            _system.gridManager.AddObjectToGrid(piece, originPosition, size, direction);
         }
     }
 
@@ -603,68 +611,76 @@ public class GridImporter
 
     private void ClearGrid()
     {
-        // Use the proper grid manager removal method for each piece
-        HashSet<GridBuildPiece> processedPieces = new HashSet<GridBuildPiece>();
+        // Get all occupied positions first to avoid issues with iteration
+        List<Vector2Int> occupiedPositions = new List<Vector2Int>();
         
         for (int x = 0; x < _system.gridManager.Grid.GetWidth(); x++)
         {
             for (int z = 0; z < _system.gridManager.Grid.GetHeight(); z++)
             {
-                GridCell cell = _system.gridManager.Grid.GetGridObject(x, z);
-                if (cell != null && cell.GetTopGridObject() != null)
+                Vector2Int position = new Vector2Int(x, z);
+                GridBuildPiece topPiece = _system.gridManager.GetTopLevelObject(position);
+                
+                if (topPiece != null)
                 {
-                    GridBuildPiece topPiece = cell.GetTopGridObject();
-                    
-                    // Skip if we've already processed this piece
-                    if (processedPieces.Contains(topPiece))
-                        continue;
-                        
-                    // Mark as processed
-                    processedPieces.Add(topPiece);
-                    
-                    // Use the grid manager's proper removal method
-                    // This should handle multi-cell pieces correctly
-                    Vector2Int originPos = new Vector2Int(x, z);
-                    
-                    // Try to find the actual origin position from the piece's occupied positions
-                    if (topPiece.occupiedPositions != null && topPiece.occupiedPositions.Count > 0)
-                    {
-                        originPos = topPiece.occupiedPositions[0];
-                    }
-                    
-                    // Remove using the grid manager's method which should handle all occupied positions
-                    GridBuildPiece removedPiece = _system.gridManager.RemoveObjectFromGrid(originPos);
-                    
-                    // Destroy the piece
-                    if (removedPiece != null)
-                    {
-                        _system.buildingManager.DestroyBuildPiece(removedPiece);
-                    }
+                    occupiedPositions.Add(position);
                 }
             }
         }
+
+        // Remove all pieces using GridManager's removal method
+        HashSet<GridBuildPiece> processedPieces = new HashSet<GridBuildPiece>();
         
-        // Safety check: Force clear any remaining pieces
-        ClearRemainingPieces();
+        foreach (Vector2Int position in occupiedPositions)
+        {
+            GridBuildPiece topPiece = _system.gridManager.GetTopLevelObject(position);
+            
+            // Skip if already processed or no piece
+            if (topPiece == null || processedPieces.Contains(topPiece))
+                continue;
+
+            // Mark as processed
+            processedPieces.Add(topPiece);
+            
+            // Find the origin position for this piece (should be the first occupied position)
+            Vector2Int originPos = position;
+            if (topPiece.occupiedPositions != null && topPiece.occupiedPositions.Count > 0)
+            {
+                originPos = topPiece.occupiedPositions[0];
+            }
+            
+            // Use GridManager's removal method which handles multi-cell pieces properly
+            GridBuildPiece removedPiece = _system.gridManager.RemoveObjectFromGrid(originPos);
+            
+            // Destroy using BuildingManager
+            if (removedPiece != null)
+            {
+                _system.buildingManager.DestroyBuildPiece(removedPiece);
+            }
+        }
+        
+        // Safety check to ensure grid is completely clear
+        VerifyGridIsEmpty();
     }
     
-    private void ClearRemainingPieces()
+    private void VerifyGridIsEmpty()
     {
         for (int x = 0; x < _system.gridManager.Grid.GetWidth(); x++)
         {
             for (int z = 0; z < _system.gridManager.Grid.GetHeight(); z++)
             {
-                GridCell cell = _system.gridManager.Grid.GetGridObject(x, z);
-                if (cell != null)
+                Vector2Int position = new Vector2Int(x, z);
+                GridBuildPiece remainingPiece = _system.gridManager.GetTopLevelObject(position);
+                
+                if (remainingPiece != null)
                 {
-                    while (cell.GetTopGridObject() != null)
+                    Debug.LogWarning($"Found remaining piece at {position}: {remainingPiece.name}. Force removing...");
+                    
+                    // Force removal using grid manager
+                    GridBuildPiece forcedRemoval = _system.gridManager.RemoveObjectFromGrid(position);
+                    if (forcedRemoval != null)
                     {
-                        GridBuildPiece remainingPiece = cell.RemoveTopGridBuildPiece();
-                        if (remainingPiece != null)
-                        {
-                            Debug.LogWarning($"Force removing remaining piece: {remainingPiece.name}");
-                            _system.buildingManager.DestroyBuildPiece(remainingPiece);
-                        }
+                        _system.buildingManager.DestroyBuildPiece(forcedRemoval);
                     }
                 }
             }
