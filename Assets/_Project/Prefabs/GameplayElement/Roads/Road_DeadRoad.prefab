@@ -217,7 +217,7 @@ GameObject:
   - component: {fileID: 2608737601196020815}
   m_Layer: 10
   m_Name: DeadRoad
-  m_TagString: Untagged
+  m_TagString: Previewable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

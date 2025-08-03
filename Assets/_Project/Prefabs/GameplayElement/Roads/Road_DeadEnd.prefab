@@ -152,7 +152,7 @@ GameObject:
   - component: {fileID: 2719149015221601906}
   m_Layer: 10
   m_Name: DeadEnd
-  m_TagString: Untagged
+  m_TagString: Previewable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
