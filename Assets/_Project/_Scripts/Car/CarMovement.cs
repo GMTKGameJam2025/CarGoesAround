@@ -15,6 +15,7 @@ public class CarMovement : MonoBehaviour
     public float probeRadius = 2f;
     public float probeDistance = 5f;
     public LayerMask trackNodeLayer;
+    public FloatingCursor startMarkerPrefab;
 
     [Header("Ground settings")]
     public float groundCheckDistance = 0.5f;
@@ -34,12 +35,19 @@ public class CarMovement : MonoBehaviour
 
     private TrackNode _startNode;
     private bool _reachedStartNode;
+    private FloatingCursor _startMarker;
 
     void Start()
     {
         _rb = GetComponent<Rigidbody>();
         _currentDirection = transform.rotation * Vector3.forward;
-
+        
+        if (startMarkerPrefab)
+        {
+            _startMarker = Instantiate(startMarkerPrefab, Vector3.zero, Quaternion.identity);
+            _startMarker.gameObject.SetActive(false);
+        }
+        
         if (!currentNode) return;
 
         transform.position = currentNode.transform.position;
@@ -105,9 +113,16 @@ public class CarMovement : MonoBehaviour
 
     private void Update()
     {
+        //Acquiring startNode if not set
         if (currentNode && !_startNode)
         {
             _startNode = currentNode;
+            if (_startMarker)
+            {
+                _startMarker.UpdateCursorPositionInstant(_startNode.transform.position);
+                _startMarker.gameObject.SetActive(true);
+                _startMarker.StartAnimation();
+            }
         } 
         
         if (!_destNode)

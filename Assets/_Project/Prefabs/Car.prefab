@@ -71,6 +71,7 @@ MonoBehaviour:
   trackNodeLayer:
     serializedVersion: 2
     m_Bits: 128
+  startMarkerPrefab: {fileID: 5911091903643016707, guid: 0b02b5379204bf64a8702951fffda62b, type: 3}
   groundCheckDistance: 0.5
   groundCheckLength: 10
   groundCheckMask:

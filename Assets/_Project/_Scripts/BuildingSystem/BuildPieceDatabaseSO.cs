@@ -17,6 +17,7 @@ public class BuildPieceData
     [field: SerializeField] public int ID { get; private set; }
     [field: SerializeField] public Vector2Int Size { get; private set; } = Vector2Int.one;
     [field: SerializeField] public GameObject Prefab { get; private set; }
+    [field: SerializeField] public GameObject PreviewPrefab { get; private set; }
 
     public bool canBuildOnTop = false;
     public bool storeThisToGrid = true;

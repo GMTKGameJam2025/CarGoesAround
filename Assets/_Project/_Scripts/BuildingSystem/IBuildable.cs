@@ -1,4 +1,4 @@
 public interface IBuildable
 {
-    void OnBuild();
+    void OnBuild(GridBuildPiece piece);
 }
