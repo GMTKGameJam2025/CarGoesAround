@@ -53,6 +53,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &4754295018718327109
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -126,6 +127,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &8333519174495402003
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -232,6 +234,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &4245752625750182961
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -263,6 +266,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2851718191289325304}
   - component: {fileID: 4073758312948476342}
+  - component: {fileID: 8224338310563448803}
   m_Layer: 10
   m_Name: Road_Straight
   m_TagString: Untagged
@@ -303,6 +307,20 @@ MonoBehaviour:
   trackRenderer: {fileID: 413900784056385418}
   defaultMaterial: {fileID: 2100000, guid: 825e1b17c5be8fa4998b3223dcdb6486, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 80569722b3a50bc4587d3c166c86c9ec, type: 2}
+--- !u!114 &8224338310563448803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5368853562604980480}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f618a99bd94e96a5d596c0c2713b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 2100000, guid: 825e1b17c5be8fa4998b3223dcdb6486, type: 2}
+  lockMaterial: {fileID: 2100000, guid: 80569722b3a50bc4587d3c166c86c9ec, type: 2}
 --- !u!1 &7081771412799213242
 GameObject:
   m_ObjectHideFlags: 0

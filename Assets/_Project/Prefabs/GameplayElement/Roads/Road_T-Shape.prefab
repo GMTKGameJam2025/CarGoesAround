@@ -120,6 +120,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3914917971756969713}
   - component: {fileID: 5137272024523130224}
+  - component: {fileID: -5935620954871032718}
   m_Layer: 10
   m_Name: Road_T-Shape
   m_TagString: Untagged
@@ -160,6 +161,20 @@ MonoBehaviour:
   trackRenderer: {fileID: 314253151269633836}
   defaultMaterial: {fileID: 2100000, guid: 825e1b17c5be8fa4998b3223dcdb6486, type: 2}
   lockedMaterial: {fileID: 2100000, guid: 80569722b3a50bc4587d3c166c86c9ec, type: 2}
+--- !u!114 &-5935620954871032718
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3163100364040915918}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f618a99bd94e96a5d596c0c2713b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 2100000, guid: 825e1b17c5be8fa4998b3223dcdb6486, type: 2}
+  lockMaterial: {fileID: 2100000, guid: 80569722b3a50bc4587d3c166c86c9ec, type: 2}
 --- !u!1 &3460746521135413333
 GameObject:
   m_ObjectHideFlags: 0

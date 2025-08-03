@@ -42,6 +42,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1637168467570909212}
+  - component: {fileID: 8693626841820168221}
   m_Layer: 10
   m_Name: Road_DeadEnd
   m_TagString: Untagged
@@ -65,6 +66,20 @@ Transform:
   - {fileID: 1291826743903090613}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8693626841820168221
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 550027533101951921}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 27f618a99bd94e96a5d596c0c2713b45, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  defaultMaterial: {fileID: 2100000, guid: 825e1b17c5be8fa4998b3223dcdb6486, type: 2}
+  lockMaterial: {fileID: 2100000, guid: 80569722b3a50bc4587d3c166c86c9ec, type: 2}
 --- !u!1 &4470840644831233120
 GameObject:
   m_ObjectHideFlags: 0
@@ -117,6 +132,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &463453177155391055
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -300,6 +316,7 @@ MonoBehaviour:
   probeMask:
     serializedVersion: 2
     m_Bits: 128
+  showConnections: 1
 --- !u!135 &1396576187849189446
 SphereCollider:
   m_ObjectHideFlags: 0
