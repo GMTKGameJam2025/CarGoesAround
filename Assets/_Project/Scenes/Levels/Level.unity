@@ -699,6 +699,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   inventoryPreset: {fileID: 11400000, guid: 6721b5fd7f5f12046a178e5cf54eb47e, type: 2}
+  initOnStart: 0
 --- !u!1 &1187978401
 GameObject:
   m_ObjectHideFlags: 0
@@ -1581,7 +1582,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 676d48fed5ea1c44d8e72ae62f762b36, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentLevel: 1
+  currentLevel: 3
   currentMaxLevel: 0
   levelData: {fileID: 11400000, guid: 6e863bf92d076b94cb2f320c31e9d3f9, type: 2}
 --- !u!4 &1764088154

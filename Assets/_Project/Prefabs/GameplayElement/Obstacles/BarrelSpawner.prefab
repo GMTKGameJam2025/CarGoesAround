@@ -49,6 +49,7 @@ MonoBehaviour:
   barrelVisual: {fileID: 8109418844447456874}
   dropHeight: 5
   respawnTime: 5
+  initialDelay: 2
 --- !u!1 &5701338717836857579
 GameObject:
   m_ObjectHideFlags: 0
