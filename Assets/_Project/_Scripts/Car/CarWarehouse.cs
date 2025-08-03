@@ -38,7 +38,8 @@ public class CarWarehouse : MonoBehaviour, IBuildable
         {
             return;
         }
-        
+
+        Debug.Log("Warehouse Built from GridLoader");
         _currentTime = startDuration;
     }
 

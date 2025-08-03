@@ -17,6 +17,10 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private LevelLose lose;
     [SerializeField] private InventoryUI inventoryUI;
 
+    [Header("Level")]
+    [SerializeField] private TextAsset levelData;
+    [SerializeField] private GridExportImportSystem gridExportSystem;
+
     private void OnEnable()
     {
         EventBus.Subscribe<GameOverEvent>(StartLose);
@@ -35,6 +39,8 @@ public class LevelManager : MonoBehaviour
         win.gameObject.SetActive(false);
         lose.gameObject.SetActive(false);
 
+        gridExportSystem.LoadFromTextAsset(levelData);
+        
         StartCoroutine(StartIntro());
     }
 
