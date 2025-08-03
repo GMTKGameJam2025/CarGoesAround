@@ -12,6 +12,7 @@ public class CarMovement : MonoBehaviour
     public float turnSpeed = 30f;
 
     [Header("Node detection settings")]
+    public float spawnYOffset = 0.5f;
     public float probeRadius = 2f;
     public float probeDistance = 5f;
     public LayerMask trackNodeLayer;
@@ -50,7 +51,9 @@ public class CarMovement : MonoBehaviour
         
         if (!currentNode) return;
 
-        transform.position = currentNode.transform.position;
+        Vector3 spawnPosition = currentNode.transform.position;
+        spawnPosition.y += spawnYOffset;
+        transform.position = spawnPosition;
         _destNode = GetNextNode();
     }
 
@@ -263,5 +266,13 @@ public class CarMovement : MonoBehaviour
         Gizmos.color = Color.yellow;
         Vector3 probeOrigin = transform.position + transform.forward * probeDistance * 0.5f;
         Gizmos.DrawWireSphere(probeOrigin, probeRadius);
+
+        if (!Application.IsPlaying(this) && currentNode)
+        {
+            Vector3 spawnPosition = currentNode.transform.position;
+            spawnPosition.y += spawnYOffset;
+            Gizmos.color = Color.red;
+            Gizmos.DrawLine(currentNode.transform.position, spawnPosition);
+        }
     }
 }

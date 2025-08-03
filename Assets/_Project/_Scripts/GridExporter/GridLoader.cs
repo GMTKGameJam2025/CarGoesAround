@@ -47,7 +47,7 @@ public class GridLoader : MonoBehaviour
             ApplySavedDataBeforeInit(piece, pieceData);
 
             // Initialize the piece - this will call OnBuild with the saved data already applied
-            piece.Init(buildData);
+            piece.Init(buildData, "GridLoader");
 
             idToPieceMap[pieceData.uniqueId] = piece;
         }

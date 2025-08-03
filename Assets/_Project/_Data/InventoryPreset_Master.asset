@@ -98,3 +98,7 @@ MonoBehaviour:
     itemName: Car
     itemIcon: {fileID: 21300000, guid: 374e90f52827a2645b023d3790ea5ef2, type: 3}
     initialQuantity: 999
+  - itemId: 31
+    itemName: Warehouse
+    itemIcon: {fileID: 21300000, guid: 374e90f52827a2645b023d3790ea5ef2, type: 3}
+    initialQuantity: 999

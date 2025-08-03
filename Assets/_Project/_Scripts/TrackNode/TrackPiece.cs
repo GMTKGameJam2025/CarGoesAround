@@ -33,7 +33,10 @@ public class TrackPiece : MonoBehaviour, IBuildable
             node.AutoConnect();
         }
 
-        trackRenderer.material = piece.canBeRemovedFromGrid ? defaultMaterial : lockedMaterial;
+        if (trackRenderer)
+        {
+            trackRenderer.material = piece.canBeRemovedFromGrid ? defaultMaterial : lockedMaterial;
+        }
     }
 
     private void OnDisable()

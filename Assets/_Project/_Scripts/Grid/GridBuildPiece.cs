@@ -22,7 +22,9 @@ public class GridBuildPiece : MonoBehaviour
     public List<GridBuildPiece> gridObjectsOnTop;
     public List<Vector2Int> occupiedPositions;
 
-    public void Init(BuildPieceData data)
+    public string builtSource;
+
+    public void Init(BuildPieceData data, string source = "")
     {
         if (data == null)
         {
@@ -40,6 +42,8 @@ public class GridBuildPiece : MonoBehaviour
         // Initialize empty lists just in case (defensive)
         gridObjectsOnTop = new List<GridBuildPiece>();
         occupiedPositions = new List<Vector2Int>();
+
+        builtSource = source;
 
         OnBuild();
     }

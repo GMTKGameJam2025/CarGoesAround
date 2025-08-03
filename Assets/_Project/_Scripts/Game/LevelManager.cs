@@ -4,6 +4,11 @@ using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.Serialization;
 
+public struct GameStartedEvent : IGameEvent
+{
+    
+}
+
 public class LevelManager : MonoBehaviour
 {
     [SerializeField] private int levelNumber;
@@ -29,14 +34,15 @@ public class LevelManager : MonoBehaviour
         intro.gameObject.SetActive(false);
         win.gameObject.SetActive(false);
         lose.gameObject.SetActive(false);
-        
-        StartIntro();
+
+        StartCoroutine(StartIntro());
     }
 
-    private void StartIntro()
+    private IEnumerator StartIntro()
     {
         intro.Initialize(levelNumber);
-        StartCoroutine(intro.PlayLevelIntro());
+        yield return StartCoroutine(intro.PlayLevelIntro());
+        EventBus.Fire<GameStartedEvent>(new());
     }
 
     private void StartLose(GameOverEvent @event)

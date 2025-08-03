@@ -202,3 +202,12 @@ MonoBehaviour:
     storeThisToGrid: 0
     layer: 0
     canBeBuiltOnLayers: 3
+  - <Name>k__BackingField: Warehouse
+    <ID>k__BackingField: 31
+    <Size>k__BackingField: {x: 1, y: 1}
+    <Prefab>k__BackingField: {fileID: 1660878220718132060, guid: 6dd7ec63323b30b45af3e8a5490e7cef, type: 3}
+    <PreviewPrefab>k__BackingField: {fileID: 6647081551058536088, guid: 271abf1da5ac0d14d92e481789303a73, type: 3}
+    canBuildOnTop: 0
+    storeThisToGrid: 0
+    layer: 0
+    canBeBuiltOnLayers: 1
