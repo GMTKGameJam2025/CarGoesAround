@@ -114,7 +114,7 @@ MonoBehaviour:
   crashRadius: 3
   crashDownwardModifier: 2
   crashEffectPrefab: {fileID: 5259346939413582324, guid: be6c3ec469c3ec94f9412b47092c5c78, type: 3}
-  crashSound: {fileID: 8300000, guid: f3706b3f3a539aa43b67247ca5758ad6, type: 3}
+  crashSound: {fileID: 8300000, guid: 9a9b5e26633699c4ca0c04b908463694, type: 3}
 --- !u!65 &105943342815320218
 BoxCollider:
   m_ObjectHideFlags: 0
