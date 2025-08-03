@@ -1,8 +1,6 @@
 using System;
 using System.Collections;
 using UnityEngine;
-using UnityEngine.SceneManagement;
-using UnityEngine.Serialization;
 
 public struct GameStartedEvent : IGameEvent
 {
@@ -18,7 +16,7 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private InventoryUI inventoryUI;
 
     [Header("Level")]
-    [SerializeField] private TextAsset levelData;
+    [SerializeField] private GridLevelDataSO levelData;
     [SerializeField] private GridExportImportSystem gridExportSystem;
 
     private void OnEnable()
@@ -39,7 +37,7 @@ public class LevelManager : MonoBehaviour
         win.gameObject.SetActive(false);
         lose.gameObject.SetActive(false);
 
-        gridExportSystem.LoadFromTextAsset(levelData);
+        gridExportSystem.LoadFromScriptableObject(levelData);
         
         StartCoroutine(StartIntro());
     }
