@@ -16,9 +16,9 @@ MonoBehaviour:
   items:
   - itemId: 0
     itemName: Curved Road
-    itemIcon: {fileID: 21300000, guid: 3822ce77b5d70144e84f482e4fe75dff, type: 3}
+    itemIcon: {fileID: 21300000, guid: f7e9e69f64d8b6b489342008c054265c, type: 3}
     initialQuantity: 1
   - itemId: 1
     itemName: Straight Road
-    itemIcon: {fileID: 21300000, guid: 2777d01739df37046b91f1c170182ef2, type: 3}
+    itemIcon: {fileID: 21300000, guid: cd7ae72c27e1929438fc9cd20e3c3be1, type: 3}
     initialQuantity: 5

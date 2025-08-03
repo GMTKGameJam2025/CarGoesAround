@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cf6e23547cf697145a5943977015a555, type: 3}
   m_Name: Level2_Inventory
   m_EditorClassIdentifier: 
-  presetName: Level 1
+  presetName: Level 2
   items: []
