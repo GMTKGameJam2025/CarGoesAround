@@ -1,5 +1,6 @@
 using System.Collections.Generic;
 using UnityEngine;
+
 public class GridLoader : MonoBehaviour
 {
     public GridManager gridManager;
@@ -37,22 +38,16 @@ public class GridLoader : MonoBehaviour
                 continue;
             }
 
-            // Create the piece
+            // Create the piece at the saved position and rotation
             Vector3 position = pieceData.worldPosition;
             Quaternion rotation = Quaternion.Euler(pieceData.rotation);
-            
             GridBuildPiece piece = buildingManager.CreateBuildPiece(buildData, position, rotation);
-            
-            // Override properties with saved data
-            piece.id = pieceData.pieceId;
-            piece.sizeOnGrid = pieceData.sizeOnGrid;
-            piece.canBuildOnTop = pieceData.canBuildOnTop;
-            piece.storeThisToGrid = pieceData.storeThisToGrid;
-            piece.canBeRemovedFromGrid = pieceData.canBeRemovedFromGrid;
-            piece.layer = pieceData.layer;
-            piece.canBeBuiltOnLayers = pieceData.canBeBuiltOnLayers;
-            piece.occupiedPositions = new List<Vector2Int>(pieceData.occupiedPositions);
-            piece.gridObjectsOnTop = new List<GridBuildPiece>();
+
+            // Apply saved data BEFORE calling Init so OnBuild uses the saved state
+            ApplySavedDataBeforeInit(piece, pieceData);
+
+            // Initialize the piece - this will call OnBuild with the saved data already applied
+            piece.Init(buildData);
 
             idToPieceMap[pieceData.uniqueId] = piece;
         }
@@ -74,7 +69,6 @@ public class GridLoader : MonoBehaviour
         }
 
         // Third pass: Add pieces to grid in the correct order (bottom to top)
-        // Sort pieces by their stack position (pieces with no objects on top of them go last)
         var sortedPieces = SortPiecesByStackOrder(exportData.buildPieces, idToPieceMap);
 
         foreach (var pieceData in sortedPieces)
@@ -98,6 +92,25 @@ public class GridLoader : MonoBehaviour
 
         Debug.Log($"Successfully loaded {exportData.buildPieces.Count} build pieces to grid.");
         return true;
+    }
+
+    /// <summary>
+    /// Apply saved data to piece BEFORE Init so OnBuild uses the saved state
+    /// </summary>
+    private void ApplySavedDataBeforeInit(GridBuildPiece piece, GridBuildPieceData savedData)
+    {
+        // Apply saved data BEFORE calling Init so OnBuild will use this data
+        piece.id = savedData.pieceId;
+        piece.sizeOnGrid = savedData.sizeOnGrid;
+        piece.canBuildOnTop = savedData.canBuildOnTop;
+        piece.storeThisToGrid = savedData.storeThisToGrid;
+        piece.canBeRemovedFromGrid = savedData.canBeRemovedFromGrid;
+        piece.layer = savedData.layer;
+        piece.canBeBuiltOnLayers = savedData.canBeBuiltOnLayers;
+        piece.occupiedPositions = new List<Vector2Int>(savedData.occupiedPositions);
+        
+        // Initialize the gridObjectsOnTop list (relationships will be rebuilt in second pass)
+        piece.gridObjectsOnTop = new List<GridBuildPiece>();
     }
 
     private List<GridBuildPieceData> SortPiecesByStackOrder(List<GridBuildPieceData> pieces, Dictionary<string, GridBuildPiece> idToPieceMap)
