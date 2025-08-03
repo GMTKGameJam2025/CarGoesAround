@@ -1,0 +1,924 @@
+{
+    "buildPieces": [
+        {
+            "uniqueId": "5af38288-e881-4749-8885-e971137b0450",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -6.0,
+                "y": 0.0,
+                "z": -1.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 2,
+                    "y": 4
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 2,
+                "y": 4
+            }
+        },
+        {
+            "uniqueId": "00a1b5e0-2c29-4dd5-bcb4-9551b4f5a1a0",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -6.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 2,
+                    "y": 5
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 2,
+                "y": 5
+            }
+        },
+        {
+            "uniqueId": "69985372-7f5d-456d-a6cb-a9ae7d6f2623",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -6.0,
+                "y": 0.0,
+                "z": 1.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 2,
+                    "y": 6
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 2,
+                "y": 6
+            }
+        },
+        {
+            "uniqueId": "77344a2d-9f72-4125-aee0-66da1d59bf48",
+            "pieceId": 0,
+            "worldPosition": {
+                "x": -6.0,
+                "y": 0.0,
+                "z": 2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 2,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 2,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "51425829-f5bb-4bbc-906d-87da92fb846b",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -5.0,
+                "y": 0.0,
+                "z": -2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 3,
+                    "y": 2
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 3,
+                "y": 2
+            }
+        },
+        {
+            "uniqueId": "78e6a349-bf61-4225-b597-c74e28be606a",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -5.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 3,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 3,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "96888c1c-cc55-4b20-bb97-c8480e2ff033",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -4.0,
+                "y": 0.0,
+                "z": -2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 4,
+                    "y": 2
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 4,
+                "y": 2
+            }
+        },
+        {
+            "uniqueId": "0464a050-457b-4709-96ab-76817df7ff32",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -4.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 4,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 4,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "03d2509b-3418-498e-9b3a-14ca89653424",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -3.0,
+                "y": 0.0,
+                "z": -2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 5,
+                    "y": 2
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 5,
+                "y": 2
+            }
+        },
+        {
+            "uniqueId": "fe9b2ee8-3af6-4eee-ae01-9aa0065c9a60",
+            "pieceId": 31,
+            "worldPosition": {
+                "x": -3.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": false,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 0,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 5,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 5,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "9cb575df-e3d5-4226-93c3-ed56c4bc24df",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -2.0,
+                "y": 0.0,
+                "z": -2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 6,
+                    "y": 2
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 6,
+                "y": 2
+            }
+        },
+        {
+            "uniqueId": "33ea8fdf-771a-4711-a717-92209d966c3f",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -2.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 6,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 6,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "10bbf567-91c1-45f7-acdb-6f702f52608a",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": -1.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 7,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 7,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "d293761a-311f-419b-acb6-8e4ac25858da",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 8,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 8,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "fade5cef-5b52-45bb-8644-54da2bf1da17",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 1.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 9,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 9,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "621b950d-a6cc-48e9-b1bf-3279e576fb9f",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 2.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 10,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 10,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "5655223d-7b4d-44f3-8731-59b5b245e744",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 3.0,
+                "y": 0.0,
+                "z": -2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 11,
+                    "y": 2
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 11,
+                "y": 2
+            }
+        },
+        {
+            "uniqueId": "19229929-04f3-4519-9464-06abf63476c0",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 3.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 11,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 11,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "e8a2689b-00ce-46bc-a54e-336b39b2391d",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 4.0,
+                "y": 0.0,
+                "z": -2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 12,
+                    "y": 2
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 12,
+                "y": 2
+            }
+        },
+        {
+            "uniqueId": "725cf926-6044-4b9a-98a7-9c4816dee952",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 4.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 12,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 12,
+                "y": 7
+            }
+        },
+        {
+            "uniqueId": "d04b54e5-b173-4292-bd46-aece3e775df9",
+            "pieceId": 0,
+            "worldPosition": {
+                "x": 6.0,
+                "y": 0.0,
+                "z": -2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 180.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 13,
+                    "y": 2
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 13,
+                "y": 2
+            }
+        },
+        {
+            "uniqueId": "2b7183b9-5319-4816-a9cf-a80c28c686cb",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -2.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 13,
+                    "y": 3
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 13,
+                "y": 3
+            }
+        },
+        {
+            "uniqueId": "7c2e87a6-0850-4684-a001-1851952124ed",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": -1.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 13,
+                    "y": 4
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 13,
+                "y": 4
+            }
+        },
+        {
+            "uniqueId": "86a19e84-7c04-4e52-825d-6af389dac3d5",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 13,
+                    "y": 5
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 13,
+                "y": 5
+            }
+        },
+        {
+            "uniqueId": "81852d43-1487-466f-ae7d-9773ccddc6c8",
+            "pieceId": 1,
+            "worldPosition": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": 1.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 0.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 13,
+                    "y": 6
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 13,
+                "y": 6
+            }
+        },
+        {
+            "uniqueId": "961f8b59-b426-4ba6-98a3-27fd3d122e70",
+            "pieceId": 0,
+            "worldPosition": {
+                "x": 5.0,
+                "y": 0.0,
+                "z": 3.0
+            },
+            "rotation": {
+                "x": 0.0,
+                "y": 90.0,
+                "z": 0.0
+            },
+            "sizeOnGrid": {
+                "x": 1,
+                "y": 1
+            },
+            "canBuildOnTop": true,
+            "storeThisToGrid": true,
+            "canBeRemovedFromGrid": false,
+            "layer": 2,
+            "canBeBuiltOnLayers": 1,
+            "occupiedPositions": [
+                {
+                    "x": 13,
+                    "y": 7
+                }
+            ],
+            "objectsOnTopIds": [],
+            "placementDirection": 0,
+            "originGridPosition": {
+                "x": 13,
+                "y": 7
+            }
+        }
+    ],
+    "gridSize": {
+        "x": 16,
+        "y": 10
+    },
+    "cellSize": 1.0,
+    "gridOrigin": {
+        "x": -8.0,
+        "y": 0.0,
+        "z": -5.0
+    }
+}
