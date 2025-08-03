@@ -66,6 +66,7 @@ MonoBehaviour:
   thresholdDistanceToGoal: 0.05
   moveSpeed: 2
   turnSpeed: 500
+  spawnYOffset: 0.5
   probeRadius: 0.2
   probeDistance: 1
   trackNodeLayer:
@@ -102,13 +103,13 @@ MonoBehaviour:
   explosionForce: 500
   explosionRadius: 5
   explosionUpwardModifier: 3
-  explosionEffectPrefab: {fileID: 0}
+  explosionEffectPrefab: {fileID: 5259346939413582324, guid: be6c3ec469c3ec94f9412b47092c5c78, type: 3}
   explosionSound: {fileID: 0}
   crashForce: 200
   crashRadius: 3
   crashDownwardModifier: 2
-  crashEffectPrefab: {fileID: 0}
-  crashSound: {fileID: 0}
+  crashEffectPrefab: {fileID: 5259346939413582324, guid: be6c3ec469c3ec94f9412b47092c5c78, type: 3}
+  crashSound: {fileID: 8300000, guid: f3706b3f3a539aa43b67247ca5758ad6, type: 3}
 --- !u!65 &105943342815320218
 BoxCollider:
   m_ObjectHideFlags: 0
