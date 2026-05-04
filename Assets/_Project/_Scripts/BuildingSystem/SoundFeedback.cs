@@ -1,41 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
+/// <summary>
+/// Plays one-shot audio clips in response to building system events.
+/// Clips are assigned in the Inspector; missing clips are silently skipped.
+/// </summary>
 public class SoundFeedback : MonoBehaviour
 {
-    [SerializeField]
-    private AudioClip clickSound, placeSound, removeSound, wrongPlacementSound;
+    [SerializeField] private AudioClip clickSound;
+    [SerializeField] private AudioClip placeSound;
+    [SerializeField] private AudioClip removeSound;
+    [SerializeField] private AudioClip wrongPlacementSound;
 
-    [SerializeField]
-    private AudioSource audioSource;
+    [SerializeField] private AudioSource audioSource;
 
+    /// <summary>Plays the clip that corresponds to <paramref name="soundType"/>.</summary>
     public void PlaySound(SoundType soundType)
     {
-        switch (soundType)
+        AudioClip clip = soundType switch
         {
-            case SoundType.Click:
-                audioSource.PlayOneShot(clickSound);
-                break;
-            case SoundType.Place:
-                audioSource.PlayOneShot(placeSound);
-                break;
-            case SoundType.Remove:
-                audioSource.PlayOneShot(removeSound);
-                break;
-            case SoundType.wrongPlacement:
-                audioSource.PlayOneShot(wrongPlacementSound);
-                break;
-            default:
-                break;
-        }
-    }
-}
+            SoundType.Click          => clickSound,
+            SoundType.Place          => placeSound,
+            SoundType.Remove         => removeSound,
+            SoundType.wrongPlacement => wrongPlacementSound,
+            _                        => null,
+        };
 
-public enum SoundType
-{
-    Click,
-    Place,
-    Remove,
-    wrongPlacement
+        if (clip != null)
+            audioSource.PlayOneShot(clip);
+    }
 }
