@@ -114,4 +114,14 @@ public class GridCell
     /// </summary>
     public GridBuildPiece GetTopGridObject()
         => _buildPieces.Count == 0 ? null : _buildPieces.Peek();
+
+    /// <summary>
+    /// Returns all pieces on this cell ordered bottom-first (index 0 = bottom, last index = top).
+    /// </summary>
+    public IReadOnlyList<GridBuildPiece> GetAllPieces()
+    {
+        GridBuildPiece[] pieces = _buildPieces.ToArray();
+        System.Array.Reverse(pieces);
+        return pieces;
+    }
 }
