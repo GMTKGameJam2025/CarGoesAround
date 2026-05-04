@@ -385,4 +385,4 @@ public class GridDebugWindow : EditorWindow
             EditorGUILayout.LabelField($"{level} - ID: {piece.id}", EditorStyles.miniLabel);
             EditorGUILayout.LabelField($"Name: {piece.name}", EditorStyles.miniLabel);
             EditorGUILayout.LabelField($"Layer: {piece.Layer}", EditorStyles.miniLabel);
-            EditorGUILayout.LabelField($"Size: {piece.size}",
+            EditorGUILayout.LabelField($"Size: {piece.size
