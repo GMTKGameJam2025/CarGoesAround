@@ -1,4 +1,3 @@
-```
 using UnityEngine;
 using UnityEditor;
 using System.Collections.Generic;
@@ -69,9 +68,9 @@ public class GridDebugEditor : Editor
     {
         EditorGUILayout.LabelField("Grid Information", EditorStyles.boldLabel);
         
-        int width = gridManager.Grid.Width;
-        int height = gridManager.Grid.Height;
-        float cellSize = gridManager.Grid.CellSize;
+        int width = gridManager.Grid.GetWidth();
+        int height = gridManager.Grid.GetHeight();
+        float cellSize = gridManager.Grid.GetCellSize();
         
         EditorGUILayout.LabelField($"Dimensions: {width} x {height}");
         EditorGUILayout.LabelField($"Cell Size: {cellSize}");
@@ -154,9 +153,9 @@ public class GridDebugEditor : Editor
     
     private void DrawGridVisualization()
     {
-        int width = gridManager.Grid.Width;
-        int height = gridManager.Grid.Height;
-        float cellSize = gridManager.Grid.CellSize;
+        int width = gridManager.Grid.GetWidth();
+        int height = gridManager.Grid.GetHeight();
+        float cellSize = gridManager.Grid.GetCellSize();
         
         Handles.BeginGUI();
         
@@ -244,7 +243,7 @@ public class GridDebugEditor : Editor
         style.fontStyle = FontStyle.Bold;
         style.alignment = TextAnchor.MiddleCenter;
         
-        string info = $"Stack: {stackCount}\nID: {topPiece.id}\nLayer: {topPiece.Layer}";
+        string info = $"Stack: {stackCount}\nID: {topPiece.id}\nLayer: {topPiece.layer}";
         
         Vector2 size = style.CalcSize(new GUIContent(info));
         GUI.Label(new Rect(screenPos.x - size.x * 0.5f, screenPos.y - size.y * 0.5f, size.x, size.y), info, style);
@@ -280,19 +279,19 @@ public class GridDebugEditor : Editor
     
     private void DrawOccupiedPositions(GridBuildPiece piece, Vector2Int currentPos)
     {
-        if (piece.OccupiedPositions == null) return;
+        if (piece.occupiedPositions == null) return;
         
         Handles.color = Color.cyan;
         
-        foreach (Vector2Int pos in piece.OccupiedPositions)
+        foreach (Vector2Int pos in piece.occupiedPositions)
         {
             if (pos != currentPos) // Don't draw line to self
             {
                 Vector3 fromWorld = gridManager.Grid.GetWorldPosition(currentPos.x, currentPos.y);
                 Vector3 toWorld = gridManager.Grid.GetWorldPosition(pos.x, pos.y);
                 
-                fromWorld += new Vector3(gridManager.Grid.CellSize * 0.5f, 0.05f, gridManager.Grid.CellSize * 0.5f);
-                toWorld += new Vector3(gridManager.Grid.CellSize * 0.5f, 0.05f, gridManager.Grid.CellSize * 0.5f);
+                fromWorld += new Vector3(gridManager.Grid.GetCellSize() * 0.5f, 0.05f, gridManager.Grid.GetCellSize() * 0.5f);
+                toWorld += new Vector3(gridManager.Grid.GetCellSize() * 0.5f, 0.05f, gridManager.Grid.GetCellSize() * 0.5f);
                 
                 Handles.DrawLine(fromWorld, toWorld);
                 Handles.DrawWireCube(toWorld, Vector3.one * 0.2f);
@@ -302,11 +301,11 @@ public class GridDebugEditor : Editor
     
     private void DrawRelationships(GridBuildPiece piece, Vector3 cellCenter)
     {
-        if (piece.GridObjectsOnTop == null) return;
+        if (piece.gridObjectsOnTop == null) return;
         
         Handles.color = relationshipColor;
         
-        foreach (GridBuildPiece topPiece in piece.GridObjectsOnTop)
+        foreach (GridBuildPiece topPiece in piece.gridObjectsOnTop)
         {
             if (topPiece != null)
             {
@@ -347,8 +346,8 @@ public class GridDebugWindow : EditorWindow
         
         scrollPosition = EditorGUILayout.BeginScrollView(scrollPosition);
         
-        int width = gridManager.Grid.Width;
-        int height = gridManager.Grid.Height;
+        int width = gridManager.Grid.GetWidth();
+        int height = gridManager.Grid.GetHeight();
         
         for (int x = 0; x < width; x++)
         {
@@ -384,5 +383,50 @@ public class GridDebugWindow : EditorWindow
             EditorGUILayout.BeginVertical("box");
             EditorGUILayout.LabelField($"{level} - ID: {piece.id}", EditorStyles.miniLabel);
             EditorGUILayout.LabelField($"Name: {piece.name}", EditorStyles.miniLabel);
-            EditorGUILayout.LabelField($"Layer: {piece.Layer}", EditorStyles.miniLabel);
-            EditorGUILayout.LabelField($"Size: {piece.size
+            EditorGUILayout.LabelField($"Layer: {piece.layer}", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField($"Size: {piece.sizeOnGrid}", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField($"Can Build On Top: {piece.canBuildOnTop}", EditorStyles.miniLabel);
+            EditorGUILayout.LabelField($"Can Remove: {piece.canBeRemovedFromGrid}", EditorStyles.miniLabel);
+            
+            if (piece.occupiedPositions != null && piece.occupiedPositions.Count > 0)
+            {
+                EditorGUILayout.LabelField($"Occupied Positions: {string.Join(", ", piece.occupiedPositions)}", EditorStyles.miniLabel);
+            }
+            
+            if (piece.gridObjectsOnTop != null && piece.gridObjectsOnTop.Count > 0)
+            {
+                EditorGUILayout.LabelField($"Objects On Top: {piece.gridObjectsOnTop.Count}", EditorStyles.miniLabel);
+            }
+            
+            EditorGUILayout.EndVertical();
+        }
+        
+        EditorGUILayout.EndVertical();
+        EditorGUILayout.Space(5);
+    }
+    
+    private List<GridBuildPiece> GetAllPiecesInStack(GridCell cell)
+    {
+        List<GridBuildPiece> pieces = new List<GridBuildPiece>();
+        Stack<GridBuildPiece> tempStack = new Stack<GridBuildPiece>();
+        
+        // Extract all pieces
+        while (cell.GetTopGridObject() != null)
+        {
+            GridBuildPiece piece = cell.RemoveTopGridBuildPiece();
+            if (piece != null)
+            {
+                tempStack.Push(piece);
+                pieces.Add(piece);
+            }
+        }
+        
+        // Restore stack
+        while (tempStack.Count > 0)
+        {
+            cell.AddGridBuildPiece(tempStack.Pop());
+        }
+        
+        return pieces;
+    }
+}
