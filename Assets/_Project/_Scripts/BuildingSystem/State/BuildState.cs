@@ -1,18 +1,29 @@
 using UnityEngine;
 
+/// <summary>
+/// Active building state: shows a placement preview and places a build piece
+/// on click after validating grid position, layer compatibility, and inventory.
+/// </summary>
 public class BuildState : IBuildingState
 {
-    private int _id;
-    private BuildPieceData _piece;
-    private BuildingManager _buildingManager;
-    private GridManager _gridManager;
-    private InventoryManager _inventoryManager;
-    private PreviewSystem _previewSystem;
-    private SoundFeedback _soundFeedback;
+    private readonly int _id;
+    private readonly BuildPieceData _piece;
+    private readonly BuildingManager _buildingManager;
+    private readonly GridManager _gridManager;
+    private readonly InventoryManager _inventoryManager;
+    private readonly PreviewSystem _previewSystem;
+    private readonly SoundFeedback _soundFeedback;
 
     private Direction _currentDirection = Direction.Down;
-    private float _currentRotation = 0;
+    private float _currentRotation;
 
+    /// <param name="id">Database ID of the piece to place.</param>
+    /// <param name="pieceDatabase">Database to look up the piece definition.</param>
+    /// <param name="buildingManager">Used to spawn / destroy pieces.</param>
+    /// <param name="inventoryManager">Optional inventory check before placement.</param>
+    /// <param name="gridManager">Grid to validate and record placement.</param>
+    /// <param name="previewSystem">Handles ghost-preview rendering.</param>
+    /// <param name="soundFeedback">Plays audio cues.</param>
     public BuildState(
         int id,
         BuildPieceDatabaseSO pieceDatabase,
@@ -22,108 +33,110 @@ public class BuildState : IBuildingState
         PreviewSystem previewSystem,
         SoundFeedback soundFeedback)
     {
-        _id = id;
-        _piece = pieceDatabase.objectsData.Find(piece => piece.ID == id);
-        _buildingManager = buildingManager;
-        _gridManager = gridManager;
+        _id               = id;
+        _piece            = pieceDatabase.objectsData.Find(p => p.ID == id);
+        _buildingManager  = buildingManager;
+        _gridManager      = gridManager;
         _inventoryManager = inventoryManager;
-        _previewSystem = previewSystem;
-        _soundFeedback = soundFeedback;
+        _previewSystem    = previewSystem;
+        _soundFeedback    = soundFeedback;
 
-        previewSystem.StartShowingPlacementPreview(_piece.PreviewPrefab ? _piece.PreviewPrefab : _piece.Prefab, _piece.Size);
+        previewSystem.StartShowingPlacementPreview(
+            _piece.PreviewPrefab ? _piece.PreviewPrefab : _piece.Prefab,
+            _piece.Size);
     }
 
-    public void EndState()
-    {
-        _previewSystem.StopShowingPreview();
-    }
+    /// <inheritdoc/>
+    public void EndState() => _previewSystem.StopShowingPreview();
 
+    /// <inheritdoc/>
     public void OnAction(Vector3Int gridPosition)
     {
-        bool placementValidity = CheckPlacementValidity(gridPosition, _piece.Size, _currentDirection);
-        if (!placementValidity)
+        if (!CheckPlacementValidity(gridPosition, _piece.Size, _currentDirection))
         {
             _soundFeedback.PlaySound(SoundType.wrongPlacement);
             return;
         }
-        _soundFeedback.PlaySound(SoundType.Place);
 
-        if (_inventoryManager)
+        if (_inventoryManager != null)
         {
-            // Check inventory before placing
-            if (!_inventoryManager.HasEnoughItems(_id))
-            {
-                _soundFeedback.PlaySound(SoundType.wrongPlacement);
-                Debug.Log($"Not enough items in inventory to place object with ID: {_id}");
-                return;
-            }
-
-            // Consume inventory item
-            if (!_inventoryManager.ConsumeItems(_id))
+            if (!_inventoryManager.HasEnoughItems(_id) || !_inventoryManager.ConsumeItems(_id))
             {
                 _soundFeedback.PlaySound(SoundType.wrongPlacement);
                 return;
             }
         }
 
-        float rotationAngle = _currentRotation;
+        Vector2Int offset        = _currentDirection.GetRotationOffset(_piece.Size);
+        Vector3    worldPosition = _gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y)
+                                   + new Vector3(offset.x, 0, offset.y);
 
-        Vector2Int offset = _currentDirection.GetRotationOffset(_piece.Size);
-
-        // Calculate final world position
-        Vector3 finalWorldPosition = _gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y) +
-                                   new Vector3(offset.x, 0, offset.y);
-
-        // Create the build piece
         GridBuildPiece piece = _buildingManager.CreateBuildPiece(
             _piece,
-            finalWorldPosition,
-            Quaternion.Euler(0, rotationAngle, 0));
+            worldPosition,
+            Quaternion.Euler(0, _currentRotation, 0));
 
-        // Add the fall animation component and start the animation
-        GridPlacementAnimator animator = piece.gameObject.GetComponent<GridPlacementAnimator>();
-        if (animator == null)
-        {
+        // Attach and start the drop-in animation.
+        if (!piece.TryGetComponent(out GridPlacementAnimator animator))
             animator = piece.gameObject.AddComponent<GridPlacementAnimator>();
-        }
 
-        // Start the fall animation
-        animator.StartFallAnimation(finalWorldPosition);
+        animator.StartFallAnimation(worldPosition);
 
         if (piece.storeThisToGrid)
         {
-            _gridManager.AddObjectToGrid(piece, new Vector2Int(gridPosition.x, gridPosition.y), piece.sizeOnGrid, _currentDirection);
+            _gridManager.AddObjectToGrid(
+                piece,
+                new Vector2Int(gridPosition.x, gridPosition.y),
+                piece.sizeOnGrid,
+                _currentDirection);
         }
-        _previewSystem.UpdatePosition(_gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y), new Vector3(offset.x, 0, offset.y), false);
+
+        _previewSystem.UpdatePosition(
+            _gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y),
+            new Vector3(offset.x, 0, offset.y),
+            false);
+
+        _soundFeedback.PlaySound(SoundType.Place);
     }
 
-    private bool CheckPlacementValidity(Vector3Int gridPosition, Vector2Int objectSize, Direction direction)
-    {
-        //TODO: remember to change back to Vector2Int
-        return _gridManager.CanBuildOnCell(new Vector2Int(gridPosition.x, gridPosition.y), objectSize, _piece.canBeBuiltOnLayers, direction);
-    }
-
+    /// <inheritdoc/>
     public void UpdateState(Vector3Int gridPosition)
     {
-        bool placementValidity = CheckPlacementValidity(gridPosition, _piece.Size, _currentDirection);
-
+        bool valid        = CheckPlacementValidity(gridPosition, _piece.Size, _currentDirection);
         Vector2Int offset = _currentDirection.GetRotationOffset(_piece.Size);
 
-        _previewSystem.UpdatePosition(_gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y), new Vector3(offset.x, 0, offset.y), placementValidity);
+        _previewSystem.UpdatePosition(
+            _gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y),
+            new Vector3(offset.x, 0, offset.y),
+            valid);
     }
 
+    /// <summary>Rotates the preview to the next direction and refreshes its position.</summary>
     public void OnRotate(Vector3Int gridPosition)
     {
-        _currentDirection = _currentDirection.GetNextDirection();// Cycle through 0, 1, 2, 3
-        _currentRotation = _currentDirection.GetDirectionRotation();
+        _currentDirection = _currentDirection.GetNextDirection();
+        _currentRotation  = _currentDirection.GetDirectionRotation();
 
         Vector2Int offset = _currentDirection.GetRotationOffset(_piece.Size);
+        bool valid        = CheckPlacementValidity(gridPosition, _piece.Size, _currentDirection);
 
-        bool placementValidity = CheckPlacementValidity(gridPosition, _piece.Size, _currentDirection);
-
-        _previewSystem.UpdatePosition(_gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y), new Vector3(offset.x, 0, offset.y), placementValidity);
+        _previewSystem.UpdatePosition(
+            _gridManager.Grid.GetWorldPosition(gridPosition.x, gridPosition.y),
+            new Vector3(offset.x, 0, offset.y),
+            valid);
 
         _previewSystem.SetRotation(_currentRotation);
-        _soundFeedback.PlaySound(SoundType.Click); // Optional: play sound on rotation
+        _soundFeedback.PlaySound(SoundType.Click);
     }
+
+    // -------------------------------------------------------------------------
+    // Helpers
+    // -------------------------------------------------------------------------
+
+    private bool CheckPlacementValidity(Vector3Int gridPosition, Vector2Int objectSize, Direction direction)
+        => _gridManager.CanBuildOnCell(
+            new Vector2Int(gridPosition.x, gridPosition.y),
+            objectSize,
+            _piece.canBeBuiltOnLayers,
+            direction);
 }
