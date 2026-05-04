@@ -1,3 +1,5 @@
+Assets/_Project/_Scripts/GridExporter/GridImporter.cs
+```
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
@@ -90,10 +92,13 @@ public class GridImporter
     // Grid clearing
     // -------------------------------------------------------------------------
 
+    /// <summary>Tracks destroyed pieces to avoid double-destroying multi-cell pieces.</summary>
     private void ClearExistingGrid()
     {
         int width  = _system.gridManager.Grid.Width;
         int height = _system.gridManager.Grid.Height;
+
+        HashSet<GridBuildPiece> destroyed = new();
 
         for (int x = 0; x < width; x++)
         {
@@ -102,10 +107,14 @@ public class GridImporter
                 GridCell cell = _system.gridManager.Grid.GetGridObject(x, z);
                 if (cell == null) continue;
 
-                // Pop and destroy every piece in the stack.
                 GridBuildPiece piece;
                 while ((piece = cell.RemoveTopGridBuildPiece()) != null)
+                {
+                    if (destroyed.Contains(piece)) continue;
+
+                    destroyed.Add(piece);
                     _system.buildingManager.DestroyBuildPiece(piece);
+                }
             }
         }
     }
@@ -184,3 +193,4 @@ public class GridImporter
         return true;
     }
 }
+```
