@@ -41,10 +41,18 @@ public class GridBuildPiece : MonoBehaviour
     // -------------------------------------------------------------------------
 
     /// <summary>Read-only view of the pieces that are currently stacked on top of this one.</summary>
-    public IReadOnlyList<GridBuildPiece> GridObjectsOnTop => _gridObjectsOnTop;
+    public List<GridBuildPiece> GridObjectsOnTop
+    {
+        get => _gridObjectsOnTop;
+        set => _gridObjectsOnTop = value;
+    }
 
     /// <summary>Read-only view of every grid cell this piece occupies.</summary>
-    public IReadOnlyList<Vector2Int> OccupiedPositions => _occupiedPositions;
+    public List<Vector2Int> OccupiedPositions 
+    {
+        get => _occupiedPositions;
+        set => _occupiedPositions = value;
+    }
 
     private List<GridBuildPiece> _gridObjectsOnTop  = new();
     private List<Vector2Int>     _occupiedPositions = new();
