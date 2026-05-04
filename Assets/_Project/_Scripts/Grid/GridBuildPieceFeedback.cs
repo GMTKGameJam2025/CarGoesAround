@@ -1,7 +1,12 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+
+/// <summary>
+/// Swaps the materials on all <c>Previewable</c>-tagged renderers of a placed piece
+/// to give visual feedback when the building system switches to Remove mode and the
+/// piece is locked (cannot be removed).
+/// </summary>
 public class GridBuildPieceFeedback : MonoBehaviour, IBuildable
 {
     [SerializeField] private Material defaultMaterial;
@@ -12,39 +17,34 @@ public class GridBuildPieceFeedback : MonoBehaviour, IBuildable
 
     private void Awake()
     {
-        _renderers = GetComponentsInChildren<Renderer>().ToList();
-        
-        // Only include renderers tagged with "Previewable"
-        _renderers = _renderers.Where(rend => rend.CompareTag("Previewable")).ToList();
+        // Only drive renderers that are explicitly tagged as Previewable.
+        _renderers = GetComponentsInChildren<Renderer>()
+            .Where(r => r.CompareTag("Previewable"))
+            .ToList();
     }
 
+    /// <inheritdoc/>
     public void OnBuild(GridBuildPiece piece)
     {
         _piece = piece;
     }
-    
-    private void OnEnable()
-    {
-        EventBus.Subscribe<BuildModeChangedEvent>(OnBuildModeChanged);
-    }
 
-    private void OnDisable()
-    {
-        EventBus.Unsubscribe<BuildModeChangedEvent>(OnBuildModeChanged);
-    }
+    private void OnEnable()  => EventBus.Subscribe<BuildModeChangedEvent>(OnBuildModeChanged);
+    private void OnDisable() => EventBus.Unsubscribe<BuildModeChangedEvent>(OnBuildModeChanged);
 
-    public void OnBuildModeChanged(BuildModeChangedEvent @event)
+    private void OnBuildModeChanged(BuildModeChangedEvent @event)
     {
         if (!defaultMaterial || !lockMaterial) return;
-        
+
+        bool showLock = !_piece.CanBeRemovedFromGrid && @event.currentBuildMode == BuildMode.Remove;
+        Material target = showLock ? lockMaterial : defaultMaterial;
+
         foreach (Renderer rend in _renderers)
         {
-            Material[] materials = rend.materials;
-            for (int i = 0; i < materials.Length; i++)
-            {
-                materials[i] = !_piece.canBeRemovedFromGrid && @event.currentBuildMode == BuildMode.Remove ? lockMaterial : defaultMaterial;;
-            }
-            rend.materials = materials;
+            Material[] mats = rend.materials;
+            for (int i = 0; i < mats.Length; i++)
+                mats[i] = target;
+            rend.materials = mats;
         }
     }
 }
