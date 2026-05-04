@@ -1,3 +1,5 @@
+Assets/_Project/_Scripts/GridExporter/GridExporter.cs
+```
 using System;
 using System.Collections.Generic;
 using UnityEngine;
@@ -93,7 +95,8 @@ public class GridExporter
 
     private void ExportAllPieces(GridLevelDataSO levelData)
     {
-        var pieceToId      = new Dictionary<GridBuildPiece, string>();
+        var pieceToId    = new Dictionary<GridBuildPiece, string>();
+        var pieceToDepth = new Dictionary<GridBuildPiece, int>();
         var processedPieces = new HashSet<GridBuildPiece>();
 
         // Pass 1 — discover every unique piece and assign a stable GUID.
@@ -103,13 +106,13 @@ public class GridExporter
             {
                 GridCell cell = _system.gridManager.Grid.GetGridObject(x, z);
                 if (cell != null)
-                    CollectPiecesFromCell(cell, processedPieces, pieceToId);
+                    CollectPiecesFromCell(cell, processedPieces, pieceToId, pieceToDepth);
             }
         }
 
         // Pass 2 — serialise each discovered piece.
         foreach (var kvp in pieceToId)
-            levelData.buildPieces.Add(BuildPieceData(kvp.Key, kvp.Value, pieceToId));
+            levelData.buildPieces.Add(BuildPieceData(kvp.Key, kvp.Value, pieceToId, pieceToDepth));
     }
 
     /// <summary>
@@ -119,11 +122,20 @@ public class GridExporter
     private void CollectPiecesFromCell(
         GridCell cell,
         HashSet<GridBuildPiece> processed,
-        Dictionary<GridBuildPiece, string> pieceToId)
+        Dictionary<GridBuildPiece, string> pieceToId,
+        Dictionary<GridBuildPiece, int> pieceToDepth)
     {
-        foreach (GridBuildPiece piece in GetStackNonDestructive(cell))
+        IReadOnlyList<GridBuildPiece> stack = GetStackNonDestructive(cell);
+
+        for (int i = 0; i < stack.Count; i++)
         {
-            if (piece == null || processed.Contains(piece)) continue;
+            GridBuildPiece piece = stack[i];
+            if (piece == null) continue;
+
+            // Depth is deterministic — always overwrite so multi-cell pieces stay consistent.
+            pieceToDepth[piece] = i;
+
+            if (processed.Contains(piece)) continue;
             processed.Add(piece);
             pieceToId[piece] = Guid.NewGuid().ToString();
         }
@@ -131,33 +143,11 @@ public class GridExporter
 
     /// <summary>
     /// Returns all pieces in the cell's stack without modifying the stack.
-    /// Bottom piece is first; top piece is last.
+    /// Bottom piece is first (index 0); top piece is last.
+    /// Delegates directly to <see cref="GridCell.GetAllPieces()"/>.
     /// </summary>
-    private static List<GridBuildPiece> GetStackNonDestructive(GridCell cell)
-    {
-        var result = new List<GridBuildPiece>();
-        GridBuildPiece top = cell.GetTopGridObject();
-
-        if (top == null) return result;
-
-        // Walk from top piece downward via objectsOnTop inverse relationships.
-        // Since GridCell only exposes Peek(), we reconstruct using GridObjectsOnTop.
-        CollectPieceRecursive(top, result, new HashSet<GridBuildPiece>());
-        return result;
-    }
-
-    private static void CollectPieceRecursive(
-        GridBuildPiece piece,
-        List<GridBuildPiece> result,
-        HashSet<GridBuildPiece> visited)
-    {
-        if (piece == null || visited.Contains(piece)) return;
-        visited.Add(piece);
-        result.Add(piece);
-
-        foreach (GridBuildPiece child in piece.GridObjectsOnTop)
-            CollectPieceRecursive(child, result, visited);
-    }
+    private static IReadOnlyList<GridBuildPiece> GetStackNonDestructive(GridCell cell)
+        => cell.GetAllPieces();
 
     // -------------------------------------------------------------------------
     // Private helpers — piece serialisation
@@ -166,7 +156,8 @@ public class GridExporter
     private static GridBuildPieceData BuildPieceData(
         GridBuildPiece piece,
         string uniqueId,
-        Dictionary<GridBuildPiece, string> pieceToId)
+        Dictionary<GridBuildPiece, string> pieceToId,
+        Dictionary<GridBuildPiece, int> pieceToDepth)
     {
         var data = new GridBuildPieceData
         {
@@ -184,7 +175,7 @@ public class GridExporter
             originGridPosition   = piece.OccupiedPositions.Count > 0
                                        ? piece.OccupiedPositions[0]
                                        : Vector2Int.zero,
-            stackDepth           = CalculateStackDepth(piece),
+            stackDepth           = pieceToDepth.TryGetValue(piece, out int d) ? d : 0,
         };
 
         // Record IDs of pieces stacked on top.
@@ -196,22 +187,5 @@ public class GridExporter
 
         return data;
     }
-
-    /// <summary>
-    /// Returns how deep this piece is in the stack by counting how many pieces
-    /// are stacked on top of it transitively. Ground pieces return 0.
-    /// </summary>
-    private static int CalculateStackDepth(GridBuildPiece piece)
-    {
-        int depth = 0;
-        GridBuildPiece current = piece;
-
-        while (current.GridObjectsOnTop != null && current.GridObjectsOnTop.Count > 0)
-        {
-            current = current.GridObjectsOnTop[0];
-            depth++;
-        }
-
-        return depth;
-    }
 }
+```
