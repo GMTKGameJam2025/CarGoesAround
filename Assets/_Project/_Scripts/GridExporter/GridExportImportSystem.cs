@@ -184,8 +184,8 @@ public class GridExporter
         
         // Set basic data
         levelData.levelName = fileName ?? $"GridLevel_{DateTime.Now:yyyyMMdd_HHmmss}";
-        levelData.gridSize = new Vector2Int(_system.gridManager.Grid.GetWidth(), _system.gridManager.Grid.GetHeight());
-        levelData.cellSize = _system.gridManager.Grid.GetCellSize();
+        levelData.gridSize = new Vector2Int(_system.gridManager.Grid.Width, _system.gridManager.Grid.Height);
+        levelData.cellSize = _system.gridManager.Grid.CellSize;
         levelData.gridOrigin = _system.gridManager.transform.position;
         levelData.creationDate = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
 
@@ -280,19 +280,19 @@ public class GridExporter
             worldPosition = piece.transform.position,
             rotation = piece.transform.eulerAngles,
             sizeOnGrid = piece.sizeOnGrid,
-            canBuildOnTop = piece.canBuildOnTop,
+            canBuildOnTop = piece.CanBuildOnTop,
             storeThisToGrid = piece.storeThisToGrid,
-            canBeRemovedFromGrid = piece.canBeRemovedFromGrid,
-            layer = piece.layer,
-            canBeBuiltOnLayers = piece.canBeBuiltOnLayers,
-            occupiedPositions = new List<Vector2Int>(piece.occupiedPositions),
+            canBeRemovedFromGrid = piece.CanBeRemovedFromGrid,
+            layer = piece.Layer,
+            canBeBuiltOnLayers = piece.CanBeBuiltOnLayers,
+            occupiedPositions = new List<Vector2Int>(piece.OccupiedPositions),
             stackDepth = CalculateStackDepth(piece)
         };
 
         // Get references to objects on top
-        if (piece.gridObjectsOnTop != null)
+        if (piece.GridObjectsOnTop != null)
         {
-            foreach (GridBuildPiece topPiece in piece.gridObjectsOnTop)
+            foreach (GridBuildPiece topPiece in piece.GridObjectsOnTop)
             {
                 if (pieceToIdMap.ContainsKey(topPiece))
                 {
@@ -315,7 +315,7 @@ public class GridExporter
     {
         // Find how many pieces are below this one in any of its occupied positions
         int maxDepth = 0;
-        foreach (Vector2Int pos in piece.occupiedPositions)
+        foreach (Vector2Int pos in piece.OccupiedPositions)
         {
             if (_system.gridManager.Grid.IsGridObjectInGrid(pos))
             {
@@ -348,17 +348,17 @@ public class GridExporter
         return 0;
     }
 
-    private Direction CalculateDirection(List<Vector2Int> occupiedPositions, Vector2Int size)
+    private Direction CalculateDirection(List<Vector2Int> OccupiedPositions, Vector2Int size)
     {
-        if (occupiedPositions.Count <= 1) return Direction.Down;
+        if (OccupiedPositions.Count <= 1) return Direction.Down;
 
-        Vector2Int origin = occupiedPositions[0];
+        Vector2Int origin = OccupiedPositions[0];
         
         // Test each direction to see which one matches the occupied positions
         foreach (Direction dir in Enum.GetValues(typeof(Direction)))
         {
             List<Vector2Int> expectedPositions = origin.GetGridPositionList(size, dir);
-            if (ListsEqual(occupiedPositions, expectedPositions))
+            if (ListsEqual(OccupiedPositions, expectedPositions))
             {
                 return dir;
             }
@@ -500,8 +500,8 @@ public class GridImporter
 
     private void ValidateGridDimensions(GridLevelDataSO levelData)
     {
-        if (_system.gridManager.Grid.GetWidth() != levelData.gridSize.x || 
-            _system.gridManager.Grid.GetHeight() != levelData.gridSize.y)
+        if (_system.gridManager.Grid.Width != levelData.gridSize.x || 
+            _system.gridManager.Grid.Height != levelData.gridSize.y)
         {
             Debug.LogWarning("Grid size mismatch! Current grid size may not match saved data.");
         }
@@ -560,10 +560,10 @@ public class GridImporter
         // Clear all existing relationships first to avoid duplicates
         foreach (var piece in idToPieceMap.Values)
         {
-            if (piece.gridObjectsOnTop == null)
-                piece.gridObjectsOnTop = new List<GridBuildPiece>();
+            if (piece.GridObjectsOnTop == null)
+                piece.GridObjectsOnTop = new List<GridBuildPiece>();
             else
-                piece.gridObjectsOnTop.Clear();
+                piece.GridObjectsOnTop.Clear();
         }
 
         // Rebuild relationships from saved data
@@ -578,9 +578,9 @@ public class GridImporter
                 if (idToPieceMap.TryGetValue(topId, out GridBuildPiece topPiece))
                 {
                     // Only add if not already present (avoid duplicates)
-                    if (!piece.gridObjectsOnTop.Contains(topPiece))
+                    if (!piece.GridObjectsOnTop.Contains(topPiece))
                     {
-                        piece.gridObjectsOnTop.Add(topPiece);
+                        piece.GridObjectsOnTop.Add(topPiece);
                     }
                 }
             }
@@ -630,39 +630,39 @@ public class GridImporter
         // Note: ID should already be correct from BuildPieceData, but ensure it matches
         piece.id = savedData.pieceId;
         piece.sizeOnGrid = savedData.sizeOnGrid;
-        piece.canBuildOnTop = savedData.canBuildOnTop;
+        piece.CanBuildOnTop = savedData.canBuildOnTop;
         piece.storeThisToGrid = savedData.storeThisToGrid;
-        piece.canBeRemovedFromGrid = savedData.canBeRemovedFromGrid;
-        piece.layer = savedData.layer;
-        piece.canBeBuiltOnLayers = savedData.canBeBuiltOnLayers;
+        piece.CanBeRemovedFromGrid = savedData.canBeRemovedFromGrid;
+        piece.Layer = savedData.layer;
+        piece.CanBeBuiltOnLayers = savedData.canBeBuiltOnLayers;
         
         // Replace the occupied positions with saved data
-        piece.occupiedPositions = new List<Vector2Int>(savedData.occupiedPositions);
+        piece.OccupiedPositions = new List<Vector2Int>(savedData.occupiedPositions);
         
-        // Initialize gridObjectsOnTop if null, otherwise clear it
+        // Initialize GridObjectsOnTop if null, otherwise clear it
         // (Will be populated later in RestoreRelationships)
-        if (piece.gridObjectsOnTop == null)
-            piece.gridObjectsOnTop = new List<GridBuildPiece>();
+        if (piece.GridObjectsOnTop == null)
+            piece.GridObjectsOnTop = new List<GridBuildPiece>();
         else
-            piece.gridObjectsOnTop.Clear();
+            piece.GridObjectsOnTop.Clear();
             
     }
 
     private void ClearGrid()
     {
         // Get all occupied positions first to avoid issues with iteration
-        List<Vector2Int> occupiedPositions = new List<Vector2Int>();
+        List<Vector2Int> OccupiedPositions = new List<Vector2Int>();
         
-        for (int x = 0; x < _system.gridManager.Grid.GetWidth(); x++)
+        for (int x = 0; x < _system.gridManager.Grid.Width; x++)
         {
-            for (int z = 0; z < _system.gridManager.Grid.GetHeight(); z++)
+            for (int z = 0; z < _system.gridManager.Grid.Height; z++)
             {
                 Vector2Int position = new Vector2Int(x, z);
                 GridBuildPiece topPiece = _system.gridManager.GetTopLevelObject(position);
                 
                 if (topPiece != null)
                 {
-                    occupiedPositions.Add(position);
+                    OccupiedPositions.Add(position);
                 }
             }
         }
@@ -670,7 +670,7 @@ public class GridImporter
         // Remove all pieces using GridManager's removal method
         HashSet<GridBuildPiece> processedPieces = new HashSet<GridBuildPiece>();
         
-        foreach (Vector2Int position in occupiedPositions)
+        foreach (Vector2Int position in OccupiedPositions)
         {
             GridBuildPiece topPiece = _system.gridManager.GetTopLevelObject(position);
             
@@ -683,9 +683,9 @@ public class GridImporter
             
             // Find the origin position for this piece (should be the first occupied position)
             Vector2Int originPos = position;
-            if (topPiece.occupiedPositions != null && topPiece.occupiedPositions.Count > 0)
+            if (topPiece.OccupiedPositions != null && topPiece.OccupiedPositions.Count > 0)
             {
-                originPos = topPiece.occupiedPositions[0];
+                originPos = topPiece.OccupiedPositions[0];
             }
             
             // Use GridManager's removal method which handles multi-cell pieces properly
@@ -704,9 +704,9 @@ public class GridImporter
     
     private void VerifyGridIsEmpty()
     {
-        for (int x = 0; x < _system.gridManager.Grid.GetWidth(); x++)
+        for (int x = 0; x < _system.gridManager.Grid.Width; x++)
         {
-            for (int z = 0; z < _system.gridManager.Grid.GetHeight(); z++)
+            for (int z = 0; z < _system.gridManager.Grid.Height; z++)
             {
                 Vector2Int position = new Vector2Int(x, z);
                 GridBuildPiece remainingPiece = _system.gridManager.GetTopLevelObject(position);
